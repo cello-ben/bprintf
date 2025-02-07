@@ -7,11 +7,16 @@ SRC_DIR = src
 INC = -I$(SRC_DIR)/include
 CFLAGS = -Wall -Wpedantic -Wextra  -Wno-unused-parameter -Wno-unused-function -Werror -std=gnu99
 
-all:
-	: #TODO add -ffreestanding.
+all: #Default to static.
+	make static
+
+static:
+	gcc -c -o static_lib.o $(SRC_DIR)/bprintf.c $(INC) $(CFLAGS) -ffreestanding -O0 #TODO figure out if this is what I should use for an embedded situation.
+	ar rcs libbprintf.a static_lib.o
+	rm -rf *.o
 
 debug:
-	gcc -g -o bprintf_debug $(SRC_DIR)/*.c $(INC) $(CFLAGS) -O0 #TODO figure out if this is what I should use for an embedded situation. 
+	gcc -g -o bprintf_debug $(SRC_DIR)/main.c $(INC) $(CFLAGS) 
 
 clean:
-	rm -rf bprintf_debug *.dSYM #TODO figure out if more things need to be removed later.
+	rm -rf bprintf_debug *.a *.dSYM #TODO figure out if more things need to be removed later.
