@@ -5,3 +5,4 @@
 
 bprintf_debug
 *.dSYM
+*.a

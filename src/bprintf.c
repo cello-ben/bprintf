@@ -8,6 +8,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 #include <bprintf.h>
 
 #ifdef BPRINTF_DEBUG
+    #include <stdarg.h>
 	#include <stdio.h>
 #endif
 
@@ -202,10 +203,22 @@ const LEDState ALPHA[26][CHAR_WIDTH * CHAR_HEIGHT] = {
 	},
 	{	//Z
 		LED_ON, LED_ON, LED_ON,
-		LED_OFF, LED_ON, LED_ON,
+		LED_OFF, LED_ON, LED_OFF,
 		LED_ON, LED_ON, LED_ON
 	}
 };
+
+int _debug_printf(const char *fmt, ...) //TODO decide if I want to return BPrintfStatus from printing functions instead of regular integers.
+{
+    #ifdef BPRINTF_DEBUG
+        va_list args;
+        va_start(args, fmt);
+        int vprintf_res = vprintf(fmt, args);
+        va_end(args);
+        return vprintf_res;
+    #endif
+    return 0;
+}
 
 int _debug_print_char(const LEDState *grid)
 {
@@ -270,4 +283,16 @@ BPrintfStatus bputchar(char c)
 	}
     return BPRINTF_INVALID_CHAR_ERR;
 	
+}
+
+int bprintf(void)
+{
+	//Steps:
+	//Take in variadic args.
+	//Check for format/arg count match.
+	//Attempt to stringify each.
+	//Start with just int and string (%d and %s, respectively).
+	//Copy into a buffer if space is available.
+	//Iterate through buffer and call bputchar on each character.
+	return 0;
 }

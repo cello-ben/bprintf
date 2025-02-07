@@ -36,14 +36,20 @@ typedef enum BPrintfStatus {
 	BPRINTF_PUTCHAR_ERR
 } BPrintfStatus;
 
+typedef enum BBool {
+	BFALSE,
+	BTRUE
+} BBool;
+
 //TODO figure out why I can't have all definitions in here; is it because they're not #define constants?
 
+int _debug_printf(const char *fmt, ...);
 int _debug_print_char(const LEDState *grid);
 BPrintfStatus off(int led);
 BPrintfStatus on(int led);
 BPrintfStatus send_to_board(const LEDState *leds);
 BPrintfStatus bputchar(char c);
-BPrintfStatus bprintf(const char *fmt, ...);
+int bprintf(void); //Void for now, will of course change later.
 
 #endif //BPRINTF_H
 

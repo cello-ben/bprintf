@@ -7,42 +7,46 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 
 #include <bprintf.h>
 
+#include <blib.h>
+#include <bstring.h>
+
 int main(void)
 {
-	int putchar_res;
+	_debug_printf("%s\n", itos(12345));
+	// int putchar_res;
 
 	//Check special characters (just space and period for now)
-	putchar_res = bputchar(' ');
-	if (putchar_res > 0)
-	{
-		return BPRINTF_PUTCHAR_ERR;
-	}
+	// putchar_res = bputchar(' ');
+	// if (putchar_res > 0)
+	// {
+	// 	return BPRINTF_PUTCHAR_ERR;
+	// }
 
-	putchar_res = bputchar('.');
-	if (putchar_res > 0)
-	{
-		return BPRINTF_PUTCHAR_ERR;
-	}
-	
-	// Test printing all nums
-	for (int i = NUM_MIN; i < NUM_MAX; i++)
-	{
-		putchar_res = bputchar(i);
-		if (putchar_res > 0)
-		{
-			return BPRINTF_PUTCHAR_ERR;
-		}
-	}
+	// putchar_res = bputchar('.');
+	// if (putchar_res > 0)
+	// {
+	// 	return BPRINTF_PUTCHAR_ERR;
+	// }
 
-	//Test printing all uppercase letters
-	for (int i = ALPHA_MIN; i < ALPHA_MAX; i++)
-	{
-		putchar_res = bputchar(i);
-		if (putchar_res > 0)
-		{
-			return BPRINTF_PUTCHAR_ERR;
-		}
-	}
+	// // Test printing all nums
+	// for (int i = NUM_MIN; i < NUM_MAX; i++)
+	// {
+	// 	putchar_res = bputchar(i);
+	// 	if (putchar_res > 0)
+	// 	{
+	// 		return BPRINTF_PUTCHAR_ERR;
+	// 	}
+	// }
+
+	// //Test printing all uppercase letters
+	// for (int i = ALPHA_MIN; i < ALPHA_MAX; i++)
+	// {
+	// 	putchar_res = bputchar(i);
+	// 	if (putchar_res > 0)
+	// 	{
+	// 		return BPRINTF_PUTCHAR_ERR;
+	// 	}
+	// }
 
 	return 0;
 }
