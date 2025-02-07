@@ -287,6 +287,15 @@ BPrintfStatus bputchar(char c)
 
 int bprintf(void)
 {
+	//Initial strategy:
+	//Figure out a way to take in variadic arguments. For the time being, we'll assume all ints after the format string.
+	//Initialize a large buffer. We could do it based upon bstrlen of the format string - format specifiers + multiple of all stringified int lengths.
+	//For now, let's keep it simpler. Just get a big old buffer, bounds check things, and return early if we can't fit everything.
+
+	
+
+
+
 	//Steps:
 	//Take in variadic args.
 	//Check for format/arg count match.

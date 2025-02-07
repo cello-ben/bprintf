@@ -12,7 +12,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 
 int main(void)
 {
-	_debug_printf("%s\n", itos(12345));
+	_debug_printf("%s\n", itos(-47));
 	// int putchar_res;
 
 	//Check special characters (just space and period for now)
