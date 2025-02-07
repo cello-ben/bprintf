@@ -14,60 +14,108 @@ int _debug_print_char(const LEDState *grid)
 {
 	int putchar_res = 0;
 	#ifdef BPRINTF_DEBUG
-		for (int i = 0; i <= (CHAR_WIDTH * CHAR_HEIGHT); i++)
+		for (int i = 0; i < CHAR_WIDTH; i++)
 		{
-			if (grid[i] == LED_ON)
+			for (int j = 0; j < CHAR_HEIGHT; j++)
 			{
-				putchar_res = putchar('*');
+				size_t idx = (i * CHAR_WIDTH) + j;
+				putchar(grid[idx] == LED_ON ? '*' : ' ');
 			}
-			else
-			{
-				putchar_res = putchar(' ');
-			}
-			if (putchar_res == EOF)
-			{
-				return putchar_res;
-			}
-			if (i % 3 == 0)
-			{
-				putchar_res = putchar('\n');
-				if (putchar_res == EOF)
-				{
-					return putchar_res;
-				}
-			}
+			putchar('\n');
 		}
+		putchar('\n');
 		return (int)putchar_res;
 	#endif
 	return 0;
 }
 
-int off(int led)
+BPrintfStatus off(int led)
 {
 	return 0;
 }
 
-int on(int led)
+BPrintfStatus on(int led)
 {
 	return 0;	
 }
 
-int send_to_board(int *leds)
+BPrintfStatus send_to_board(const LEDState *leds)
 {
+	#ifdef BPRINTF_DEBUG
+		return _debug_print_char(leds);
+	#else
+		return BPRINTF_SUCCESS;
+	#endif
 	//Call on x times with pins we need to activate.
 	//Sleep for 1 second.
 	//Call off x times with pins we need to deactivate.
-	return 0;
+	//Return BPRINTF_BOARD_SEND_ERR for error.
+	return BPRINTF_SUCCESS;
 }
 
-int bputchar(char c)
+BPrintfStatus bputchar(char c)
 {
-	return 0;
+	const LEDState *ptr;
+	if (c == SPACE_CODE)
+	{
+		return send_to_board(SPACE_CHAR);
+	}
+	else if (c == PERIOD_CODE)
+	{
+		return send_to_board(PERIOD_CHAR);
+	}
+	else if (c >= NUM_MIN && c <= NUM_MAX)
+	{
+		ptr = NUMS[c - NUM_OFFSET];
+		send_to_board(ptr);
+	}
+	else if (c >= ALPHA_MIN && c <= ALPHA_MAX)
+	{
+		ptr = ALPHA[c - ALPHA_OFFSET];
+	}
+	else
+	{
+		return BPRINTF_INVALID_CHAR_ERR;
+	}
+	return send_to_board(ptr);
 }
 
 int main(void)
 {
-	const LEDState *B = NUMS['1' - NUM_OFFSET];
-	_debug_print_char(B);
+	int putchar_res;
+
+	//Check special characters (just space and period for now)
+	putchar_res = bputchar(' ');
+	if (putchar_res > 0)
+	{
+		return BPRINTF_PUTCHAR_ERR;
+	}
+
+	putchar_res = bputchar('.');
+	if (putchar_res > 0)
+	{
+		return BPRINTF_PUTCHAR_ERR;
+	}
+
+	// Test printing all nums
+	for (int i = NUM_MIN; i < NUM_MAX; i++)
+	{
+		putchar_res = bputchar(i);
+		if (putchar_res > 0)
+		{
+			return BPRINTF_PUTCHAR_ERR;
+		}
+	}
+
+	//Test printing all uppercase letters
+	for (int i = ALPHA_MIN; i < ALPHA_MAX; i++)
+	{
+		putchar_res = bputchar(i);
+		if (putchar_res > 0)
+		{
+			return BPRINTF_PUTCHAR_ERR;
+		}
+	}
+
 	return 0;
 }
