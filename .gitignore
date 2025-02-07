@@ -6,3 +6,4 @@
 bprintf_debug
 *.dSYM
 *.a
+.DS_Store
