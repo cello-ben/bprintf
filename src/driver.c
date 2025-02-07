@@ -6,79 +6,6 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 */
 
 #include <bprintf.h>
-#ifdef BPRINTF_DEBUG
-	#include <stdio.h>
-#endif
-
-int _debug_print_char(const LEDState *grid)
-{
-	int putchar_res = 0;
-	#ifdef BPRINTF_DEBUG
-		for (int i = 0; i < CHAR_WIDTH; i++)
-		{
-			for (int j = 0; j < CHAR_HEIGHT; j++)
-			{
-				size_t idx = (i * CHAR_WIDTH) + j;
-				putchar(grid[idx] == LED_ON ? '*' : ' ');
-			}
-			putchar('\n');
-		}
-		putchar('\n');
-		return (int)putchar_res;
-	#endif
-	return 0;
-}
-
-BPrintfStatus off(int led)
-{
-	return 0;
-}
-
-BPrintfStatus on(int led)
-{
-	return 0;	
-}
-
-BPrintfStatus send_to_board(const LEDState *leds)
-{
-	#ifdef BPRINTF_DEBUG
-		return _debug_print_char(leds);
-	#else
-		return BPRINTF_SUCCESS;
-	#endif
-	//Call on x times with pins we need to activate.
-	//Sleep for 1 second.
-	//Call off x times with pins we need to deactivate.
-	//Return BPRINTF_BOARD_SEND_ERR for error.
-	return BPRINTF_SUCCESS;
-}
-
-BPrintfStatus bputchar(char c)
-{
-	const LEDState *ptr;
-	if (c == SPACE_CODE)
-	{
-		return send_to_board(SPACE_CHAR);
-	}
-	else if (c == PERIOD_CODE)
-	{
-		return send_to_board(PERIOD_CHAR);
-	}
-	else if (c >= NUM_MIN && c <= NUM_MAX)
-	{
-		ptr = NUMS[c - NUM_OFFSET];
-		send_to_board(ptr);
-	}
-	else if (c >= ALPHA_MIN && c <= ALPHA_MAX)
-	{
-		ptr = ALPHA[c - ALPHA_OFFSET];
-	}
-	else
-	{
-		return BPRINTF_INVALID_CHAR_ERR;
-	}
-	return send_to_board(ptr);
-}
 
 int main(void)
 {
@@ -96,7 +23,7 @@ int main(void)
 	{
 		return BPRINTF_PUTCHAR_ERR;
 	}
-
+	
 	// Test printing all nums
 	for (int i = NUM_MIN; i < NUM_MAX; i++)
 	{
