@@ -5,10 +5,10 @@
 
 SRC_DIR = src
 INC = -I$(SRC_DIR)/include
-CFLAGS = -Wall -Wpedantic -Wextra  -Wno-unused-parameter -Wno-unused-function -Werror -ffreestanding -std=gnu99
+CFLAGS = -Wall -Wpedantic -Wextra  -Wno-unused-parameter -Wno-unused-function -Werror -std=gnu99
 
 all:
-	:
+	: #TODO add -ffreestanding.
 
 debug:
 	gcc -g -o bprintf_debug $(SRC_DIR)/*.c $(INC) $(CFLAGS) -O0 #TODO figure out if this is what I should use for an embedded situation. 

@@ -8,6 +8,8 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 #ifndef BPRINTF_H
 #define BPRINTF_H
 
+#define BPRINTF_DEBUG
+
 #define CHAR_WIDTH 3
 #define CHAR_HEIGHT 3
 
@@ -20,12 +22,12 @@ typedef enum LEDState {
 } LEDState;
 
 const LEDState SPACE[CHAR_WIDTH * CHAR_HEIGHT] = {LED_OFF};
+
 const LEDState PERIOD[CHAR_WIDTH * CHAR_HEIGHT] = {
 		LED_OFF, LED_OFF, LED_OFF,
 		LED_OFF, LED_OFF, LED_OFF,
 		LED_OFF, LED_OFF, LED_ON
 	};
-
 
 const LEDState NUMS[10][CHAR_WIDTH * CHAR_HEIGHT] = {
 	{
@@ -80,10 +82,144 @@ const LEDState NUMS[10][CHAR_WIDTH * CHAR_HEIGHT] = {
 	}
 };
 
+const LEDState ALPHA[26][CHAR_WIDTH * CHAR_HEIGHT] = {
+	{
+		LED_OFF, LED_ON, LED_OFF,
+		LED_ON, LED_ON, LED_ON,
+		LED_ON, LED_OFF, LED_ON
+	},
+	{
+		LED_ON, LED_ON, LED_ON,
+		LED_ON, LED_ON, LED_ON,
+		LED_ON, LED_ON, LED_ON
+	},
+	{
+		LED_ON, LED_ON, LED_ON,
+		LED_ON, LED_OFF, LED_OFF,
+		LED_ON, LED_ON, LED_ON
+	},
+	{
+		LED_ON, LED_ON, LED_ON,
+		LED_ON, LED_OFF, LED_ON,
+		LED_ON, LED_ON, LED_ON
+	},
+	{
+		LED_ON, LED_ON, LED_ON,
+		LED_ON, LED_ON, LED_OFF,
+		LED_ON, LED_ON, LED_ON
+	},
+	{
+		LED_ON, LED_ON, LED_ON,
+		LED_ON, LED_ON, LED_OFF,
+		LED_ON, LED_OFF, LED_OFF
+	},
+	{
+		LED_ON, LED_ON, LED_ON,
+		LED_ON, LED_ON, LED_ON,
+		LED_ON, LED_ON, LED_ON
+	},
+	{
+		LED_ON, LED_OFF, LED_ON,
+		LED_ON, LED_ON, LED_ON,
+		LED_ON, LED_OFF, LED_ON
+	},
+	{
+		LED_ON, LED_ON, LED_ON,
+		LED_OFF, LED_ON, LED_OFF,
+		LED_ON, LED_ON, LED_ON
+	},
+	{
+		LED_OFF, LED_OFF, LED_ON,
+		LED_OFF, LED_OFF, LED_ON,
+		LED_ON, LED_ON, LED_ON
+	},
+	{
+		LED_ON, LED_OFF, LED_ON,
+		LED_ON, LED_ON, LED_OFF,
+		LED_ON, LED_OFF, LED_ON
+	},
+	{
+		LED_ON, LED_OFF, LED_OFF,
+		LED_ON, LED_OFF, LED_OFF,
+		LED_ON, LED_ON, LED_ON
+	},
+	{
+		LED_ON, LED_OFF, LED_ON,
+		LED_ON, LED_ON, LED_ON,
+		LED_ON, LED_OFF, LED_ON
+	},
+	{
+		LED_ON, LED_OFF, LED_ON,
+		LED_ON, LED_ON, LED_ON,
+		LED_ON, LED_OFF, LED_ON
+	},
+	{
+		LED_OFF, LED_ON, LED_OFF,
+		LED_ON, LED_OFF, LED_ON,
+		LED_OFF, LED_ON, LED_OFF
+	},
+	{
+		LED_ON, LED_ON, LED_ON,
+		LED_ON, LED_OFF, LED_ON,
+		LED_ON, LED_OFF, LED_OFF
+	},
+	{
+		LED_ON, LED_ON, LED_OFF,
+		LED_ON, LED_ON, LED_OFF,
+		LED_OFF, LED_OFF, LED_ON
+	},
+	{
+		LED_ON, LED_ON, LED_ON,
+		LED_ON, LED_ON, LED_ON,
+		LED_ON, LED_ON, LED_OFF
+	},
+	{
+		LED_ON, LED_ON, LED_ON,
+		LED_ON, LED_ON, LED_ON,
+		LED_ON, LED_ON, LED_ON
+	},
+	{
+		LED_ON, LED_ON, LED_ON,
+		LED_OFF, LED_ON, LED_OFF,
+		LED_OFF, LED_ON, LED_OFF
+	},
+	{
+		LED_ON, LED_OFF, LED_ON,
+		LED_ON, LED_OFF, LED_ON,
+		LED_ON, LED_ON, LED_ON
+	},
+	{
+		LED_ON, LED_OFF, LED_ON,
+		LED_ON, LED_OFF, LED_ON,
+		LED_OFF, LED_ON, LED_OFF
+	},
+	{
+		LED_ON, LED_OFF, LED_ON,
+		LED_ON, LED_OFF, LED_ON,
+		LED_ON, LED_ON, LED_ON
+	},
+	{
+		LED_ON, LED_OFF, LED_ON,
+		LED_OFF, LED_ON, LED_OFF,
+		LED_ON, LED_OFF, LED_ON
+	},
+	{
+		LED_ON, LED_OFF, LED_ON,
+		LED_OFF, LED_ON, LED_OFF,
+		LED_OFF, LED_ON, LED_OFF
+	},
+	{
+		LED_ON, LED_ON, LED_ON,
+		LED_OFF, LED_ON, LED_ON,
+		LED_ON, LED_ON, LED_ON
+	}
+};
 
 #define OUTPUT_ERROR -1
 
-int light(int led);
+int _debug_print_char(const LEDState *grid);
+int off(int led);
+int on(int led);
 int send_to_board(int *leds);
 int bputchar(char c);
 int bprintf(const char *fmt, ...);
