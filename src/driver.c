@@ -6,6 +6,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 */
 
 #include <bprintf.h>
+#include <limits.h>
 
 int main(void)
 {
@@ -44,6 +45,7 @@ int main(void)
 	// 	}
 	// }
 	// bprintf("THIS MONTH IS FEBRUARY. WE REPRESENT IT AS %d.", 2); //No lowercase letters implemented (not yet, at least).
-	bprintf("A CHARACTER IS %c", 'C');
+	// bprintf("A CHARACTER IS %c", 'C');
+	bprintf("%li IS A LOW NUMBER.", LONG_MIN);
 	return 0;
 }

@@ -34,3 +34,31 @@ char *itos(int n)
 	}
 	return res;
 }
+
+char *ltos(long n)
+{
+	BBool negative = n < 0;
+	char tmp[22];
+	long long abs_n = ABS(n);
+	_debug_printf("ABS: %li", abs_n);
+	bsize_t idx = 0;
+	while (abs_n)
+	{
+		_debug_printf("%d\n", (abs_n % 10) + NUM_OFFSET);
+		tmp[idx++] = (abs_n % 10) + NUM_OFFSET;
+		abs_n /= 10;
+	}
+	_debug_printf("tmp: %s\n", tmp);
+	static char res[22];
+	if (negative == BTRUE)
+	{
+		res[0] = '-';
+	}
+	const bsize_t len = idx + (int)negative;
+	res[idx--] = '\0';
+	for (bsize_t i = (int)negative; i < len; i++)
+	{
+		res[i] = tmp[idx--];
+	}
+	return res;
+}

@@ -11,6 +11,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 #ifdef BPRINTF_DEBUG
     #include <stdarg.h>
 	#include <stdio.h>
+	#include <unistd.h>
 #endif
 
 #define SPACE_CODE 32
@@ -315,12 +316,29 @@ int bprintf(const char *fmt, ...)
 					buffer[str_idx++] = c;
 					break;
 				case 'd':
+				case 'i':
 					n = itos(va_arg(args, int));
 					fmt++;
 					while (*n != '\0' && str_idx < BPRINTF_BUF_LEN)
 					{
 						buffer[str_idx++] = *n;
 						n++;
+					}
+					break;
+				case 'l':
+					_debug_printf("Time for a long.\n");
+					c = *(fmt + 2);
+					_debug_printf("Next char: %c\n", c);
+					if (c == 'd' || c == 'i')
+					{
+						n = ltos(va_arg(args, long));
+						_debug_printf("Long: %s\n", n);
+						fmt += 2;
+						while (*n != '\0' && str_idx < BPRINTF_BUF_LEN)
+						{
+							buffer[str_idx++] = *n;
+							n++;
+						}
 					}
 					break;
 				case 's':
@@ -333,6 +351,7 @@ int bprintf(const char *fmt, ...)
 					}
 					break;
 				default:
+					//We don't support printing the '%' sign, so there's no point in putting it in the buffer.
 					break;
 
 			}
@@ -344,10 +363,12 @@ int bprintf(const char *fmt, ...)
 		fmt++;
 	}
 	buffer[str_idx] = '\0';
-	_debug_printf("%s", buffer);
 	for (bsize_t i = 0; i < str_idx; i++)
 	{
 		bputchar(buffer[i]);
+		#ifdef BPRINTF_DEBUG
+			usleep(SLEEP_USEC);
+		#endif
 	}
 	return ++str_idx; //TODO figure out if this needs to be incremented or not.
 }
