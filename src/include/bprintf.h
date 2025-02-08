@@ -12,6 +12,8 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 
 #define BPRINTF_DEBUG
 
+#define BPRINTF_BUF_LEN 8192
+
 #define CHAR_WIDTH 3
 #define CHAR_HEIGHT 3
 
@@ -51,7 +53,7 @@ BPrintfStatus off(int led);
 BPrintfStatus on(int led);
 BPrintfStatus send_to_board(const LEDState *leds);
 BPrintfStatus bputchar(char c);
-int bprintf(void); //Void for now, will of course change later.
+int bprintf(const char *fmt, ...);
 
 #endif //BPRINTF_H
 

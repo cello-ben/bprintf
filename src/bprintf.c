@@ -6,6 +6,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 */
 
 #include <bprintf.h>
+#include <blib.h>
 
 #ifdef BPRINTF_DEBUG
     #include <stdarg.h>
@@ -285,23 +286,58 @@ BPrintfStatus bputchar(char c)
 	
 }
 
-int bprintf(void)
+int bprintf(const char *fmt, ...)
 {
 	//Initial strategy:
 	//Figure out a way to take in variadic arguments. For the time being, we'll assume all ints after the format string.
-	//Initialize a large buffer. We could do it based upon bstrlen of the format string - format specifiers + multiple of all stringified int lengths.
-	//For now, let's keep it simpler. Just get a big old buffer, bounds check things, and return early if we can't fit everything.
+	char buffer[BPRINTF_BUF_LEN + 1];
+	va_list args;
+	va_start(args, fmt);
 
-	
+	//Parse format specifiers.
+	bsize_t str_idx = 0;
+	while (*fmt != '\0')
+	{
+		if (str_idx == BPRINTF_BUF_LEN)
+		{
+			buffer[BPRINTF_BUF_LEN] = '\0';
+			break;
+		}
+		if (*fmt == '%')
+		{
+			char *n;
+			switch (*(fmt + 1))
+			{
+				case 'd':
+					n = itos(va_arg(args, int));
+					fmt++;
+					while (*n != '\0' && str_idx < BPRINTF_BUF_LEN)
+					{
+						buffer[str_idx++] = *n;
+						n++;
+					}
+					break;
+				case 's':
+					n = va_arg(args, char*);
+					fmt++;
+					while (*n != '\0' && str_idx < BPRINTF_BUF_LEN)
+					{
+						buffer[str_idx++] = *n;
+						n++;
+					}
+					break;
+				default:
+					break;
 
-
-
-	//Steps:
-	//Take in variadic args.
-	//Check for format/arg count match.
-	//Attempt to stringify each.
-	//Start with just int and string (%d and %s, respectively).
-	//Copy into a buffer if space is available.
-	//Iterate through buffer and call bputchar on each character.
+			}
+		}
+		else
+		{
+			buffer[str_idx++] = *fmt;
+		}
+		fmt++;
+	}
+	buffer[str_idx] = '\0';
+	_debug_printf("%s\n", buffer);
 	return 0;
 }
