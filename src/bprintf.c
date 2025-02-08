@@ -338,6 +338,10 @@ int bprintf(const char *fmt, ...)
 		fmt++;
 	}
 	buffer[str_idx] = '\0';
-	_debug_printf("%s\n", buffer);
-	return 0;
+	_debug_printf("%s", buffer);
+	for (bsize_t i = 0; i < str_idx; i++)
+	{
+		bputchar(buffer[i]);
+	}
+	return ++str_idx; //TODO figure out if this needs to be incremented or not.
 }

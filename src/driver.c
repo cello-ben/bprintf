@@ -46,6 +46,5 @@ int main(void)
 	// 		return BPRINTF_PUTCHAR_ERR;
 	// 	}
 	// }
-
 	return 0;
 }
