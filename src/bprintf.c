@@ -36,7 +36,7 @@ const LEDState NUMS[10][CHAR_WIDTH * CHAR_HEIGHT] = {
 		LED_OFF, LED_ON, LED_OFF
 	},
 	{	//2
-		LED_ON, LED_ON, LED_ON,
+		LED_ON, LED_ON, LED_OFF,
 		LED_OFF, LED_ON, LED_OFF,
 		LED_ON, LED_ON, LED_ON
 	},
@@ -239,6 +239,11 @@ int _debug_print_char(const LEDState *grid)
 		return (int)putchar_res;
 	#endif
 	return 0;
+}
+
+BPrintfStatus flush(void)
+{
+	return BPRINTF_SUCCESS; //Placeholder
 }
 
 BPrintfStatus off(int led)

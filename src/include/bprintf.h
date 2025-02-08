@@ -49,6 +49,7 @@ typedef enum BBool {
 
 int _debug_printf(const char *fmt, ...);
 int _debug_print_char(const LEDState *grid);
+BPrintfStatus flush(void);
 BPrintfStatus off(int led);
 BPrintfStatus on(int led);
 BPrintfStatus send_to_board(const LEDState *leds);
