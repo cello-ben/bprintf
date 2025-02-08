@@ -2,7 +2,12 @@
 
 I'm Ben and I want to create my own `printf`...so...`bprintf`. More to come soon, once I get the Raspberry Pi Pico in hand.
 
+# Freestanding
+
+This is designed to be built without libc and be bundled up in a tiny package. However, at least for the time being, I am using `stdarg.h` based upon [this link](https://wiki.osdev.org/Implications_of_writing_a_freestanding_C_project#Headers_available_as_of_C89), helpfully given to me by a kind Redditor.
+
 # License
+
 MIT License:
 Copyright 2025 Benjamin Fryxell
 

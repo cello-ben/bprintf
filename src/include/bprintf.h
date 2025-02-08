@@ -8,6 +8,8 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 #ifndef BPRINTF_H
 #define BPRINTF_H
 
+#include <stdarg.h>
+
 #define BPRINTF_DEBUG
 
 #define CHAR_WIDTH 3
