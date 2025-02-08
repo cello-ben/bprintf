@@ -13,6 +13,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 typedef unsigned int bsize_t;
 
 char *itos(int n);
+char *rtods(const char *s);
 char *ultos(long n);
 
 #endif

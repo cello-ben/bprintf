@@ -35,17 +35,50 @@ char *itos(int n)
 	return res;
 }
 
+char *rtods(const char *s)
+{
+	int map[89] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 100, 500, 0, //C, D
+                0, 0, 0, 1, 0, 0, 50, 1000, 0, 0, //I, L, M
+                0, 0, 0, 0, 0, 0, 5, 0, 10}; //V, X
+
+    bsize_t len = bstrlen(s);
+    int num = 0, i = len - 1;
+
+    while (i >= 0)
+    {
+        int curr = map[(bsize_t)s[i]];
+        if (i != 0)
+        {
+            int prev = map[(bsize_t)s[i - 1]];
+            if (curr > prev)
+            {
+                num -= prev;
+                i--;
+            }
+        }
+        num += curr;
+        i--;
+    }
+
+    return itos(num);
+}
+
 char *ultos(long n)
 {
+	_debug_printf("Passed: %lu\n", n);
 	char tmp[21];
 	bsize_t idx = 0;
 	while (n)
 	{
-		_debug_printf("%d\n", (n % 10) + NUM_OFFSET);
 		tmp[idx++] = (n % 10) + NUM_OFFSET;
 		n /= 10;
 	}
-	_debug_printf("tmp: %s\n", tmp);
 	static char res[21];
 	const bsize_t len = idx;
 	res[idx--] = '\0';

@@ -363,6 +363,14 @@ int bprintf(const char *fmt, ...)
 					break;
 				case 'R':
 					//Why not include Roman numeral to decimal string conversion? ;)
+					n = rtods(va_arg(args, char*));
+					_debug_printf("n: %s\n", n);
+					fmt++;
+					while (*n != '\0' && str_idx < BPRINTF_BUF_LEN)
+					{
+						buffer[str_idx++] = *n;
+						n++;
+					}
 					break;
 				default:
 					//We don't support printing the '%' sign, so there's no point in putting it in the buffer.

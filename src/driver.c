@@ -46,6 +46,7 @@ int main(void)
 	// }
 	// bprintf("THIS MONTH IS FEBRUARY. WE REPRESENT IT AS %d.", 2); //No lowercase letters implemented (not yet, at least).
 	// bprintf("A CHARACTER IS %c", 'C');
-	bprintf("%lu IS A LOW NUMBER.", LONG_MAX);
+	// bprintf("%lu IS A HIGH NUMBER.", LONG_MAX);
+	bprintf("%R WAS ROMAN.", "MVII");
 	return 0;
 }
