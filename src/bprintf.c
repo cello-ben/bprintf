@@ -305,9 +305,15 @@ int bprintf(const char *fmt, ...)
 		}
 		if (*fmt == '%')
 		{
+			char c;
 			char *n;
 			switch (*(fmt + 1))
 			{
+				case 'c':
+					c = (char)va_arg(args, int);
+					fmt++;
+					buffer[str_idx++] = c;
+					break;
 				case 'd':
 					n = itos(va_arg(args, int));
 					fmt++;

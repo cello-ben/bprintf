@@ -12,7 +12,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 
 #define BPRINTF_DEBUG
 
-#define BPRINTF_BUF_LEN 8192
+#define BPRINTF_BUF_LEN 8192 //TODO change if too large for Raspberry Pi Pico stack.
 
 #define CHAR_WIDTH 3
 #define CHAR_HEIGHT 3

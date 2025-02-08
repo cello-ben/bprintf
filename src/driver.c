@@ -7,9 +7,6 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 
 #include <bprintf.h>
 
-#include <blib.h>
-#include <bstring.h>
-
 int main(void)
 {
 	// int putchar_res;
@@ -46,6 +43,7 @@ int main(void)
 	// 		return BPRINTF_PUTCHAR_ERR;
 	// 	}
 	// }
-	bprintf("THIS MONTH IS FEBRUARY. WE REPRESENT IT AS %d.", 2); //No lowercase letters implemented (not yet, at least).
+	// bprintf("THIS MONTH IS FEBRUARY. WE REPRESENT IT AS %d.", 2); //No lowercase letters implemented (not yet, at least).
+	bprintf("A CHARACTER IS %c", 'C');
 	return 0;
 }
