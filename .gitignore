@@ -8,3 +8,5 @@ output.txt
 *.dSYM
 *.a
 .DS_Store
+src/.DS_Store
+src/include/.DS_Store
