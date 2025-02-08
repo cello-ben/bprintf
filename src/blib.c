@@ -10,7 +10,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 #include <blib.h>
 #include <bstring.h>
 
-char *itos(int n)
+char *itos(int n) //TODO check for overflows, etc.
 {
 	BBool negative = n < 0;
 	char tmp[11];
