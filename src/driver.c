@@ -46,5 +46,6 @@ int main(void)
 	// 		return BPRINTF_PUTCHAR_ERR;
 	// 	}
 	// }
+	bprintf("THIS MONTH IS FEBRUARY. WE REPRESENT IT AS %d.", 2); //No lowercase letters implemented (not yet, at least).
 	return 0;
 }
