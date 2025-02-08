@@ -17,6 +17,13 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 #define SPACE_CODE 32
 const LEDState SPACE_CHAR[CHAR_WIDTH * CHAR_HEIGHT] = {LED_OFF};
 
+#define HYPHEN_CODE 45
+const LEDState HYPHEN_CHAR[CHAR_WIDTH * CHAR_HEIGHT] = {
+	LED_OFF, LED_OFF, LED_OFF,
+	LED_ON, LED_ON, LED_ON,
+	LED_OFF, LED_OFF, LED_OFF
+};
+
 #define PERIOD_CODE 46
 const LEDState PERIOD_CHAR[CHAR_WIDTH * CHAR_HEIGHT] = {
 		LED_OFF, LED_OFF, LED_OFF,
@@ -276,6 +283,10 @@ BPrintfStatus bputchar(char c)
 	{
 		return send_to_board(SPACE_CHAR);
 	}
+	else if (c == HYPHEN_CODE)
+	{
+		return send_to_board(HYPHEN_CHAR);
+	}
 	else if (c == PERIOD_CODE)
 	{
 		return send_to_board(PERIOD_CHAR);
@@ -369,7 +380,6 @@ int bprintf(const char *fmt, ...)
 				case 'R':
 					//Why not include Roman numeral to decimal string conversion? ;)
 					n = rtods(va_arg(args, char*));
-					_debug_printf("n: %s\n", n);
 					fmt++;
 					while (*n != '\0' && str_idx < BPRINTF_BUF_LEN)
 					{
@@ -392,9 +402,12 @@ int bprintf(const char *fmt, ...)
 	buffer[str_idx] = '\0';
 	for (bsize_t i = 0; i < str_idx; i++)
 	{
-		bputchar(buffer[i]);
+		if (bputchar(buffer[i]) == BPRINTF_PUTCHAR_ERR)
+		{
+			return -1;
+		}
 		#ifdef BPRINTF_DEBUG
-			usleep(SLEEP_USEC);
+			// usleep(SLEEP_USEC);
 		#endif
 	}
 	return ++str_idx; //TODO figure out if this needs to be incremented or not.

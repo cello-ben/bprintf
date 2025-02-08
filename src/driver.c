@@ -6,47 +6,22 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 */
 
 #include <bprintf.h>
-#include <limits.h>
+#ifdef BPRINTF_DEBUG
+	#include <assert.h>
+	#include <test.h>
+#endif
 
 int main(void)
 {
-	// int putchar_res;
-
-	//Check special characters (just space and period for now)
-	// putchar_res = bputchar(' ');
-	// if (putchar_res > 0)
-	// {
-	// 	return BPRINTF_PUTCHAR_ERR;
-	// }
-
-	// putchar_res = bputchar('.');
-	// if (putchar_res > 0)
-	// {
-	// 	return BPRINTF_PUTCHAR_ERR;
-	// }
-
-	// // Test printing all nums
-	// for (int i = NUM_MIN; i < NUM_MAX; i++)
-	// {
-	// 	putchar_res = bputchar(i);
-	// 	if (putchar_res > 0)
-	// 	{
-	// 		return BPRINTF_PUTCHAR_ERR;
-	// 	}
-	// }
-
-	// //Test printing all uppercase letters
-	// for (int i = ALPHA_MIN; i < ALPHA_MAX; i++)
-	// {
-	// 	putchar_res = bputchar(i);
-	// 	if (putchar_res > 0)
-	// 	{
-	// 		return BPRINTF_PUTCHAR_ERR;
-	// 	}
-	// }
-	bprintf("IT IS FEBRUARY AKA %d", 2); //No lowercase letters implemented (not yet, at least).
-	// bprintf("A CHARACTER IS %c", 'C');
-	// bprintf("%lu IS A HIGH NUMBER.", LONG_MAX);
-	// bprintf("%R WAS ROMAN.", "MVII");
+	#ifdef BPRINTF_DEBUG
+		assert(test_special() == BPRINTF_SUCCESS);
+		assert(test_alpha() == BPRINTF_SUCCESS);
+		assert(test_numeric() == BPRINTF_SUCCESS);
+		assert(test_decimal() == BPRINTF_SUCCESS);
+		assert(test_char() == BPRINTF_SUCCESS);
+		assert(test_unsigned_long() == BPRINTF_SUCCESS);
+		assert(test_roman() == BPRINTF_SUCCESS);
+		_debug_printf("All tests passed!\n");
+	#endif
 	return 0;
 }

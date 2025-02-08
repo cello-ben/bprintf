@@ -35,7 +35,7 @@ char *itos(int n)
 	return res;
 }
 
-char *rtods(const char *s)
+char *rtods(const char *s) //TODO add long support when bug fixed.
 {
 	int map[89] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -69,9 +69,8 @@ char *rtods(const char *s)
     return itos(num);
 }
 
-char *ultos(long n)
+char *ultos(long n) //TODO fix bugs manifest when calling from rtods.
 {
-	_debug_printf("Passed: %lu\n", n);
 	char tmp[21];
 	bsize_t idx = 0;
 	while (n)

@@ -34,6 +34,7 @@ typedef enum LEDState {
 } LEDState;
 
 typedef enum BPrintfStatus {
+	BPRINTF_BPRINTF_ERR = -1,
 	BPRINTF_SUCCESS,
 	BPRINTF_INVALID_CHAR_ERR,
 	BPRINTF_BOARD_SEND_ERR,
