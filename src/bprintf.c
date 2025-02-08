@@ -329,9 +329,9 @@ int bprintf(const char *fmt, ...)
 					_debug_printf("Time for a long.\n");
 					c = *(fmt + 2);
 					_debug_printf("Next char: %c\n", c);
-					if (c == 'd' || c == 'i')
+					if (c == 'u')
 					{
-						n = ltos(va_arg(args, long));
+						n = ultos(va_arg(args, long));
 						_debug_printf("Long: %s\n", n);
 						fmt += 2;
 						while (*n != '\0' && str_idx < BPRINTF_BUF_LEN)
@@ -339,6 +339,17 @@ int bprintf(const char *fmt, ...)
 							buffer[str_idx++] = *n;
 							n++;
 						}
+					}
+					if (c == 'd' || c == 'i')
+					{
+						// n = ltos(va_arg(args, long)); //Will implement again once absolute value issue is figured out. Probably overflow-related.
+						// _debug_printf("Long: %s\n", n);
+						fmt += 2;
+						// while (*n != '\0' && str_idx < BPRINTF_BUF_LEN)
+						// {
+						// 	buffer[str_idx++] = *n;
+						// 	n++;
+						// }
 					}
 					break;
 				case 's':
@@ -349,6 +360,9 @@ int bprintf(const char *fmt, ...)
 						buffer[str_idx++] = *n;
 						n++;
 					}
+					break;
+				case 'R':
+					//Why not include Roman numeral to decimal string conversion? ;)
 					break;
 				default:
 					//We don't support printing the '%' sign, so there's no point in putting it in the buffer.
