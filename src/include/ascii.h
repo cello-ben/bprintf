@@ -256,7 +256,7 @@
 			LED_OFF, LED_OFF, LED_OFF,
 			LED_ON, LED_ON, LED_ON
 		},
-		{LED_OFF}, //Grave accent - Not implemented.
+		{LED_OFF}, //Grave accent/backtick - Not implemented.
 		{LED_OFF}, //a - Not implemented.
 		{LED_OFF}, //b - Not implemented.
 		{LED_OFF}, //c - Not implemented.

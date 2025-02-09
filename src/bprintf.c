@@ -130,7 +130,7 @@ int bprintf(const char *fmt, ...)
 					{
 						c = *(fmt + 3);
 						fmt++;
-						if (c == 'd')
+						if (c == 'd' || c == 'i')
 						{
 							s = lltos(va_arg(args, long long));
 							fmt++;

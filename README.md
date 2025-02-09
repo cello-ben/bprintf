@@ -2,9 +2,28 @@
 
 I'm Ben and I want to create my own `printf`...so...`bprintf`. More to come soon, once I get the Raspberry Pi Pico in hand.
 
+### Format Specifiers Currently Implemented
+
+`%c` - Print a single character
+`%s` - Print a string from a literal or char pointer
+`%d/%i` - Print a signed int
+`%ld/%li` - Print a signed long
+`%lu` - Print an unsigned long
+`%lld/lli` - Print a signed long long
+`%llu` - Print an unsigned long long
+`%R` - Print the decimal representation of a Roman numeral from a string literal or char pointer
+
 # Freestanding
 
-This is designed to be built without libc and be bundled up in a tiny package. However, at least for the time being, I am using `stdarg.h` based upon [this link](https://wiki.osdev.org/Implications_of_writing_a_freestanding_C_project#Headers_available_as_of_C89), helpfully given to me by a kind Redditor.
+This is designed to be built without libc and be bundled up in a tiny package. However, at least for the time being, I am using `stdarg.h` and `limits.h`, based upon [this link](https://wiki.osdev.org/Implications_of_writing_a_freestanding_C_project#Headers_available_as_of_C89), helpfully given to me by a kind Redditor.
+
+# Supported Characters
+
+At present, there are many ASCII characters that have yet to be implemented. Part of this is due to the limitations of a 3x3 matrix of LEDs, but part of it is also for simplicity. Any ASCII value from 0-127 will work without error. However, characters that have not been implemented wil be skipped. Currently, capital letters, all numbers, the period, the underscore, the hyphen/negative sign, and the pipe/vertical bar are implemented, as well as a space.
+
+# Debug Defines
+
+There are a couple of defines you can use for help debugging. The main one is `BPRINTF_DEBUG`, which allows more use of libc to use (real) `printf`. The other is `BPRINTF_SKIP_PUTCHAR`, which bypasses the calls to `bputchar`, thus eliminating some clutter in the terminal. Both should be defined in `bprintf.h`. 
 
 # Generative AI Disclosure
 
