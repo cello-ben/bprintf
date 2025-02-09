@@ -320,73 +320,69 @@ int bprintf(const char *fmt, ...)
 			buffer[BPRINTF_BUF_LEN] = '\0';
 			break;
 		}
-		if (*fmt == '%')
+		if (*fmt == '%') //TODO figure out why longs, etc. aren't making their way into s.
 		{
 			char c;
-			char *n;
+			char *s;
 			switch (*(fmt + 1))
 			{
 				case 'c':
 					c = (char)va_arg(args, int);
-					fmt++;
 					buffer[str_idx++] = c;
 					break;
 				case 'd':
 				case 'i':
-					n = itos(va_arg(args, int));
-					fmt++;
-					while (*n != '\0' && str_idx < BPRINTF_BUF_LEN)
-					{
-						buffer[str_idx++] = *n;
-						n++;
-					}
+					s = itos(va_arg(args, int));
+					goto copy_to_buffer;
 					break;
 				case 'l':
-					_debug_printf("Time for a long.\n");
 					c = *(fmt + 2);
-					_debug_printf("Next char: %c\n", c);
-					if (c == 'u')
-					{
-						n = ultos(va_arg(args, long));
-						_debug_printf("Long: %s\n", n);
-						fmt += 2;
-						while (*n != '\0' && str_idx < BPRINTF_BUF_LEN)
-						{
-							buffer[str_idx++] = *n;
-							n++;
-						}
-					}
 					if (c == 'd' || c == 'i')
 					{
-						// n = ltos(va_arg(args, long)); //Will implement again once absolute value issue is figured out. Probably overflow-related.
-						// _debug_printf("Long: %s\n", n);
+						s = ltos(va_arg(args, long));
 						fmt += 2;
-						// while (*n != '\0' && str_idx < BPRINTF_BUF_LEN)
-						// {
-						// 	buffer[str_idx++] = *n;
-						// 	n++;
-						// }
+					}
+					else if (c == 'u')
+					{
+						s = ultos(va_arg(args, unsigned long));
+						fmt += 2;
+					}
+					else if (c == 'l')
+					{
+						c = *(fmt + 3);
+						if (c == 'd')
+						{
+							s = lltos(va_arg(args, long long));
+							fmt += 3;
+						}
+						else if (c == 'u')
+						{
+							s = ulltos(va_arg(args, unsigned long long));
+							fmt += 3;
+						}
 					}
 					break;
 				case 's':
-					n = va_arg(args, char*);
+					s = va_arg(args, char*);
 					fmt++;
-					while (*n != '\0' && str_idx < BPRINTF_BUF_LEN)
+					while (*s != '\0' && str_idx < BPRINTF_BUF_LEN)
 					{
-						buffer[str_idx++] = *n;
-						n++;
+						buffer[str_idx++] = *s;
+						s++;
 					}
 					break;
 				case 'R':
 					//Why not include Roman numeral to decimal string conversion? ;)
-					n = rtods(va_arg(args, char*));
-					fmt++;
-					while (*n != '\0' && str_idx < BPRINTF_BUF_LEN)
-					{
-						buffer[str_idx++] = *n;
-						n++;
-					}
+					s = rtods(va_arg(args, char*));
 					break;
+				copy_to_buffer:
+					_debug_printf("%s\n", s);
+					fmt++;
+					while (*s != '\0' && str_idx < BPRINTF_BUF_LEN)
+					{
+						buffer[str_idx++] = *s;
+						s++;
+					}
 				default:
 					//We don't support printing the '%' sign, so there's no point in putting it in the buffer.
 					break;

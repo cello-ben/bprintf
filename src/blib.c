@@ -10,18 +10,20 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 #include <blib.h>
 #include <bstring.h>
 
+//ULONG_MAX digits: 20
+
 char *itos(int n) //TODO check for overflows, etc.
 {
 	BBool negative = n < 0;
-	char tmp[11];
+	char tmp[INT_MAX_DIGITS_LEN + 2]; //Extra 2 chars for negative and null terminator.
 	int abs_n = ABS(n);
 	bsize_t idx = 0;
-	while (abs_n)
+	while (abs_n > 0)
 	{
 		tmp[idx++] = (abs_n % 10) + NUM_OFFSET;
 		abs_n /= 10;
 	}
-	static char res[11]; //Workaround for no heap.
+	static char res[INT_MAX_DIGITS_LEN + 2]; //Workaround for no heap.
 	if (negative == BTRUE)
 	{
 		res[0] = '-';
@@ -35,17 +37,26 @@ char *itos(int n) //TODO check for overflows, etc.
 	return res;
 }
 
-char *rtods(const char *s) //TODO add long support when bug fixed.
+char *rtods(const char *s) //TODO add long support when bug(s) fixed.
 {
-	int map[89] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 100, 500, 0, //C, D
-                0, 0, 0, 1, 0, 0, 50, 1000, 0, 0, //I, L, M
-                0, 0, 0, 0, 0, 0, 5, 0, 10}; //V, X
+	int map[] = {
+		['C'] = 100,
+		['D'] = 500,
+		['I'] = 1,
+		['L'] = 50,
+		['M'] = 1000,
+		['V'] = 5,
+		['X'] = 10
+	};
+	// int map[89] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    //             0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    //             0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    //             0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    //             0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    //             0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    //             0, 0, 0, 0, 0, 0, 0, 100, 500, 0, //C, D
+    //             0, 0, 0, 1, 0, 0, 50, 1000, 0, 0, //I, L, M
+    //             0, 0, 0, 0, 0, 0, 5, 0, 10}; //V, X
 
     bsize_t len = bstrlen(s);
     int num = 0, i = len - 1;
@@ -69,16 +80,16 @@ char *rtods(const char *s) //TODO add long support when bug fixed.
     return itos(num);
 }
 
-char *ultos(long n) //TODO fix bugs manifest when calling from rtods.
+char *ltos(long n) //TODO check fix bugs manifest when calling from rtods.
 {
-	char tmp[21];
+	char tmp[LONG_MAX_DIGITS_LEN + 2];
 	bsize_t idx = 0;
 	while (n)
 	{
 		tmp[idx++] = (n % 10) + NUM_OFFSET;
 		n /= 10;
 	}
-	static char res[21];
+	static char res[LONG_MAX_DIGITS_LEN + 2];
 	const bsize_t len = idx;
 	res[idx--] = '\0';
 	for (bsize_t i = len; i < len; i++)
@@ -86,4 +97,61 @@ char *ultos(long n) //TODO fix bugs manifest when calling from rtods.
 		res[i] = tmp[idx--];
 	}
 	return res;
+}
+
+char *ultos(unsigned long n)
+{
+	char tmp[ULONG_MAX_DIGITS_LEN + 2];
+	bsize_t idx = 0;
+	while (n)
+	{
+		tmp[idx++] = (n % 10) + NUM_OFFSET;
+		n /= 10;
+	}
+	static char res[LONG_MAX_DIGITS_LEN + 2];
+	const bsize_t len = idx;
+	res[idx--] = '\0';
+	for (bsize_t i = len; i < len; i++)
+	{
+		res[i] = tmp[idx--];
+	}
+	return res;
+}
+
+char *lltos(long long n)
+{
+	char tmp[LONG_LONG_MAX_DIGITS_LEN + 2];
+	bsize_t idx = 0;
+	while (n)
+	{
+		tmp[idx++] = (n % 10) + NUM_OFFSET;
+		n /= 10;
+	}
+	static char res[LONG_MAX_DIGITS_LEN + 2];
+	const bsize_t len = idx;
+	res[idx--] = '\0';
+	for (bsize_t i = len; i < len; i++)
+	{
+		res[i] = tmp[idx--];
+	}
+	return "";
+}
+
+char *ulltos(unsigned long long n)
+{
+	char tmp[ULONG_LONG_MAX_DIGITS_LEN + 2];
+	bsize_t idx = 0;
+	while (n)
+	{
+		tmp[idx++] = (n % 10) + NUM_OFFSET;
+		n /= 10;
+	}
+	static char res[ULONG_MAX_DIGITS_LEN + 2];
+	const bsize_t len = idx;
+	res[idx--] = '\0';
+	for (bsize_t i = len; i < len; i++)
+	{
+		res[i] = tmp[idx--];
+	}
+	return "";
 }

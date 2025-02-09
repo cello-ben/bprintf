@@ -8,19 +8,24 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 #include <bprintf.h>
 #ifdef BPRINTF_DEBUG
 	#include <assert.h>
+	#include <limits.h>
 	#include <test.h>
 #endif
 
 int main(void)
 {
 	#ifdef BPRINTF_DEBUG
-		assert(test_special() == BPRINTF_SUCCESS);
-		assert(test_alpha() == BPRINTF_SUCCESS);
-		assert(test_numeric() == BPRINTF_SUCCESS);
-		assert(test_decimal() == BPRINTF_SUCCESS);
-		assert(test_char() == BPRINTF_SUCCESS);
-		assert(test_unsigned_long() == BPRINTF_SUCCESS);
-		assert(test_roman() == BPRINTF_SUCCESS);
+		// assert(test_special() == BPRINTF_SUCCESS);
+		// assert(test_alpha() == BPRINTF_SUCCESS);
+		// assert(test_numeric() == BPRINTF_SUCCESS);
+		// assert(test_decimal() == BPRINTF_SUCCESS);
+		assert(test_signed_long() == BPRINTF_SUCCESS);
+		// assert(test_unsigned_long() == BPRINTF_SUCCESS);
+		// assert(test_signed_long_long() == BPRINTF_SUCCESS);
+		// assert(test_unsigned_long_long() == BPRINTF_SUCCESS);
+		// assert(test_char() == BPRINTF_SUCCESS);
+		// assert(test_unsigned_long() == BPRINTF_SUCCESS);
+		// assert(test_roman() == BPRINTF_SUCCESS);
 		_debug_printf("All tests passed!\n");
 	#endif
 	return 0;

@@ -8,12 +8,26 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 #ifndef BLIB_H
 #define BLIB_H
 
+#define INT_MAX_DIGITS_LEN 10
+#define LONG_MAX_DIGITS_LEN 19
+#define ULONG_MAX_DIGITS_LEN 20
+#define LONG_LONG_MAX_DIGITS_LEN 19
+#define ULONG_LONG_MAX_DIGITS_LEN 20
+
 #define ABS(n) (n) > 0 ? (n) : (-n) //TODO check for correctness re: parentheses.
 
 typedef unsigned int bsize_t;
 
+typedef enum BBool {
+	BFALSE,
+	BTRUE
+} BBool;
+
 char *itos(int n);
 char *rtods(const char *s);
-char *ultos(long n);
+char *ltos(long n);
+char *ultos(unsigned long n);
+char *lltos(long long n);
+char *ulltos(unsigned long long n);
 
 #endif

@@ -41,11 +41,6 @@ typedef enum BPrintfStatus {
 	BPRINTF_PUTCHAR_ERR
 } BPrintfStatus;
 
-typedef enum BBool {
-	BFALSE,
-	BTRUE
-} BBool;
-
 //TODO figure out why I can't have all definitions in here; is it because they're not #define constants?
 
 int _debug_printf(const char *fmt, ...);

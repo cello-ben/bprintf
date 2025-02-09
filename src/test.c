@@ -61,9 +61,36 @@ BPrintfStatus test_char(void)
      return BPRINTF_SUCCESS;
 }
 
+BPrintfStatus test_signed_long(void)
+{
+    if (bprintf("%ld IS A HIGH NUMBER.", LONG_MAX) < 0)
+    {
+        return BPRINTF_BPRINTF_ERR;
+    }
+    return BPRINTF_SUCCESS;
+}
+
 BPrintfStatus test_unsigned_long(void)
 {
-    if (bprintf("%lu IS A HIGH NUMBER.", LONG_MAX) < 0)
+    if (bprintf("%lu IS A HIGH NUMBER.", ULONG_MAX) < 0)
+    {
+        return BPRINTF_BPRINTF_ERR;
+    }
+    return BPRINTF_SUCCESS;
+}
+
+BPrintfStatus test_signed_long_long(void)
+{
+    if (bprintf("%lld IS A HIGH NUMBER.", LONG_LONG_MAX) < 0)
+    {
+        return BPRINTF_BPRINTF_ERR;
+    }
+    return BPRINTF_SUCCESS;
+}
+
+BPrintfStatus test_unsigned_long_long(void)
+{
+    if (bprintf("%llu IS A HIGH NUMBER.", ULONG_LONG_MAX) < 0)
     {
         return BPRINTF_BPRINTF_ERR;
     }
