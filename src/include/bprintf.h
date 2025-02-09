@@ -6,52 +6,52 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 */
 
 #ifndef BPRINTF_H
-#define BPRINTF_H
+	#define BPRINTF_H
 
-#include <stdarg.h>
+	#include <stdarg.h>
 
-#define BPRINTF_DEBUG
-#define BPRINTF_SKIP_PUTCHAR
+	#define BPRINTF_DEBUG
+	#define BPRINTF_SKIP_PUTCHAR
 
-#define BPRINTF_BUF_LEN 8192 //TODO change if too large for Raspberry Pi Pico stack.
+	#define BPRINTF_BUF_LEN 8192 //TODO change if too large for Raspberry Pi Pico stack.
 
-#define CHAR_WIDTH 3
-#define CHAR_HEIGHT 3
+	#define CHAR_WIDTH 3
+	#define CHAR_HEIGHT 3
 
-#define NUM_OFFSET 48
-#define ALPHA_OFFSET 65
+	#define NUM_OFFSET 48
+	#define ALPHA_OFFSET 65
 
-#define NUM_MIN 48
-#define NUM_MAX 58
+	#define NUM_MIN 48
+	#define NUM_MAX 58
 
-#define ALPHA_CAPS_MIN 65
-#define ALPHA_CAPS_MAX 91
+	#define ALPHA_CAPS_MIN 65
+	#define ALPHA_CAPS_MAX 91
 
-#define SLEEP_MSEC 750
+	#define SLEEP_MSEC 750
 
-typedef enum LEDState {
-	LED_OFF,
-	LED_ON
-} LEDState;
+	typedef enum LEDState {
+		LED_OFF,
+		LED_ON
+	} LEDState;
 
-typedef enum BPrintfStatus {
-	BPRINTF_BPRINTF_ERR = -1,
-	BPRINTF_SUCCESS,
-	BPRINTF_INVALID_CHAR_ERR,
-	BPRINTF_BOARD_SEND_ERR,
-	BPRINTF_PUTCHAR_ERR
-} BPrintfStatus;
+	typedef enum BPrintfStatus {
+		BPRINTF_BPRINTF_ERR = -1,
+		BPRINTF_SUCCESS,
+		BPRINTF_INVALID_CHAR_ERR,
+		BPRINTF_BOARD_SEND_ERR,
+		BPRINTF_PUTCHAR_ERR
+	} BPrintfStatus;
 
-//TODO figure out why I can't have all definitions in here; is it because they're not #define constants?
+	//TODO figure out why I can't have all definitions in here; is it because they're not #define constants?
 
-int _debug_printf(const char *fmt, ...);
-int _debug_print_char(const LEDState *grid);
-BPrintfStatus flush(void);
-BPrintfStatus off(int led);
-BPrintfStatus on(int led);
-BPrintfStatus send_to_board(const LEDState *leds);
-BPrintfStatus bputchar(char c);
-int bprintf(const char *fmt, ...);
+	int _debug_printf(const char *fmt, ...);
+	int _debug_print_char(const LEDState *grid);
+	BPrintfStatus flush(void);
+	BPrintfStatus off(int led);
+	BPrintfStatus on(int led);
+	BPrintfStatus send_to_board(const LEDState *leds);
+	BPrintfStatus bputchar(char c);
+	int bprintf(const char *fmt, ...);
 
 #endif //BPRINTF_H
 
