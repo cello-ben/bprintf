@@ -84,7 +84,7 @@ const LEDState NUMS[10][CHAR_WIDTH * CHAR_HEIGHT] = {
 	}
 };
 
-const LEDState ALPHA[26][CHAR_WIDTH * CHAR_HEIGHT] = {
+const LEDState ALPHA_CAPS[26][CHAR_WIDTH * CHAR_HEIGHT] = {
 	{	//A
 		LED_OFF, LED_ON, LED_OFF,
 		LED_ON, LED_ON, LED_ON,
@@ -229,7 +229,7 @@ int _debug_printf(const char *fmt, ...) //TODO decide if I want to return BPrint
     return 0;
 }
 
-int _debug_print_char(const LEDState *grid)
+int _debug_print_char(const LEDState *grid) //TODO decide whether or not to keep.
 {
 	int putchar_res = 0;
 	#ifdef BPRINTF_DEBUG
@@ -295,9 +295,9 @@ BPrintfStatus bputchar(char c)
 	{
         return send_to_board(NUMS[c-NUM_OFFSET]);
 	}
-	else if (c >= ALPHA_MIN && c <= ALPHA_MAX)
+	else if (c >= ALPHA_CAPS_MIN && c <= ALPHA_CAPS_MAX)
 	{
-        return send_to_board(ALPHA[c - ALPHA_OFFSET]);
+        return send_to_board(ALPHA_CAPS[c - ALPHA_OFFSET]);
 	}
     return BPRINTF_INVALID_CHAR_ERR;
 	

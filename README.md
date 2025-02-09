@@ -6,6 +6,10 @@ I'm Ben and I want to create my own `printf`...so...`bprintf`. More to come soon
 
 This is designed to be built without libc and be bundled up in a tiny package. However, at least for the time being, I am using `stdarg.h` based upon [this link](https://wiki.osdev.org/Implications_of_writing_a_freestanding_C_project#Headers_available_as_of_C89), helpfully given to me by a kind Redditor.
 
+# Generative AI Disclosure
+
+The code herein was written **without** the help of generative AI. Generative AI **was** used as an advisor for setting up the breadboard. For full transparency, that conversation can be seen [here](https://chatgpt.com/share/67a88d01-9770-800b-b29e-fee49701916c).
+
 # License
 
 MIT License:
