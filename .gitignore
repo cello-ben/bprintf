@@ -7,6 +7,7 @@ bprintf_debug
 output.txt
 *.dSYM
 *.a
+*.o
 .DS_Store
 src/.DS_Store
 src/include/.DS_Store

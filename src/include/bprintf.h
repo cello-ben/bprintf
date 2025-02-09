@@ -11,7 +11,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 	#include <stdarg.h>
 
 	#define BPRINTF_DEBUG
-	#define BPRINTF_SKIP_PUTCHAR
+	// #define BPRINTF_SKIP_PUTCHAR
 
 	#define BPRINTF_BUF_LEN 8192 //TODO change if too large for Raspberry Pi Pico stack.
 
