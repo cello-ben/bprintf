@@ -34,7 +34,7 @@ There are a couple of defines you can use for help debugging. The main one is `B
 
 # Generative AI Disclosure
 
-The code herein was written **without** the help of generative AI. Generative AI **was** used as an advisor for setting up the breadboard. For full transparency, that conversation can be seen [here](https://chatgpt.com/share/67a88d01-9770-800b-b29e-fee49701916c).
+The code herein was written **without** the help of generative AI. Generative AI **was** used as an advisor for setting up the breadboard. For full transparency, those conversations can be seen [here](https://chatgpt.com/share/67a88d01-9770-800b-b29e-fee49701916c), [here](https://chatgpt.com/share/67a9390c-282c-800b-8864-05604baeee18), and [here](https://chatgpt.com/share/67a9390c-282c-800b-8864-05604baeee18).
 
 # License
 
