@@ -10,8 +10,6 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 #include <blib.h>
 #include <bstring.h>
 
-//ULONG_MAX digits: 20
-
 char *itos(int n) //TODO check for overflows, etc.
 {
 	BBool negative = n < 0;
@@ -82,17 +80,23 @@ char *rtods(const char *s) //TODO add long support when bug(s) fixed.
 
 char *ltos(long n) //TODO check fix bugs manifest when calling from rtods.
 {
-	char tmp[LONG_MAX_DIGITS_LEN + 2];
+	BBool negative = n < 0;
+	char tmp[LONG_MAX_DIGITS_LEN + 2]; //Extra 2 chars for negative and null terminator.
+	long abs_n = ABS(n);
 	bsize_t idx = 0;
-	while (n)
+	while (abs_n > 0)
 	{
-		tmp[idx++] = (n % 10) + NUM_OFFSET;
-		n /= 10;
+		tmp[idx++] = (abs_n % 10) + NUM_OFFSET;
+		abs_n /= 10;
 	}
-	static char res[LONG_MAX_DIGITS_LEN + 2];
-	const bsize_t len = idx;
-	res[idx--] = '\0';
-	for (bsize_t i = len; i < len; i++)
+	static char res[LONG_MAX_DIGITS_LEN + 2]; //Workaround for no heap.
+	if (negative == BTRUE)
+	{
+		res[0] = '-';
+	}
+	const bsize_t len = idx + (int)negative;
+	res[idx--] = '\0'; //TODO figure out for sure if we need this.
+	for (bsize_t i = (int)negative; i < len; i++)
 	{
 		res[i] = tmp[idx--];
 	}
@@ -101,17 +105,18 @@ char *ltos(long n) //TODO check fix bugs manifest when calling from rtods.
 
 char *ultos(unsigned long n)
 {
-	char tmp[ULONG_MAX_DIGITS_LEN + 2];
+	char tmp[ULONG_MAX_DIGITS_LEN + 2]; //Extra 2 chars for negative and null terminator.
+	long abs_n = ABS(n);
 	bsize_t idx = 0;
-	while (n)
+	while (abs_n > 0)
 	{
-		tmp[idx++] = (n % 10) + NUM_OFFSET;
-		n /= 10;
+		tmp[idx++] = (abs_n % 10) + NUM_OFFSET;
+		abs_n /= 10;
 	}
-	static char res[LONG_MAX_DIGITS_LEN + 2];
+	static char res[ULONG_MAX_DIGITS_LEN + 2]; //Workaround for no heap.
 	const bsize_t len = idx;
-	res[idx--] = '\0';
-	for (bsize_t i = len; i < len; i++)
+	res[idx--] = '\0'; //TODO figure out for sure if we need this.
+	for (bsize_t i = 0; i < len; i++)
 	{
 		res[i] = tmp[idx--];
 	}
@@ -120,38 +125,44 @@ char *ultos(unsigned long n)
 
 char *lltos(long long n)
 {
-	char tmp[LONG_LONG_MAX_DIGITS_LEN + 2];
+	BBool negative = n < 0;
+	char tmp[LONG_LONG_MAX_DIGITS_LEN + 2]; //Extra 2 chars for negative and null terminator.
+	long abs_n = ABS(n);
 	bsize_t idx = 0;
-	while (n)
+	while (abs_n > 0)
 	{
-		tmp[idx++] = (n % 10) + NUM_OFFSET;
-		n /= 10;
+		tmp[idx++] = (abs_n % 10) + NUM_OFFSET;
+		abs_n /= 10;
 	}
-	static char res[LONG_MAX_DIGITS_LEN + 2];
-	const bsize_t len = idx;
-	res[idx--] = '\0';
-	for (bsize_t i = len; i < len; i++)
+	static char res[LONG_LONG_MAX_DIGITS_LEN + 2]; //Workaround for no heap.
+	if (negative == BTRUE)
+	{
+		res[0] = '-';
+	}
+	const bsize_t len = idx + (int)negative;
+	res[idx--] = '\0'; //TODO figure out for sure if we need this.
+	for (bsize_t i = (int)negative; i < len; i++)
 	{
 		res[i] = tmp[idx--];
 	}
-	return "";
+	return res;
 }
 
 char *ulltos(unsigned long long n)
 {
-	char tmp[ULONG_LONG_MAX_DIGITS_LEN + 2];
+	char tmp[ULONG_LONG_MAX_DIGITS_LEN + 2]; //Extra 2 chars for negative and null terminator.
 	bsize_t idx = 0;
-	while (n)
+	while (n > 0)
 	{
 		tmp[idx++] = (n % 10) + NUM_OFFSET;
 		n /= 10;
 	}
-	static char res[ULONG_MAX_DIGITS_LEN + 2];
+	static char res[ULONG_LONG_MAX_DIGITS_LEN + 2]; //Workaround for no heap.
 	const bsize_t len = idx;
-	res[idx--] = '\0';
-	for (bsize_t i = len; i < len; i++)
+	res[idx--] = '\0'; //TODO figure out for sure if we need this.
+	for (bsize_t i = 0; i < len; i++)
 	{
 		res[i] = tmp[idx--];
 	}
-	return "";
+	return res;
 }

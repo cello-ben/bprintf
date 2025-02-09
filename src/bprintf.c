@@ -340,43 +340,52 @@ int bprintf(const char *fmt, ...)
 					if (c == 'd' || c == 'i')
 					{
 						s = ltos(va_arg(args, long));
-						fmt += 2;
+						fmt++;
 					}
 					else if (c == 'u')
 					{
 						s = ultos(va_arg(args, unsigned long));
-						fmt += 2;
+						fmt++;
 					}
 					else if (c == 'l')
 					{
 						c = *(fmt + 3);
+						fmt++;
 						if (c == 'd')
 						{
 							s = lltos(va_arg(args, long long));
-							fmt += 3;
+							fmt++;
 						}
 						else if (c == 'u')
 						{
 							s = ulltos(va_arg(args, unsigned long long));
-							fmt += 3;
+							fmt++;
+						}
+						else
+						{
+							s = "";
 						}
 					}
-					break;
+					else
+					{
+						s = "";
+					}
+					goto copy_to_buffer;
 				case 's':
 					s = va_arg(args, char*);
-					fmt++;
-					while (*s != '\0' && str_idx < BPRINTF_BUF_LEN)
-					{
-						buffer[str_idx++] = *s;
-						s++;
-					}
-					break;
+					// fmt++;
+					// while (*s != '\0' && str_idx < BPRINTF_BUF_LEN)
+					// {
+					// 	buffer[str_idx++] = *s;
+					// 	s++;
+					// }
+					goto copy_to_buffer;
+					break; //TODO check to make sure break is not needed after a goto statement.
 				case 'R':
 					//Why not include Roman numeral to decimal string conversion? ;)
 					s = rtods(va_arg(args, char*));
-					break;
+					goto copy_to_buffer;
 				copy_to_buffer:
-					_debug_printf("%s\n", s);
 					fmt++;
 					while (*s != '\0' && str_idx < BPRINTF_BUF_LEN)
 					{
@@ -396,6 +405,7 @@ int bprintf(const char *fmt, ...)
 		fmt++;
 	}
 	buffer[str_idx] = '\0';
+	_debug_printf("%s\n", buffer);
 	for (bsize_t i = 0; i < str_idx; i++)
 	{
 		if (bputchar(buffer[i]) == BPRINTF_PUTCHAR_ERR)

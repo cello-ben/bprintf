@@ -1,12 +1,10 @@
 #include <bprintf.h>
+#include <limits.h>
 #include <test.h>
-
-#ifdef BPRINTF_DEBUG
-    #include <limits.h>
-#endif
 
 BPrintfStatus test_special(void)
 {
+    _debug_printf("Testing special characters.\n");
     const char *SPECIAL_CHARS = " .-";
     while (*SPECIAL_CHARS != '\0')
     {
@@ -19,8 +17,9 @@ BPrintfStatus test_special(void)
     return BPRINTF_SUCCESS;
 }
 
-BPrintfStatus test_alpha(void)
+BPrintfStatus test_alpha_caps(void)
 {
+    _debug_printf("Testing capital letters.\n");
     for (int i = ALPHA_MIN; i < ALPHA_MAX; i++)
 	{
 		if (bputchar(i) < 0)
@@ -33,6 +32,7 @@ BPrintfStatus test_alpha(void)
 
 BPrintfStatus test_numeric(void)
 {
+    _debug_printf("Testing digits.\n");
     for (int i = NUM_MIN; i < NUM_MAX; i++)
     {
         if (bputchar(i) < 0)
@@ -45,6 +45,7 @@ BPrintfStatus test_numeric(void)
 
 BPrintfStatus test_decimal(void)
 {
+    _debug_printf("Testing %%d format specifier.\n");
      if(bprintf("IT IS FEBRUARY AKA %d", 2) < 0) //No lowercase letters implemented (not yet, at least).
      {
         return BPRINTF_BPRINTF_ERR;
@@ -54,6 +55,7 @@ BPrintfStatus test_decimal(void)
 
 BPrintfStatus test_char(void)
 {
+    _debug_printf("Testing %%c format specifier.\n");
     if(bprintf("A CHARACTER IS %c.", 'C') < 0)
      {
         return BPRINTF_BPRINTF_ERR;
@@ -63,6 +65,7 @@ BPrintfStatus test_char(void)
 
 BPrintfStatus test_signed_long(void)
 {
+    _debug_printf("Testing %%ld format specifier.\n");
     if (bprintf("%ld IS A HIGH NUMBER.", LONG_MAX) < 0)
     {
         return BPRINTF_BPRINTF_ERR;
@@ -72,7 +75,8 @@ BPrintfStatus test_signed_long(void)
 
 BPrintfStatus test_unsigned_long(void)
 {
-    if (bprintf("%lu IS A HIGH NUMBER.", ULONG_MAX) < 0)
+    _debug_printf("Testing %%lu format specifier.\n");
+    if (bprintf("%lu IS A HIGH NUMBER.", LONG_MAX) < 0)
     {
         return BPRINTF_BPRINTF_ERR;
     }
@@ -81,6 +85,7 @@ BPrintfStatus test_unsigned_long(void)
 
 BPrintfStatus test_signed_long_long(void)
 {
+    _debug_printf("Testing %%lld format specifier.\n");
     if (bprintf("%lld IS A HIGH NUMBER.", LONG_LONG_MAX) < 0)
     {
         return BPRINTF_BPRINTF_ERR;
@@ -90,6 +95,7 @@ BPrintfStatus test_signed_long_long(void)
 
 BPrintfStatus test_unsigned_long_long(void)
 {
+    _debug_printf("Testing %%llu format specifier.\n");
     if (bprintf("%llu IS A HIGH NUMBER.", ULONG_LONG_MAX) < 0)
     {
         return BPRINTF_BPRINTF_ERR;
