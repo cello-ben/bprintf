@@ -26,7 +26,7 @@ This is designed to be built without libc and be bundled up in a tiny package. H
 
 # Supported Characters
 
-At present, there are many ASCII characters that have yet to be implemented. Part of this is due to the limitations of a 3x3 matrix of LEDs, but part of it is also for simplicity. Any ASCII value from 0-127 will work without error. However, characters that have not been implemented wil be skipped. Currently, capital letters, all numbers, the period, the underscore, the hyphen/negative sign, and the pipe/vertical bar are implemented, as well as a space.
+At present, there are many ASCII characters that have yet to be implemented. Part of this is due to the limitations of a 3x3 matrix of LEDs, but part of it is also for simplicity. No valid ASCII value (0-127) will cause an error. However, characters that have not been implemented wil be skipped. Currently, capital letters, all numbers, the period, the underscore, the hyphen/negative sign, and the pipe/vertical bar are implemented, as well as a space.
 
 # Debug Defines
 
