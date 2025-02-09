@@ -12,4 +12,4 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 
 bsize_t bstrlen(const char *s);
 
-#endif
+#endif //BSTRING_H

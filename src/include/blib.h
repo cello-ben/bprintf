@@ -30,4 +30,4 @@ char *ultos(unsigned long n);
 char *lltos(long long n);
 char *ulltos(unsigned long long n);
 
-#endif
+#endif //BLIB_H

@@ -5,217 +5,16 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+#include <stdarg.h>
+
+#include <ascii.h>
 #include <bprintf.h>
 #include <blib.h>
 
 #ifdef BPRINTF_DEBUG
-    #include <stdarg.h>
 	#include <stdio.h>
 	#include <unistd.h>
 #endif
-
-#define SPACE_CODE 32
-const LEDState SPACE_CHAR[CHAR_WIDTH * CHAR_HEIGHT] = {LED_OFF};
-
-#define HYPHEN_CODE 45
-const LEDState HYPHEN_CHAR[CHAR_WIDTH * CHAR_HEIGHT] = {
-	LED_OFF, LED_OFF, LED_OFF,
-	LED_ON, LED_ON, LED_ON,
-	LED_OFF, LED_OFF, LED_OFF
-};
-
-#define PERIOD_CODE 46
-const LEDState PERIOD_CHAR[CHAR_WIDTH * CHAR_HEIGHT] = {
-		LED_OFF, LED_OFF, LED_OFF,
-		LED_OFF, LED_OFF, LED_OFF,
-		LED_OFF, LED_OFF, LED_ON
-	};
-
-const LEDState NUMS[10][CHAR_WIDTH * CHAR_HEIGHT] = {
-	{	//0
-		LED_OFF, LED_ON, LED_OFF,
-		LED_ON, LED_OFF, LED_ON,
-		LED_OFF, LED_ON, LED_OFF
-	},
-	{	//1
-		LED_OFF, LED_ON, LED_OFF,
-		LED_ON, LED_ON, LED_OFF,
-		LED_OFF, LED_ON, LED_OFF
-	},
-	{	//2
-		LED_ON, LED_ON, LED_OFF,
-		LED_OFF, LED_ON, LED_OFF,
-		LED_ON, LED_ON, LED_ON
-	},
-	{	//3
-		LED_ON, LED_ON, LED_ON,
-		LED_OFF, LED_ON, LED_ON,
-		LED_ON, LED_ON, LED_ON
-	},
-	{	//4
-		LED_ON, LED_ON, LED_OFF,
-		LED_ON, LED_ON, LED_OFF,
-		LED_OFF, LED_ON, LED_OFF
-	},
-	{	//5
-		LED_ON, LED_ON, LED_ON,
-		LED_ON, LED_ON, LED_ON,
-		LED_ON, LED_ON, LED_ON
-	},
-	{	//6
-		LED_ON, LED_OFF, LED_OFF,
-		LED_ON, LED_ON, LED_ON,
-		LED_ON, LED_ON, LED_ON
-	},
-	{	//7
-		LED_ON, LED_ON, LED_ON,
-		LED_OFF, LED_OFF, LED_ON,
-		LED_OFF, LED_OFF, LED_ON
-	},
-	{	//8
-		LED_ON, LED_ON, LED_ON,
-		LED_ON, LED_ON, LED_ON,
-		LED_ON, LED_ON, LED_ON
-	},
-	{	//9
-		LED_ON, LED_ON, LED_ON,
-		LED_ON, LED_ON, LED_ON,
-		LED_OFF, LED_OFF, LED_ON
-	}
-};
-
-const LEDState ALPHA_CAPS[26][CHAR_WIDTH * CHAR_HEIGHT] = {
-	{	//A
-		LED_OFF, LED_ON, LED_OFF,
-		LED_ON, LED_ON, LED_ON,
-		LED_ON, LED_OFF, LED_ON
-	},
-	{	//B
-		LED_ON, LED_ON, LED_ON,
-		LED_ON, LED_ON, LED_ON,
-		LED_ON, LED_ON, LED_ON
-	},
-	{	//C
-		LED_ON, LED_ON, LED_ON,
-		LED_ON, LED_OFF, LED_OFF,
-		LED_ON, LED_ON, LED_ON
-	},
-	{	//D
-		LED_ON, LED_ON, LED_ON,
-		LED_ON, LED_OFF, LED_ON,
-		LED_ON, LED_ON, LED_ON
-	},
-	{	//E
-		LED_ON, LED_ON, LED_ON,
-		LED_ON, LED_ON, LED_OFF,
-		LED_ON, LED_ON, LED_ON
-	},
-	{	//F
-		LED_ON, LED_ON, LED_ON,
-		LED_ON, LED_ON, LED_OFF,
-		LED_ON, LED_OFF, LED_OFF
-	},
-	{	//G
-		LED_ON, LED_ON, LED_ON,
-		LED_ON, LED_ON, LED_ON,
-		LED_ON, LED_ON, LED_ON
-	},
-	{	//H
-		LED_ON, LED_OFF, LED_ON,
-		LED_ON, LED_ON, LED_ON,
-		LED_ON, LED_OFF, LED_ON
-	},
-	{	//I
-		LED_ON, LED_ON, LED_ON,
-		LED_OFF, LED_ON, LED_OFF,
-		LED_ON, LED_ON, LED_ON
-	},
-	{	//J
-		LED_OFF, LED_OFF, LED_ON,
-		LED_OFF, LED_OFF, LED_ON,
-		LED_ON, LED_ON, LED_ON
-	},
-	{	//K
-		LED_ON, LED_OFF, LED_ON,
-		LED_ON, LED_ON, LED_OFF,
-		LED_ON, LED_OFF, LED_ON
-	},
-	{	//L
-		LED_ON, LED_OFF, LED_OFF,
-		LED_ON, LED_OFF, LED_OFF,
-		LED_ON, LED_ON, LED_ON
-	},
-	{	//M
-		LED_ON, LED_OFF, LED_ON,
-		LED_ON, LED_ON, LED_ON,
-		LED_ON, LED_OFF, LED_ON
-	},
-	{	//N
-		LED_ON, LED_OFF, LED_ON,
-		LED_ON, LED_ON, LED_ON,
-		LED_ON, LED_OFF, LED_ON
-	},
-	{	//O
-		LED_OFF, LED_ON, LED_OFF,
-		LED_ON, LED_OFF, LED_ON,
-		LED_OFF, LED_ON, LED_OFF
-	},
-	{	//P
-		LED_ON, LED_ON, LED_ON,
-		LED_ON, LED_OFF, LED_ON,
-		LED_ON, LED_OFF, LED_OFF
-	},
-	{	//Q
-		LED_ON, LED_ON, LED_OFF,
-		LED_ON, LED_ON, LED_OFF,
-		LED_OFF, LED_OFF, LED_ON
-	},
-	{	//R
-		LED_ON, LED_ON, LED_ON,
-		LED_ON, LED_ON, LED_ON,
-		LED_ON, LED_OFF, LED_ON
-	},
-	{	//S
-		LED_ON, LED_ON, LED_ON,
-		LED_ON, LED_ON, LED_ON,
-		LED_ON, LED_ON, LED_ON
-	},
-	{	//T
-		LED_ON, LED_ON, LED_ON,
-		LED_OFF, LED_ON, LED_OFF,
-		LED_OFF, LED_ON, LED_OFF
-	},
-	{	//U
-		LED_ON, LED_OFF, LED_ON,
-		LED_ON, LED_OFF, LED_ON,
-		LED_ON, LED_ON, LED_ON
-	},
-	{	//V
-		LED_ON, LED_OFF, LED_ON,
-		LED_ON, LED_OFF, LED_ON,
-		LED_OFF, LED_ON, LED_OFF
-	},
-	{	//W
-		LED_ON, LED_OFF, LED_ON,
-		LED_ON, LED_OFF, LED_ON,
-		LED_ON, LED_ON, LED_ON
-	},
-	{	//X
-		LED_ON, LED_OFF, LED_ON,
-		LED_OFF, LED_ON, LED_OFF,
-		LED_ON, LED_OFF, LED_ON
-	},
-	{	//Y
-		LED_ON, LED_OFF, LED_ON,
-		LED_OFF, LED_ON, LED_OFF,
-		LED_OFF, LED_ON, LED_OFF
-	},
-	{	//Z
-		LED_ON, LED_ON, LED_ON,
-		LED_OFF, LED_ON, LED_OFF,
-		LED_ON, LED_ON, LED_ON
-	}
-};
 
 int _debug_printf(const char *fmt, ...) //TODO decide if I want to return BPrintfStatus from printing functions instead of regular integers.
 {
@@ -279,28 +78,7 @@ BPrintfStatus send_to_board(const LEDState *leds)
 
 BPrintfStatus bputchar(char c)
 {
-	if (c == SPACE_CODE)
-	{
-		return send_to_board(SPACE_CHAR);
-	}
-	else if (c == HYPHEN_CODE)
-	{
-		return send_to_board(HYPHEN_CHAR);
-	}
-	else if (c == PERIOD_CODE)
-	{
-		return send_to_board(PERIOD_CHAR);
-	}
-	else if (c >= NUM_MIN && c <= NUM_MAX)
-	{
-        return send_to_board(NUMS[c-NUM_OFFSET]);
-	}
-	else if (c >= ALPHA_CAPS_MIN && c <= ALPHA_CAPS_MAX)
-	{
-        return send_to_board(ALPHA_CAPS[c - ALPHA_OFFSET]);
-	}
-    return BPRINTF_INVALID_CHAR_ERR;
-	
+	return send_to_board(ASCII_MAP[(bsize_t)c]) == BPRINTF_SUCCESS ? BPRINTF_SUCCESS : BPRINTF_INVALID_CHAR_ERR; 	
 }
 
 int bprintf(const char *fmt, ...)
@@ -373,12 +151,6 @@ int bprintf(const char *fmt, ...)
 					goto copy_to_buffer;
 				case 's':
 					s = va_arg(args, char*);
-					// fmt++;
-					// while (*s != '\0' && str_idx < BPRINTF_BUF_LEN)
-					// {
-					// 	buffer[str_idx++] = *s;
-					// 	s++;
-					// }
 					goto copy_to_buffer;
 					break; //TODO check to make sure break is not needed after a goto statement.
 				case 'R':

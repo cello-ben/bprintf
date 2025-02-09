@@ -12,7 +12,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 BPrintfStatus test_special(void)
 {
     _debug_printf("Testing special characters.\n");
-    const char *SPECIAL_CHARS = " .-";
+    const char *SPECIAL_CHARS = " .-_";
     while (*SPECIAL_CHARS != '\0')
     {
         if (bputchar(*SPECIAL_CHARS) < 0)
