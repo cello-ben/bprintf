@@ -102,7 +102,7 @@ int bprintf(const char *fmt, ...)
 		{
 			char c;
 			char *s;
-			switch (*(fmt + 1))
+			switch (*(fmt + 1)) //Massive, hideous switch statement. I'm no happier about it than you are. However, this seems to be the most straightforward way to deal with the logic since we don't have a heap (very much open to being enlightened otherwise).
 			{
 				case 'c':
 					c = (char)va_arg(args, int);
