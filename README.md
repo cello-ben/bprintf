@@ -5,12 +5,19 @@ I'm Ben and I want to create my own `printf`...so...`bprintf`. More to come soon
 ### Format Specifiers Currently Implemented
 
 `%c` - Print a single character
+
 `%s` - Print a string from a literal or char pointer
+
 `%d/%i` - Print a signed int
+
 `%ld/%li` - Print a signed long
+
 `%lu` - Print an unsigned long
+
 `%lld/lli` - Print a signed long long
+
 `%llu` - Print an unsigned long long
+
 `%R` - Print the decimal representation of a Roman numeral from a string literal or char pointer
 
 # Freestanding
