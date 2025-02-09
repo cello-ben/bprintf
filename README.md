@@ -10,11 +10,11 @@ I'm Ben and I want to create my own `printf`...so...`bprintf`. More to come soon
 
 `%d/%i` - Print a signed int
 
-`%ld/%li` - Print a signed long
+`%ld`/`%li` - Print a signed long
 
 `%lu` - Print an unsigned long
 
-`%lld/lli` - Print a signed long long
+`%lld`/`lli` - Print a signed long long
 
 `%llu` - Print an unsigned long long
 
