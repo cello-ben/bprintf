@@ -107,6 +107,7 @@ int bprintf(const char *fmt, ...)
 				case 'c':
 					c = (char)va_arg(args, int);
 					buffer[str_idx++] = c;
+					fmt++;
 					break;
 				case 'd':
 				case 'i':
@@ -180,10 +181,12 @@ int bprintf(const char *fmt, ...)
 	_debug_printf("%s\n", buffer);
 	for (bsize_t i = 0; i < str_idx; i++)
 	{
-		if (bputchar(buffer[i]) == BPRINTF_PUTCHAR_ERR)
-		{
-			return -1;
-		}
+		#ifndef BPRINTF_SKIP_PUTCHAR
+			if (bputchar(buffer[i]) == BPRINTF_PUTCHAR_ERR)
+			{
+				return -1;
+			}
+		#endif
 		#ifdef BPRINTF_DEBUG
 			// usleep(SLEEP_USEC);
 		#endif

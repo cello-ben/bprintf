@@ -13,12 +13,15 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 BPrintfStatus test_special(void);
 BPrintfStatus test_alpha_caps(void); //Lowercase to potentially come at a later point.
 BPrintfStatus test_numeric(void);
-BPrintfStatus test_decimal(void);
-BPrintfStatus test_char(void);
-BPrintfStatus test_signed_long(void);
+BPrintfStatus test_signed_int_positive(void);
+BPrintfStatus test_signed_int_negative(void);
+BPrintfStatus test_signed_long_positive(void);
+BPrintfStatus test_signed_long_negative(void);
 BPrintfStatus test_unsigned_long(void);
-BPrintfStatus test_signed_long_long(void);
+BPrintfStatus test_signed_long_long_positive(void);
+BPrintfStatus test_signed_long_long_negative(void);
 BPrintfStatus test_unsigned_long_long(void);
+BPrintfStatus test_char(void);
 BPrintfStatus test_roman(void);
 BPrintfStatus test_string(void);
 

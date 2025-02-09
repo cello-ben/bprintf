@@ -50,7 +50,7 @@ BPrintfStatus test_numeric(void)
     return BPRINTF_SUCCESS;
 }
 
-BPrintfStatus test_decimal(void)
+BPrintfStatus test_signed_int_positive(void)
 {
     _debug_printf("Testing %%d format specifier.\n");
      if(bprintf("IT IS FEBRUARY AKA %d", 2) < 0) //No lowercase letters implemented (not yet, at least).
@@ -60,20 +60,34 @@ BPrintfStatus test_decimal(void)
      return BPRINTF_SUCCESS;
 }
 
-BPrintfStatus test_char(void)
+BPrintfStatus test_signed_int_negative(void)
 {
-    _debug_printf("Testing %%c format specifier.\n");
-    if(bprintf("A CHARACTER IS %c.", 'C') < 0)
+    _debug_printf("Testing %%d format specifier.\n");
+     if(bprintf("TEMPERATURE IS %d", -14) < 0)
+     {
+        return BPRINTF_BPRINTF_ERR;
+     }
+     if(bprintf("%d IS A LOW NUMBER.", INT_MIN + 1) < 0) //TODO figure out a workaround for needing to add 1 to minimum values.
      {
         return BPRINTF_BPRINTF_ERR;
      }
      return BPRINTF_SUCCESS;
 }
 
-BPrintfStatus test_signed_long(void)
+BPrintfStatus test_signed_long_positive(void)
 {
     _debug_printf("Testing %%ld format specifier.\n");
     if (bprintf("%ld IS A HIGH NUMBER.", LONG_MAX) < 0)
+    {
+        return BPRINTF_BPRINTF_ERR;
+    }
+    return BPRINTF_SUCCESS;
+}
+
+BPrintfStatus test_signed_long_negative(void)
+{
+    _debug_printf("Testing %%ld format specifier.\n");
+    if (bprintf("%ld IS A LOW NUMBER.", LONG_MIN + 1) < 0)
     {
         return BPRINTF_BPRINTF_ERR;
     }
@@ -90,10 +104,20 @@ BPrintfStatus test_unsigned_long(void)
     return BPRINTF_SUCCESS;
 }
 
-BPrintfStatus test_signed_long_long(void)
+BPrintfStatus test_signed_long_long_positive(void)
 {
     _debug_printf("Testing %%lld format specifier.\n");
     if (bprintf("%lld IS A HIGH NUMBER.", LONG_LONG_MAX) < 0)
+    {
+        return BPRINTF_BPRINTF_ERR;
+    }
+    return BPRINTF_SUCCESS;
+}
+
+BPrintfStatus test_signed_long_long_negative(void)
+{
+    _debug_printf("Testing %%lld format specifier.\n");
+    if (bprintf("%lld IS A HIGH NUMBER.", LONG_LONG_MIN + 1) < 0)
     {
         return BPRINTF_BPRINTF_ERR;
     }
@@ -108,6 +132,16 @@ BPrintfStatus test_unsigned_long_long(void)
         return BPRINTF_BPRINTF_ERR;
     }
     return BPRINTF_SUCCESS;
+}
+
+BPrintfStatus test_char(void)
+{
+    _debug_printf("Testing %%c format specifier.\n");
+    if(bprintf("A CHARACTER IS %c.", 'C') < 0)
+     {
+        return BPRINTF_BPRINTF_ERR;
+     }
+     return BPRINTF_SUCCESS;
 }
 
 BPrintfStatus test_roman(void)

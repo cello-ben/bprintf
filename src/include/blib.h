@@ -14,7 +14,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 #define LONG_LONG_MAX_DIGITS_LEN 19
 #define ULONG_LONG_MAX_DIGITS_LEN 20
 
-#define ABS(n) (n) > 0 ? (n) : (-n) //TODO check for correctness re: parentheses.
+#define ABS(x) (x) < 0 ? (-x) : (x)
 
 typedef unsigned int bsize_t;
 
