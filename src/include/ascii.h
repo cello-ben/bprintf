@@ -38,17 +38,41 @@
 		{LED_OFF},
 		{LED_OFF},  //Space
 		{LED_OFF},  //Exclamation point - not implemented.
-		{LED_OFF},  //Double quote - not implemented.
+		{
+			LED_OFF, LED_ON, LED_ON, //Double quote
+			LED_OFF, LED_ON, LED_ON,
+			LED_OFF, LED_OFF, LED_OFF
+		},
 		{LED_OFF},  //Octothorpe - not implemented.
 		{LED_OFF},  //Dollar sign - not implemented.
 		{LED_OFF},  //Percent sign - not implemented.
 		{LED_OFF},  //Ampersand - not implemented.
-		{LED_OFF},  //Single quote/apostrophe - not implemented.
-		{LED_OFF},  //Left parenthesis - not implemented.
-		{LED_OFF},  //Right parenthesis - not implemented.
+		{
+			LED_OFF, LED_OFF, LED_ON, //Single quote/apostrophe
+			LED_OFF, LED_OFF, LED_ON,
+			LED_OFF, LED_OFF, LED_OFF
+		},
+		{
+			LED_OFF, LED_ON, LED_OFF, //Left parenthesis
+			LED_ON, LED_OFF, LED_OFF,
+			LED_OFF, LED_ON, LED_OFF
+		},
+		{
+			LED_OFF, LED_ON, LED_OFF, //Right parenthesis
+			LED_OFF, LED_OFF, LED_ON,
+			LED_OFF, LED_ON, LED_OFF
+		},
 		{LED_OFF},  //Asterisk - not implemented.
-		{LED_OFF},  //Plus sign - not implemented.
-		{LED_OFF},  //Comma - not implemented.
+		{
+			LED_OFF, LED_ON, LED_OFF, //Plus sign
+			LED_ON, LED_ON, LED_ON,
+			LED_OFF, LED_ON, LED_OFF
+		},
+		{
+			LED_OFF, LED_OFF, LED_OFF, //Comma
+			LED_OFF, LED_OFF, LED_ON,
+			LED_OFF, LED_ON, LED_OFF
+		},
 		{
 			LED_OFF, LED_OFF, LED_OFF, //Hyphen/negative sign
 			LED_ON, LED_ON, LED_ON,
@@ -59,7 +83,11 @@
 			LED_OFF, LED_OFF, LED_OFF,
 			LED_OFF, LED_OFF, LED_ON
 		},
-		{LED_OFF},  //Forward slash - not implemented.
+		{
+			LED_OFF, LED_OFF, LED_ON, //Forward slash
+			LED_OFF, LED_ON, LED_OFF,
+			LED_ON, LED_OFF, LED_OFF
+		},
 		{
 			LED_OFF, LED_ON, LED_OFF, //0
 			LED_ON, LED_OFF, LED_ON,
@@ -110,10 +138,18 @@
 			LED_ON, LED_ON, LED_ON,
 			LED_OFF, LED_OFF, LED_ON
 		},
-		{LED_OFF},  //Colon - not implemented.
+		{
+			LED_OFF, LED_ON, LED_OFF, //Colon
+			LED_OFF, LED_OFF, LED_OFF,
+			LED_OFF, LED_ON, LED_OFF
+		},
 		{LED_OFF},  //Semicolon - not implemented.
 		{LED_OFF},  //Less than sign - not implemented.
-		{LED_OFF},  //Equals sign - not implemented.
+		{
+			LED_ON, LED_ON, LED_ON, //Equals sign
+			LED_ON, LED_ON, LED_ON,
+			LED_OFF, LED_OFF, LED_OFF
+		},
 		{LED_OFF},  //Greater than sign - not implemented.
 		{LED_OFF},  //Question mark - not implemented.
 		{LED_OFF},  //At sign - not implemented.
@@ -247,16 +283,36 @@
 			LED_OFF, LED_ON, LED_OFF,
 			LED_ON, LED_ON, LED_ON
 		},
-		{LED_OFF}, //Left bracket - Not implemented.
-		{LED_OFF}, //Backslash - Not implemented.
-		{LED_OFF}, //Right bracket - Not implemented.
-		{LED_OFF}, //Caret - Not implemented.
+		{
+			LED_ON, LED_ON, LED_OFF, //Left bracket
+			LED_ON, LED_OFF, LED_OFF,
+			LED_ON, LED_ON, LED_OFF
+		},
+		{
+			LED_ON, LED_OFF, LED_OFF, //Backslash
+			LED_OFF, LED_ON, LED_OFF,
+			LED_OFF, LED_OFF, LED_ON
+		},
+		{
+			LED_OFF, LED_ON, LED_ON, //Right bracket
+			LED_OFF, LED_OFF, LED_ON,
+			LED_OFF, LED_ON, LED_ON
+		},
+		{
+			LED_OFF, LED_ON, LED_OFF, //Caret
+			LED_ON, LED_OFF, LED_ON,
+			LED_OFF, LED_OFF, LED_OFF
+		},
 		{
 			LED_OFF, LED_OFF, LED_OFF, //Underscore
 			LED_OFF, LED_OFF, LED_OFF,
 			LED_ON, LED_ON, LED_ON
 		},
-		{LED_OFF}, //Grave accent/backtick - Not implemented.
+		{
+			LED_ON, LED_OFF, LED_OFF, //Grave accent/backtick
+			LED_OFF, LED_ON, LED_OFF,
+			LED_OFF, LED_OFF, LED_OFF
+		},
 		{LED_OFF}, //a - Not implemented.
 		{LED_OFF}, //b - Not implemented.
 		{LED_OFF}, //c - Not implemented.
