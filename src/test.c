@@ -5,8 +5,9 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include <bprintf.h>
 #include <limits.h>
+
+#include <bprintf.h>
 #include <test.h>
 
 BPrintfStatus test_special(void)
@@ -27,7 +28,11 @@ BPrintfStatus test_special(void)
 BPrintfStatus test_alpha_caps(void)
 {
     _debug_printf("Testing capital letters.\n");
-    for (int i = ALPHA_CAPS_MIN; i < ALPHA_CAPS_MAX; i++)
+    
+    const bsize_t ALPHA_CAPS_MIN = 65;
+    const bsize_t ALPHA_CAPS_MAX = 90;
+
+    for (bsize_t i = ALPHA_CAPS_MIN; i <= ALPHA_CAPS_MAX; i++)
 	{
 		if (bputchar(i) < 0)
         {
@@ -40,7 +45,11 @@ BPrintfStatus test_alpha_caps(void)
 BPrintfStatus test_numeric(void)
 {
     _debug_printf("Testing digits.\n");
-    for (int i = NUM_MIN; i < NUM_MAX; i++)
+
+    const bsize_t NUM_MIN = 48;
+    const bsize_t NUM_MAX = 57;
+
+    for (bsize_t i = NUM_MIN; i <= NUM_MAX; i++)
     {
         if (bputchar(i) < 0)
         {
@@ -63,7 +72,7 @@ BPrintfStatus test_signed_int_positive(void)
 BPrintfStatus test_signed_int_negative(void)
 {
     _debug_printf("Testing %%d format specifier.\n");
-     if(bprintf("TEMPERATURE IS %d", -14) < 0)
+     if(bprintf("TEMPERATURE IS %d CELSIUS", -3) < 0)
      {
         return BPRINTF_BPRINTF_ERR;
      }

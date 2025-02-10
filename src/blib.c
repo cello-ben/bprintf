@@ -6,7 +6,6 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 */
 
 #include <bprintf.h>
-
 #include <blib.h>
 #include <bstring.h>
 
@@ -33,49 +32,6 @@ char *itos(int n) //TODO check for overflows, etc.
 		res[i] = tmp[idx--];
 	}
 	return res;
-}
-
-char *rtods(const char *s) //TODO add long support when bug(s) fixed.
-{
-	int map[] = {
-		['C'] = 100,
-		['D'] = 500,
-		['I'] = 1,
-		['L'] = 50,
-		['M'] = 1000,
-		['V'] = 5,
-		['X'] = 10
-	};
-	// int map[89] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    //             0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    //             0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    //             0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    //             0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    //             0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    //             0, 0, 0, 0, 0, 0, 0, 100, 500, 0, //C, D
-    //             0, 0, 0, 1, 0, 0, 50, 1000, 0, 0, //I, L, M
-    //             0, 0, 0, 0, 0, 0, 5, 0, 10}; //V, X
-
-    bsize_t len = bstrlen(s);
-    int num = 0, i = len - 1;
-
-    while (i >= 0)
-    {
-        int curr = map[(bsize_t)s[i]];
-        if (i != 0)
-        {
-            int prev = map[(bsize_t)s[i - 1]];
-            if (curr > prev)
-            {
-                num -= prev;
-                i--;
-            }
-        }
-        num += curr;
-        i--;
-    }
-
-    return itos(num);
 }
 
 char *ltos(long n) //TODO check fix bugs manifest when calling from rtods.
@@ -164,4 +120,47 @@ char *ulltos(unsigned long long n)
 		res[i] = tmp[idx--];
 	}
 	return res;
+}
+
+char *rtods(const char *s) //TODO add long support when bug(s) fixed.
+{
+	int map[] = {
+		['C'] = 100,
+		['D'] = 500,
+		['I'] = 1,
+		['L'] = 50,
+		['M'] = 1000,
+		['V'] = 5,
+		['X'] = 10
+	};
+	// int map[89] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    //             0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    //             0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    //             0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    //             0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    //             0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    //             0, 0, 0, 0, 0, 0, 0, 100, 500, 0, //C, D
+    //             0, 0, 0, 1, 0, 0, 50, 1000, 0, 0, //I, L, M
+    //             0, 0, 0, 0, 0, 0, 5, 0, 10}; //V, X
+
+    bsize_t len = bstrlen(s);
+    int num = 0, i = len - 1;
+
+    while (i >= 0)
+    {
+        int curr = map[(bsize_t)s[i]];
+        if (i != 0)
+        {
+            int prev = map[(bsize_t)s[i - 1]];
+            if (curr > prev)
+            {
+                num -= prev;
+                i--;
+            }
+        }
+        num += curr;
+        i--;
+    }
+
+    return itos(num);
 }

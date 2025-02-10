@@ -8,12 +8,12 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 #ifndef BPRINTF_H
 	#define BPRINTF_H
 
-	#include <stdarg.h>
+	// #include <stdarg.h>
 
 	#define BPRINTF_DEBUG
 	#define BPRINTF_SKIP_PUTCHAR
 
-	#define BPRINTF_BUF_LEN 8192 //TODO change if too large for Raspberry Pi Pico stack.
+	#define BPRINTF_BUF_LEN 512 //Default Pico stack size is 2048. This should be a safe number that leaves us plenty of wiggle room. And let's be real, who wants to sit and wait for an LED matrix to light up 512 different times?
 
 	#define CHAR_WIDTH 3
 	#define CHAR_HEIGHT 3
@@ -21,13 +21,9 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 	#define NUM_OFFSET 48
 	#define ALPHA_OFFSET 65
 
-	#define NUM_MIN 48
-	#define NUM_MAX 58
-
-	#define ALPHA_CAPS_MIN 65
-	#define ALPHA_CAPS_MAX 91
-
 	#define SLEEP_MSEC 750
+
+	typedef unsigned int bsize_t;
 
 	typedef enum LEDState {
 		LED_OFF,
@@ -52,4 +48,3 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 	int bprintf(const char *fmt, ...);
 
 #endif //BPRINTF_H
-

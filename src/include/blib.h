@@ -16,18 +16,16 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 
 	#define ABS(x) (x) < 0 ? (-x) : (x)
 
-	typedef unsigned int bsize_t;
-
 	typedef enum BBool {
 		BFALSE,
 		BTRUE
 	} BBool;
 
 	char *itos(int n);
-	char *rtods(const char *s);
 	char *ltos(long n);
 	char *ultos(unsigned long n);
 	char *lltos(long long n);
 	char *ulltos(unsigned long long n);
+	char *rtods(const char *s);
 
 #endif //BLIB_H

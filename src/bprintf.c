@@ -7,11 +7,11 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 
 #include <stdarg.h>
 
-#include <ascii.h>
 #include <bprintf.h>
+#include <ascii.h>
 #include <blib.h>
 
-#ifdef BPRINTF_DEBUG
+#ifdef BPRINTF_DEBUG //TODO figure out why this has to come after other includes.
 	#include <stdio.h>
 #endif
 
@@ -29,7 +29,7 @@ int _debug_printf(const char *fmt, ...) //TODO decide if I want to return BPrint
     return 0;
 }
 
-int _debug_print_char(const LEDState *grid) //TODO decide whether or not to keep.
+int _debug_print_char(const LEDState *grid)
 {
 	int putchar_res = 0;
 	#ifdef BPRINTF_DEBUG
@@ -50,7 +50,7 @@ int _debug_print_char(const LEDState *grid) //TODO decide whether or not to keep
 
 BPrintfStatus flush(void)
 {
-	return BPRINTF_SUCCESS; //Placeholder
+	return bputchar(' ');
 }
 
 BPrintfStatus send_to_board(const LEDState *leds)
@@ -78,8 +78,6 @@ BPrintfStatus bputchar(char c)
 
 int bprintf(const char *fmt, ...)
 {
-	//Initial strategy:
-	//Figure out a way to take in variadic arguments. For the time being, we'll assume all ints after the format string.
 	char buffer[BPRINTF_BUF_LEN + 1];
 	va_list args;
 	va_start(args, fmt);
@@ -93,7 +91,7 @@ int bprintf(const char *fmt, ...)
 			buffer[BPRINTF_BUF_LEN] = '\0';
 			break;
 		}
-		if (*fmt == '%') //TODO figure out why longs, etc. aren't making their way into s.
+		if (*fmt == '%')
 		{
 			char c;
 			char *s;
@@ -107,10 +105,9 @@ int bprintf(const char *fmt, ...)
 				case 'd':
 				case 'i':
 					s = itos(va_arg(args, int));
-					goto copy_to_buffer;
-					break;
+					goto copy_to_buffer; //Easily avoided with a helper function if we had a heap, but here we are. Again, open to suggestions as to how to improve this!
 				case 'l':
-					c = *(fmt + 2);
+					c = *(fmt + 2); //Get the next char to test what kind of long the user wants to print.
 					if (c == 'd' || c == 'i')
 					{
 						s = ltos(va_arg(args, long));
@@ -123,7 +120,7 @@ int bprintf(const char *fmt, ...)
 					}
 					else if (c == 'l')
 					{
-						c = *(fmt + 3);
+						c = *(fmt + 3); //Get the third and final potential char of the format specifier for signed or unsigned.
 						fmt++;
 						if (c == 'd' || c == 'i')
 						{
@@ -148,7 +145,6 @@ int bprintf(const char *fmt, ...)
 				case 's':
 					s = va_arg(args, char*);
 					goto copy_to_buffer;
-					break; //TODO check to make sure break is not needed after a goto statement.
 				case 'R':
 					//Why not include Roman numeral to decimal string conversion? ;)
 					s = rtods(va_arg(args, char*));
@@ -161,7 +157,7 @@ int bprintf(const char *fmt, ...)
 						s++;
 					}
 				default:
-					//We don't support printing the '%' sign, so there's no point in putting it in the buffer.
+					//We don't support printing the '%' sign (or anything not covered above, for that matter), so there's no point in putting it in the buffer.
 					break;
 
 			}
@@ -182,11 +178,11 @@ int bprintf(const char *fmt, ...)
 				return -1;
 			}
 			//SLEEP
-			if (bputchar(' ') == BPRINTF_PUTCHAR_ERR)
+			if (flush() == BPRINTF_PUTCHAR_ERR)
 			{
 				return -1;
 			}
 		#endif
 	}
-	return ++str_idx; //TODO figure out if this needs to be incremented or not.
+	return str_idx; //Characters written, excluding null terminator
 }
