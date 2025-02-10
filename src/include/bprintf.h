@@ -11,7 +11,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 	#include <stdarg.h>
 
 	#define BPRINTF_DEBUG
-	// #define BPRINTF_SKIP_PUTCHAR
+	#define BPRINTF_SKIP_PUTCHAR
 
 	#define BPRINTF_BUF_LEN 8192 //TODO change if too large for Raspberry Pi Pico stack.
 
@@ -47,8 +47,6 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 	int _debug_printf(const char *fmt, ...);
 	int _debug_print_char(const LEDState *grid);
 	BPrintfStatus flush(void);
-	BPrintfStatus off(int led);
-	BPrintfStatus on(int led);
 	BPrintfStatus send_to_board(const LEDState *leds);
 	BPrintfStatus bputchar(char c);
 	int bprintf(const char *fmt, ...);

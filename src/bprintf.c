@@ -13,8 +13,9 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 
 #ifdef BPRINTF_DEBUG
 	#include <stdio.h>
-	#include <unistd.h>
 #endif
+
+const int LED_MAP[CHAR_WIDTH * CHAR_HEIGHT] = {1, 1, 1, 1, 1, 1, 1, 1, 1};
 
 int _debug_printf(const char *fmt, ...) //TODO decide if I want to return BPrintfStatus from printing functions instead of regular integers.
 {
@@ -52,21 +53,15 @@ BPrintfStatus flush(void)
 	return BPRINTF_SUCCESS; //Placeholder
 }
 
-BPrintfStatus off(int led)
-{
-	return 0;
-}
-
-BPrintfStatus on(int led)
-{
-	return 0;	
-}
-
 BPrintfStatus send_to_board(const LEDState *leds)
 {
 	#ifdef BPRINTF_DEBUG
 		return _debug_print_char(leds);
 	#else
+		//for (int i = 0; i < CHAR_WIDTH * CHAR_HEIGHT; i++)
+		// {
+		// 	gpio_put(LED_MAP[i], leds[i]);
+		// }
 		return BPRINTF_SUCCESS; //Placeholder
 	#endif
 	//Call on x times with pins we need to activate.
@@ -186,9 +181,11 @@ int bprintf(const char *fmt, ...)
 			{
 				return -1;
 			}
-		#endif
-		#ifdef BPRINTF_DEBUG
-			// usleep(SLEEP_USEC);
+			//SLEEP
+			if (bputchar(' ') == BPRINTF_PUTCHAR_ERR)
+			{
+				return -1;
+			}
 		#endif
 	}
 	return ++str_idx; //TODO figure out if this needs to be incremented or not.

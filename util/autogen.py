@@ -1,24 +1,7 @@
-# Parse -c or -h
-# If -c, generate the following:
-# <license>
-# \n
-# #include <[lowercase_name].h>
-# \n\n\n
-# Write to ../src/[lowercase_name].c
-# If -h, generate the following:
-# #ifndef [UPPERCASE_NAME]_H
-# \t#define [UPPERCASE_NAME]_H
-# \n\n\n
-# #endif //[UPPERCASE_NAME]_H
-# Write to ../src/include/[lowercase_name].h
-# If no args, do both.
-
-#!/bin/python3
-
 import sys
 
 def usage():
-    print('./autogen.py <filename>')
+    print('python3 autogen.py <filename>')
 
 def autogen():
     if len(sys.argv) < 2:
