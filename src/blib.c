@@ -106,12 +106,11 @@ char *ltos(long n) //TODO check fix bugs manifest when calling from rtods.
 char *ultos(unsigned long n)
 {
 	char tmp[ULONG_MAX_DIGITS_LEN + 2]; //Extra 2 chars for negative and null terminator.
-	long abs_n = ABS(n);
 	bsize_t idx = 0;
-	while (abs_n > 0)
+	while (n > 0)
 	{
-		tmp[idx++] = (abs_n % 10) + NUM_OFFSET;
-		abs_n /= 10;
+		tmp[idx++] = (n % 10) + NUM_OFFSET;
+		n /= 10;
 	}
 	static char res[ULONG_MAX_DIGITS_LEN + 2]; //Workaround for no heap.
 	const bsize_t len = idx;

@@ -107,7 +107,7 @@ BPrintfStatus test_unsigned_long(void)
 BPrintfStatus test_signed_long_long_positive(void)
 {
     _debug_printf("Testing %%lld format specifier.\n");
-    if (bprintf("%lld IS A HIGH NUMBER.", LONG_LONG_MAX) < 0)
+    if (bprintf("%lld IS A HIGH NUMBER.", LLONG_MAX) < 0)
     {
         return BPRINTF_BPRINTF_ERR;
     }
@@ -117,7 +117,7 @@ BPrintfStatus test_signed_long_long_positive(void)
 BPrintfStatus test_signed_long_long_negative(void)
 {
     _debug_printf("Testing %%lld format specifier.\n");
-    if (bprintf("%lld IS A HIGH NUMBER.", LONG_LONG_MIN + 1) < 0)
+    if (bprintf("%lld IS A HIGH NUMBER.", LLONG_MIN + 1) < 0)
     {
         return BPRINTF_BPRINTF_ERR;
     }
@@ -127,7 +127,7 @@ BPrintfStatus test_signed_long_long_negative(void)
 BPrintfStatus test_unsigned_long_long(void)
 {
     _debug_printf("Testing %%llu format specifier.\n");
-    if (bprintf("%llu IS A HIGH NUMBER.", ULONG_LONG_MAX) < 0)
+    if (bprintf("%llu IS A HIGH NUMBER.", ULLONG_MAX) < 0)
     {
         return BPRINTF_BPRINTF_ERR;
     }
