@@ -9,29 +9,30 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 #include <blib.h>
 #include <bstring.h>
 
-char *itos(int n) //TODO check for overflows, etc.
+char *itos(int n) //TODO check for overflows, etc. Also, decide if I want to do a separate unsigned int function.
 {
-	BBool negative = n < 0;
-	char tmp[INT_MAX_DIGITS_LEN + 2]; //Extra 2 chars for negative and null terminator.
-	int abs_n = ABS(n);
-	bsize_t idx = 0;
-	while (abs_n > 0)
-	{
-		tmp[idx++] = (abs_n % 10) + NUM_OFFSET;
-		abs_n /= 10;
-	}
-	static char res[INT_MAX_DIGITS_LEN + 2]; //Workaround for no heap.
-	if (negative == BTRUE)
-	{
-		res[0] = '-';
-	}
-	const bsize_t len = idx + (int)negative;
-	res[idx--] = '\0'; //TODO figure out for sure if we need this.
-	for (bsize_t i = (int)negative; i < len; i++)
-	{
-		res[i] = tmp[idx--];
-	}
-	return res;
+	// BBool negative = n < 0;
+	// char tmp[INT_MAX_DIGITS_LEN + 2]; //Extra 2 chars for negative and null terminator.
+	// int abs_n = ABS(n);
+	// bsize_t idx = 0;
+	// while (abs_n > 0)
+	// {
+	// 	tmp[idx++] = (abs_n % 10) + NUM_OFFSET;
+	// 	abs_n /= 10;
+	// }
+	// static char res[INT_MAX_DIGITS_LEN + 2]; //Workaround for no heap.
+	// if (negative == BTRUE)
+	// {
+	// 	res[0] = '-';
+	// }
+	// const bsize_t len = idx + (int)negative;
+	// res[idx--] = '\0'; //TODO figure out for sure if we need this.
+	// for (bsize_t i = (int)negative; i < len; i++)
+	// {
+	// 	res[i] = tmp[idx--];
+	// }
+	// return res;
+	return wrapper(n, BTRUE);
 }
 
 char *ltos(long n) //TODO check fix bugs manifest when calling from rtods.
@@ -103,16 +104,48 @@ char *lltos(long long n)
 	return res;
 }
 
-char *ulltos(unsigned long long n)
+//The goal of this function is eventually to adhere to DRY principles, but we may end up wasting some stack bytes in the process.
+char *wrapper(long long n, BBool is_signed) //GCC on Linux will error out with current compilation flags if we try to take ABS of an unsigned type, so we need to do it conditionally.
 {
-	char tmp[ULONG_LONG_MAX_DIGITS_LEN + 2]; //Extra 2 chars for negative and null terminator.
+	BBool negative = n < 0;
+	if (is_signed)
+	{
+		n = ABS(n);
+	}
+	char tmp[ULONG_LONG_MAX_DIGITS_LEN + 1]; //unsigned long long can be up to 20 digits, we add 1 for the null terminator. 
+	//It can't be negative, so we don't need to worry about that sign taking up space, and a signed long long on my Mac takes up
+	//a maximum of 19 digits. Of courser, this may be platform-dependent, so it's something to revisit later on.
+
 	bsize_t idx = 0;
 	while (n > 0)
 	{
 		tmp[idx++] = (n % 10) + NUM_OFFSET;
 		n /= 10;
 	}
-	static char res[ULONG_LONG_MAX_DIGITS_LEN + 2]; //Workaround for no heap.
+	static char res[ULONG_LONG_MAX_DIGITS_LEN + 2];
+	if (negative == BTRUE)
+	{
+		res[0] = '-';
+	}
+	const bsize_t len = idx + (bsize_t)negative;
+	res[idx--] = '\0';
+	for (bsize_t i = (bsize_t)negative; i < len; i++)
+	{
+		res[i] = tmp[idx--];
+	}
+	return res;
+}
+
+char *ulltos(unsigned long long n)
+{
+	char tmp[ULONG_LONG_MAX_DIGITS_LEN + 1]; //Extra char for null terminator.
+	bsize_t idx = 0;
+	while (n > 0)
+	{
+		tmp[idx++] = (n % 10) + NUM_OFFSET;
+		n /= 10;
+	}
+	static char res[ULONG_LONG_MAX_DIGITS_LEN + 1]; //Workaround for no heap.
 	const bsize_t len = idx;
 	res[idx--] = '\0'; //TODO figure out for sure if we need this.
 	for (bsize_t i = 0; i < len; i++)
@@ -124,8 +157,8 @@ char *ulltos(unsigned long long n)
 
 char *rtods(const char *s) //TODO add long support when bug(s) fixed.
 {
-	int map[] = {
-		['C'] = 100,
+	int map[89] = {
+		['9'] = 100,
 		['D'] = 500,
 		['I'] = 1,
 		['L'] = 50,
@@ -133,19 +166,11 @@ char *rtods(const char *s) //TODO add long support when bug(s) fixed.
 		['V'] = 5,
 		['X'] = 10
 	};
-	// int map[89] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    //             0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    //             0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    //             0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    //             0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    //             0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    //             0, 0, 0, 0, 0, 0, 0, 100, 500, 0, //C, D
-    //             0, 0, 0, 1, 0, 0, 50, 1000, 0, 0, //I, L, M
-    //             0, 0, 0, 0, 0, 0, 5, 0, 10}; //V, X
 
     bsize_t len = bstrlen(s);
-    int num = 0, i = len - 1;
-
+	bsize_t i = len - 1;
+    int num = 0;
+	
     while (i >= 0)
     {
         int curr = map[(bsize_t)s[i]];
