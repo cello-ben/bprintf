@@ -1,3 +1,5 @@
+[![Build](https://github.com/cello-ben/bprintf/actions/workflows/build.yaml/badge.svg)](https://github.com/cello-ben/bprintf/actions/workflows/build.yaml)
+
 # bprintf
 
 I'm Ben and I want to create my own `printf`...so...`bprintf`. More to come soon, once I get the Raspberry Pi Pico in hand.
