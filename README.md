@@ -2,7 +2,15 @@
 
 # bprintf
 
-I'm Ben and I want to create my own `printf`...so...`bprintf`. More to come soon, once I get the Raspberry Pi Pico in hand.
+I'm Ben and I want to create my own `printf`...so...`bprintf`. This is my first foray into embedded programming. I have gotten the Raspberry Pi Pico set up and familiarized myself with the basics (managed to build and run the obligatory blinking LED sample program after some troubleshooting). Here are the next steps:
+
+- I've ordered a new Pico with soldered-on headers, so I'll be able to connect it to my breadboard. Then, I'll hook up the 9 LEDs and figure out how they map to the GPIO ports.
+
+- Test out the program as presently implemented.
+
+- Implement floating point/double format specifiers.
+
+- Audit the code to be more defensive and prevent overflows and the like. The stakes are low since this project is purely for fun and learning, but good practice is good practice.
 
 ### Format Specifiers Currently Implemented
 
