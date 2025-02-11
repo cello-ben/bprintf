@@ -72,7 +72,7 @@ BPrintfStatus test_signed_int_positive(void)
 BPrintfStatus test_signed_int_negative(void)
 {
     _debug_printf("Testing %%d format specifier.\n");
-     if(bprintf("TEMPERATURE IS %d CELSIUS", -3) < 0)
+     if(bprintf("TEMPERATURE IS %d CELSIUS.", -3) < 0)
      {
         return BPRINTF_BPRINTF_ERR;
      }
@@ -155,7 +155,7 @@ BPrintfStatus test_char(void)
 
 BPrintfStatus test_roman(void)
 {
-    if (bprintf("%R WAS ROMAN.", "MCDIV") < 0)
+    if (bprintf("%R WAS ROMAN, MY FRIEND.", "MCDIV") < 0)
     {
         return BPRINTF_BPRINTF_ERR;
     }

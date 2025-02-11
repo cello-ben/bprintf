@@ -42,7 +42,7 @@ char *stringifyn(long long n, BBool negative) //GCC on Linux will error out with
 	return res;
 }
 
-char *ulltos(unsigned long long n)
+char *ulltos(unsigned long long n) //TODO figure out why we can't use the main stringifyn function for this one as written.
 {
 	char tmp[ULONG_LONG_MAX_DIGITS_LEN + 1]; //Extra char for null terminator.
 	bsize_t idx = 0;

@@ -183,10 +183,12 @@ int bprintf(const char *fmt, ...)
 				return -1;
 			}
 			//SLEEP
-			if (flush() == BPRINTF_PUTCHAR_ERR)
-			{
-				return -1;
-			}
+			#ifndef BPRINTF_DEBUG //We don't need big spaces in debug output.
+				if (flush() == BPRINTF_PUTCHAR_ERR)
+				{
+					return -1;
+				}
+			#endif
 		#endif
 	}
 	return str_idx; //Characters written, excluding null terminator
