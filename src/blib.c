@@ -9,8 +9,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 #include <blib.h>
 #include <bstring.h>
 
-// The goal of this function is eventually to adhere to DRY principles, but we may end up wasting some stack bytes in the process.
-// However, it's very buggy right now, even with INT_MIN.
+// Potentially wastes a few extra bytes here and there, but nothing we can't handle.
 char *stringifyn(long long n, BBool negative) //GCC on Linux will error out with current compilation flags if we try to take ABS of an unsigned type, so we need to do it conditionally.
 {
 	if (negative == BTRUE)
@@ -66,7 +65,7 @@ char *ulltos(unsigned long long n)
 char *rtods(const char *s) //TODO add long support when bug(s) fixed.
 {
 	int map[89] = {
-		['9'] = 100,
+		['C'] = 100,
 		['D'] = 500,
 		['I'] = 1,
 		['L'] = 50,

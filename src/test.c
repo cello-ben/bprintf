@@ -155,7 +155,7 @@ BPrintfStatus test_char(void)
 
 BPrintfStatus test_roman(void)
 {
-    if (bprintf("%R WAS ROMAN.", "MVII") < 0)
+    if (bprintf("%R WAS ROMAN.", "MCDIV") < 0)
     {
         return BPRINTF_BPRINTF_ERR;
     }
@@ -164,7 +164,7 @@ BPrintfStatus test_roman(void)
 
 BPrintfStatus test_string(void)
 {
-    if (bprintf("MY NAME IS %s", "BEN") < 0)
+    if (bprintf("MY NAME IS %s.", "BEN") < 0)
     {
         return BPRINTF_BPRINTF_ERR;
     }
