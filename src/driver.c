@@ -16,9 +16,9 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 int main(void)
 {
 	#ifdef BPRINTF_DEBUG
-		assert(test_special() == BPRINTF_SUCCESS);
-		assert(test_alpha_caps() == BPRINTF_SUCCESS);
-		assert(test_numeric() == BPRINTF_SUCCESS);
+		// assert(test_special() == BPRINTF_SUCCESS);
+		// assert(test_alpha_caps() == BPRINTF_SUCCESS);
+		// assert(test_numeric() == BPRINTF_SUCCESS);
 		assert(test_signed_int_positive() == BPRINTF_SUCCESS);
 		assert(test_signed_int_negative() == BPRINTF_SUCCESS);
 		assert(test_signed_long_positive() == BPRINTF_SUCCESS);

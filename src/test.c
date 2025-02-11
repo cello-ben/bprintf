@@ -168,5 +168,10 @@ BPrintfStatus test_string(void)
     {
         return BPRINTF_BPRINTF_ERR;
     }
+    char str[] = "DIFFERENTLY-INITIALIZED STRING";
+    if (bprintf("THIS IS A %s.", str) < 0)
+    {
+        return BPRINTF_BPRINTF_ERR;
+    } 
     return BPRINTF_SUCCESS;
 }

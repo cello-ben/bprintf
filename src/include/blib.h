@@ -21,11 +21,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 		BTRUE
 	} BBool;
 
-	char *wrapper(long long n, BBool is_signed);
-	char *itos(int n);
-	char *ltos(long n);
-	char *ultos(unsigned long n);
-	char *lltos(long long n);
+	char *stringifyn(long long n, BBool is_signed);
 	char *ulltos(unsigned long long n);
 	char *rtods(const char *s);
 

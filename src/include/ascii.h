@@ -3,7 +3,7 @@
 
 	#include <bprintf.h>
 
-	const LEDState ASCII_MAP[128][9] = { //TODO figure out why this can only be included in one file.
+	static const LEDState ASCII_MAP[128][9] = { //TODO figure out why this can only be included in one file.
 		{LED_OFF}, //Placeholders
 		{LED_OFF},
 		{LED_OFF},

@@ -94,6 +94,7 @@ int bprintf(const char *fmt, ...)
 		if (*fmt == '%')
 		{
 			char c;
+			long long n;
 			char *s;
 			switch (*(fmt + 1)) //Massive, hideous switch statement. I'm no happier about it than you are. However, this seems to be the most straightforward way to deal with the logic since we don't have a heap (very much open to being enlightened otherwise).
 			{
@@ -104,18 +105,21 @@ int bprintf(const char *fmt, ...)
 					break;
 				case 'd':
 				case 'i':
-					s = itos(va_arg(args, int));
+					n = (long long)va_arg(args, int);
+					s = stringifyn(n, (BBool)(n < 0));
 					goto copy_to_buffer; //Easily avoided with a helper function if we had a heap, but here we are. Again, open to suggestions as to how to improve this!
 				case 'l':
 					c = *(fmt + 2); //Get the next char to test what kind of long the user wants to print.
 					if (c == 'd' || c == 'i')
 					{
-						s = ltos(va_arg(args, long));
+						n = (long long)va_arg(args, long);
+						s = stringifyn(n, (BBool)(n < 0));
 						fmt++;
 					}
 					else if (c == 'u')
 					{
-						s = ultos(va_arg(args, unsigned long));
+						n = (long long)va_arg(args, unsigned long);
+						s = stringifyn(n, (BBool)(n < 0));
 						fmt++;
 					}
 					else if (c == 'l')
@@ -124,7 +128,8 @@ int bprintf(const char *fmt, ...)
 						fmt++;
 						if (c == 'd' || c == 'i')
 						{
-							s = lltos(va_arg(args, long long));
+							n = va_arg(args, long long);
+							s = stringifyn(n, (BBool)(n < 0));
 							fmt++;
 						}
 						else if (c == 'u')

@@ -8,8 +8,6 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 #ifndef BPRINTF_H
 	#define BPRINTF_H
 
-	// #include <stdarg.h>
-
 	#define BPRINTF_DEBUG
 	#define BPRINTF_SKIP_PUTCHAR
 
@@ -37,8 +35,6 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 		BPRINTF_BOARD_SEND_ERR,
 		BPRINTF_PUTCHAR_ERR
 	} BPrintfStatus;
-
-	//TODO figure out why I can't have all definitions in here; is it because they're not #define constants?
 
 	int _debug_printf(const char *fmt, ...);
 	int _debug_print_char(const LEDState *grid);
