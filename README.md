@@ -14,21 +14,21 @@ I'm Ben and I want to create my own `printf`...so...`bprintf`. This is my first 
 
 ### Format Specifiers Currently Implemented
 
-`%c` - Print a single character
+`%c` - Prints a single character.
 
-`%s` - Print a string from a literal or char pointer
+`%s` - Prints a string from a literal or char pointer.
 
-`%d/%i` - Print a signed int
+`%d/%i` - Prints a signed int.
 
-`%ld`/`%li` - Print a signed long
+`%ld`/`%li` - Prints a signed long.
 
-`%lu` - Print an unsigned long
+`%lu` - Prints an unsigned long.
 
-`%lld`/`lli` - Print a signed long long
+`%lld`/`lli` - Prints a signed long long.
 
-`%llu` - Print an unsigned long long
+`%llu` - Prints an unsigned long long.
 
-`%R` - Print the decimal representation of a Roman numeral from a string literal or char pointer
+`%R` - Prints the decimal representation of a Roman numeral from a string literal or char pointer.
 
 # Freestanding
 
