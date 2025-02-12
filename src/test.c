@@ -86,7 +86,7 @@ BPrintfStatus test_signed_int_negative(void)
 BPrintfStatus test_signed_long_positive(void)
 {
     _debug_printf("Testing %%ld format specifier.\n");
-    if (bprintf("%ld IS A HIGH NUMBER.", LONG_MAX) < 0)
+    if (bprintf("%ld IS A HIGH NUMBER.", LONG_MAX) < 0) //TODO switch to ternary operator for simple functions (maybe).
     {
         return BPRINTF_BPRINTF_ERR;
     }
@@ -173,5 +173,20 @@ BPrintfStatus test_string(void)
     {
         return BPRINTF_BPRINTF_ERR;
     } 
+    return BPRINTF_SUCCESS;
+}
+
+BPrintfStatus test_buffer_overflow(void)
+{
+    char big_buffer[1024];
+    for (int i = 0; i < 2023; i++)
+    {
+        big_buffer[i] = 'A';
+    }
+    big_buffer[1023] = '\0';
+    if (bprintf("%s", big_buffer) < 0)
+    {
+        return BPRINTF_BPRINTF_ERR;
+    }
     return BPRINTF_SUCCESS;
 }

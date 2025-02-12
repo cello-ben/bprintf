@@ -24,6 +24,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
     BPrintfStatus test_char(void);
     BPrintfStatus test_roman(void);
     BPrintfStatus test_string(void);
+    BPrintfStatus test_buffer_overflow(void);
 
 #endif //TEST_H
 

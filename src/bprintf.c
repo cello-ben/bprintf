@@ -86,8 +86,9 @@ int bprintf(const char *fmt, ...)
 	bsize_t str_idx = 0;
 	while (*fmt != '\0')
 	{
-		if (str_idx == BPRINTF_BUF_LEN)
+		if (str_idx == BPRINTF_BUF_LEN) //TODO figure out why this doesn't prevent buffer overflow.
 		{
+			_debug_printf("Breaking.");
 			buffer[BPRINTF_BUF_LEN] = '\0';
 			break;
 		}
@@ -173,6 +174,7 @@ int bprintf(const char *fmt, ...)
 		}
 		fmt++;
 	}
+	
 	buffer[str_idx] = '\0';
 	_debug_printf("%s\n", buffer);
 	for (bsize_t i = 0; i < str_idx; i++)

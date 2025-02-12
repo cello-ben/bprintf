@@ -30,6 +30,7 @@ int main(void)
 		assert(test_char() == BPRINTF_SUCCESS);
 		assert(test_roman() == BPRINTF_SUCCESS);
 		assert(test_string() == BPRINTF_SUCCESS);
+		assert(test_buffer_overflow() == BPRINTF_SUCCESS);
 		_debug_printf("All tests passed!\n");
 	#endif
 	return 0;
