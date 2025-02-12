@@ -48,7 +48,7 @@ int _debug_print_char(const LEDState *grid)
 	return 0;
 }
 
-BPrintfStatus flush(void)
+BPrintfStatus clear_leds(void)
 {
 	return bputchar(' ');
 }
@@ -184,7 +184,7 @@ int bprintf(const char *fmt, ...)
 			}
 			//SLEEP
 			#ifndef BPRINTF_DEBUG //We don't need big spaces in debug output.
-				if (flush() == BPRINTF_PUTCHAR_ERR)
+				if (clear_leds() == BPRINTF_PUTCHAR_ERR)
 				{
 					return -1;
 				}
