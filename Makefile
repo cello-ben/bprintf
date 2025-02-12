@@ -5,7 +5,7 @@
 
 SRC_DIR = src
 INC = -I$(SRC_DIR)/include
-CFLAGS = -Wall -Wpedantic -Wextra  -Wno-unused-parameter -Wno-unused-function -Werror -std=gnu99
+CFLAGS = -Wall -Wpedantic -Wextra  -Wno-unused-parameter -Wno-unused-function -Werror -std=gnu99 
 
 all: #Default to static.
 	make static

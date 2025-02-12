@@ -182,6 +182,7 @@ int bprintf(const char *fmt, ...)
 		#ifndef BPRINTF_SKIP_PUTCHAR
 			if (bputchar(buffer[i]) == BPRINTF_PUTCHAR_ERR)
 			{
+				va_end(args);
 				return -1;
 			}
 			//SLEEP
@@ -193,5 +194,6 @@ int bprintf(const char *fmt, ...)
 			#endif
 		#endif
 	}
+	va_end(args); //TODO figure out if this needs to stay here. 
 	return str_idx; //Characters written, excluding null terminator
 }
