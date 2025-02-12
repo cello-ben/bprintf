@@ -179,12 +179,12 @@ BPrintfStatus test_string(void)
 BPrintfStatus test_buffer_overflow(void)
 {
     char big_buffer[1024];
-    for (int i = 0; i < 2023; i++)
+    for (int i = 0; i < 1023; i++)
     {
         big_buffer[i] = 'A';
     }
     big_buffer[1023] = '\0';
-    if (bprintf("%s", big_buffer) < 0)
+    if (bprintf("%s", &big_buffer) < 0) //TODO figure out if I indeed want to pass the address here.
     {
         return BPRINTF_BPRINTF_ERR;
     }

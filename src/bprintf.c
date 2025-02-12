@@ -29,7 +29,7 @@ int _debug_printf(const char *fmt, ...) //TODO decide if I want to return BPrint
     return 0;
 }
 
-int _debug_print_char(const LEDState *grid)
+static int _debug_print_char(const LEDState *grid)
 {
 	int putchar_res = 0;
 	#ifdef BPRINTF_DEBUG
@@ -48,12 +48,12 @@ int _debug_print_char(const LEDState *grid)
 	return 0;
 }
 
-BPrintfStatus clear_leds(void)
+static BPrintfStatus clear_leds(void)
 {
 	return bputchar(' ');
 }
 
-BPrintfStatus send_to_board(const LEDState *leds)
+static BPrintfStatus send_to_board(const LEDState *leds)
 {
 	#ifdef BPRINTF_DEBUG
 		return _debug_print_char(leds);
