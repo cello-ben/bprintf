@@ -85,8 +85,14 @@ BPrintfStatus test_signed_int_negative(void)
 
 BPrintfStatus test_signed_long_positive(void)
 {
-    _debug_printf("Testing %%ld format specifier.\n");
+    _debug_printf("Testing %%ld format specifier (positive).\n");
     if (bprintf("%ld IS A HIGH NUMBER.", LONG_MAX) < 0) //TODO switch to ternary operator for simple functions (maybe).
+    {
+        return BPRINTF_BPRINTF_ERR;
+    }
+    return BPRINTF_SUCCESS;
+    _debug_printf("Testing %%li format specifier (positive).\n");
+    if (bprintf("%li IS A HIGH NUMBER.", LONG_MAX) < 0) //TODO switch to ternary operator for simple functions (maybe).
     {
         return BPRINTF_BPRINTF_ERR;
     }
@@ -95,8 +101,13 @@ BPrintfStatus test_signed_long_positive(void)
 
 BPrintfStatus test_signed_long_negative(void)
 {
-    _debug_printf("Testing %%ld format specifier.\n");
+    _debug_printf("Testing %%ld format specifier (negative).\n");
     if (bprintf("%ld IS A LOW NUMBER.", LONG_MIN + 1) < 0)
+    {
+        return BPRINTF_BPRINTF_ERR;
+    }
+    _debug_printf("Testing %%li format specifier (negative).\n");
+    if (bprintf("%li IS A LOW NUMBER.", LONG_MIN + 1) < 0)
     {
         return BPRINTF_BPRINTF_ERR;
     }
@@ -115,8 +126,13 @@ BPrintfStatus test_unsigned_long(void)
 
 BPrintfStatus test_signed_long_long_positive(void)
 {
-    _debug_printf("Testing %%lld format specifier.\n");
+    _debug_printf("Testing %%lld format specifier (positive).\n");
     if (bprintf("%lld IS A HIGH NUMBER.", LLONG_MAX) < 0)
+    {
+        return BPRINTF_BPRINTF_ERR;
+    }
+    _debug_printf("Testing %%lli format specifier (positive).\n");
+    if (bprintf("%lli IS A HIGH NUMBER.", LLONG_MAX) < 0)
     {
         return BPRINTF_BPRINTF_ERR;
     }
@@ -125,7 +141,12 @@ BPrintfStatus test_signed_long_long_positive(void)
 
 BPrintfStatus test_signed_long_long_negative(void)
 {
-    _debug_printf("Testing %%lld format specifier.\n");
+    _debug_printf("Testing %%lld format specifier (negative).\n");
+    if (bprintf("%lld IS A HIGH NUMBER.", LLONG_MIN + 1) < 0)
+    {
+        return BPRINTF_BPRINTF_ERR;
+    }
+    _debug_printf("Testing %%lli format specifier (negative).\n");
     if (bprintf("%lld IS A HIGH NUMBER.", LLONG_MIN + 1) < 0)
     {
         return BPRINTF_BPRINTF_ERR;
@@ -184,9 +205,17 @@ BPrintfStatus test_buffer_overflow(void)
         big_buffer[i] = 'A';
     }
     big_buffer[1023] = '\0';
-    if (bprintf("%s", &big_buffer) < 0) //TODO figure out if I indeed want to pass the address here.
+    int bprintf_res = bprintf("%s", big_buffer);
+    if (bprintf_res < 0) //TODO figure out if I indeed want to pass the address here.
     {
         return BPRINTF_BPRINTF_ERR;
     }
-    return BPRINTF_SUCCESS;
+    _debug_printf("Characters written (char array): %d\n", bprintf_res);
+    bprintf_res = bprintf("%s", &big_buffer);
+    if (bprintf_res < 0) //TODO figure out if I indeed want to pass the address here.
+    {
+        return BPRINTF_BPRINTF_ERR;
+    }
+    _debug_printf("Characters written (address): %d\n", bprintf_res);
+    return bprintf_res > BPRINTF_BUF_LEN ? BPRINTF_BPRINTF_ERR : BPRINTF_SUCCESS;
 }

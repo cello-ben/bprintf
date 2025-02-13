@@ -90,7 +90,7 @@ int bprintf(const char *fmt, ...)
 		{
 			_debug_printf("Breaking.");
 			buffer[BPRINTF_BUF_LEN] = '\0';
-			break;
+			return str_idx;
 		}
 		if (*fmt == '%')
 		{
@@ -174,7 +174,6 @@ int bprintf(const char *fmt, ...)
 		}
 		fmt++;
 	}
-	
 	buffer[str_idx] = '\0';
 	_debug_printf("%s\n", buffer);
 	for (bsize_t i = 0; i < str_idx; i++)
