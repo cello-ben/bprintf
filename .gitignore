@@ -5,6 +5,7 @@
 
 bprintf_debug
 output.txt
+*.gch
 *.dSYM
 *.a
 *.o
