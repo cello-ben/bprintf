@@ -8,7 +8,7 @@ INC = -I$(SRC_DIR)/include
 CFLAGS = -Wall -Wpedantic -Wextra  -Wno-unused-parameter -Wno-unused-function -Werror -std=gnu99 
 
 all:
-	gcc -o bprintf_debug $(SRC_DIR)/*.c $(INC) $(CFLAGS) -O3
+	gcc -o bprintf_debug $(SRC_DIR)/*.c $(INC) $(CFLAGS) -O2
 
 # If I ever want to set this up as a static library:
 # static:
