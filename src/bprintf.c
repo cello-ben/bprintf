@@ -13,9 +13,11 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 
 #ifdef BPRINTF_DEBUG //TODO figure out why this has to come after other includes.
 	#include <stdio.h>
+#else
+	#include "pico/stdlib.h"
 #endif
 
-const int LED_MAP[CHAR_WIDTH * CHAR_HEIGHT] = {1, 1, 1, 1, 1, 1, 1, 1, 1};
+const int LED_MAP[CHAR_WIDTH * CHAR_HEIGHT] = {20, 22, 19, 17, 18, 16, 21, 10, 12};
 
 int _debug_printf(const char *fmt, ...) //TODO decide if I want to return BPrintfStatus from printing functions instead of regular integers.
 {
@@ -48,9 +50,14 @@ static int _debug_print_char(const LEDState *grid)
 	return 0;
 }
 
-static BPrintfStatus clear_leds(void)
+static void clear_leds(void)
 {
-	return bputchar(' ');
+	for (bsize_t i = 0; i < CHAR_WIDTH * CHAR_HEIGHT; i++)
+	{
+		#ifndef BPRINTF_DEBUG
+			gpio_put(LED_MAP[i], LED_OFF);
+		#endif
+	}
 }
 
 static BPrintfStatus send_to_board(const LEDState *leds)
@@ -58,11 +65,13 @@ static BPrintfStatus send_to_board(const LEDState *leds)
 	#ifdef BPRINTF_DEBUG
 		return _debug_print_char(leds);
 	#else
-		//for (int i = 0; i < CHAR_WIDTH * CHAR_HEIGHT; i++)
-		// {
-		// 	gpio_put(LED_MAP[i], leds[i]);
-		// }
-		return BPRINTF_SUCCESS; //Placeholder
+		for (bsize_t i = 0; i < CHAR_WIDTH * CHAR_HEIGHT; i++)
+		{
+			gpio_put(LED_MAP[i], leds[i]);
+		}
+		sleep_ms(SLEEP_MSEC);
+		clear_leds();
+		return BPRINTF_SUCCESS; //We can't get an error code from clear_leds because gpio_put is void.
 	#endif
 	//Call on x times with pins we need to activate.
 	//Sleep for 1 second.

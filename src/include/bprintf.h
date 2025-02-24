@@ -38,7 +38,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 
 	int _debug_printf(const char *fmt, ...);
 	static int _debug_print_char(const LEDState *grid);
-	static BPrintfStatus clear_leds(void);
+	static void clear_leds(void);
 	static BPrintfStatus send_to_board(const LEDState *leds);
 	BPrintfStatus bputchar(char c);
 	int bprintf(const char *fmt, ...);
