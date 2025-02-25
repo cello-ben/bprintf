@@ -34,6 +34,7 @@ int main(void)
 		_debug_printf("All tests passed!\n");
 	#else
 		bprintf("HELLO WORLD");
+		
 	#endif
 	return 0;
 }
