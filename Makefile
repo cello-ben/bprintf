@@ -8,13 +8,7 @@ INC = -I$(SRC_DIR)/include
 CFLAGS = -Wall -Wpedantic -Wextra  -Wno-unused-parameter -Wno-unused-function -Werror -std=gnu99 
 
 all:
-	gcc -o bprintf_debug $(SRC_DIR)/*.c $(INC) $(CFLAGS) -O2
-
-# If I ever want to set this up as a static library:
-# static:
-# 	gcc -c -o static_lib.o $(SRC_DIR)/bprintf.c $(INC) $(CFLAGS) -ffreestanding -O0 #TODO figure out if this is what I should use for an embedded situation.
-# 	ar rcs libbprintf.a static_lib.o
-# 	rm -rf *.o
+	@echo "Building for the Raspberry Pi Pico should be done using CMake. Please see README for more information. Please only use the Makefile for building for debug purposes and cleaning."
 
 debug:
 	gcc -g -o bprintf_debug $(SRC_DIR)/*.c $(INC) $(CFLAGS) 
