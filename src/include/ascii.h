@@ -1,7 +1,7 @@
 #ifndef ASCII_H
 	#define ASCII_H
 
-	#include <bprintf.h>
+	#include "bprintf.h"
 
 	static const LEDState ASCII_MAP[128][9] = { //TODO figure out why this can only be included in one file.
 		{LED_OFF}, //Placeholders

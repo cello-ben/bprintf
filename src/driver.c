@@ -32,6 +32,8 @@ int main(void)
 		assert(test_string() == BPRINTF_SUCCESS);
 		assert(test_buffer_overflow() == BPRINTF_SUCCESS);
 		_debug_printf("All tests passed!\n");
+	#else
+		bprintf("HELLO WORLD");
 	#endif
 	return 0;
 }

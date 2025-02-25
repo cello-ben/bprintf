@@ -8,7 +8,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 #ifndef TEST_H
     #define TEST_H
 
-    #include <bprintf.h>
+    #include "bprintf.h"
 
     BPrintfStatus test_special(void);
     BPrintfStatus test_alpha_caps(void); //Lowercase to potentially come at a later point.
