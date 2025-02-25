@@ -2,9 +2,7 @@
 
 # bprintf
 
-I'm Ben and I want to create my own `printf`...so...`bprintf`. This is my first foray into embedded programming. I have gotten the Raspberry Pi Pico set up and familiarized myself with the basics (managed to build and run the obligatory blinking LED sample program after some troubleshooting). Here are the next steps:
-
-- Finish configuring breadboard to allow for each of 9 LEDs to be controlled by its own GPIO pin.
+I'm Ben and I want to create my own `printf`...so...`bprintf`. This is my first foray into embedded programming. I have gotten the Raspberry Pi Pico set up and familiarized myself with the basics (managed to build and run the obligatory blinking LED sample program after some troubleshooting). Here are (some) next steps:
 
 - Implement basic floating point/double format specifiers.
 
