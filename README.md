@@ -28,6 +28,12 @@ I'm Ben and I want to create my own `printf`...so...`bprintf`. This is my first 
 
 `%R` - Prints the decimal representation of a Roman numeral from a string literal or char pointer.
 
+# Building
+
+The Pico SDK has a most unwieldy build system, based upon CMake. Once set up, though, it is relatively straightforward to use with VS Code. 
+
+First, clone the project and open it up in VS Code. Then, you can install the Raspberry Pi Pico extension.
+
 # Freestanding
 
 This is designed to be built without libc and be bundled up in a tiny package. However, at least for the time being, I am using `stdarg.h` and `limits.h`, based upon [this link](https://wiki.osdev.org/Implications_of_writing_a_freestanding_C_project#Headers_available_as_of_C89), helpfully given to me by a kind Redditor.

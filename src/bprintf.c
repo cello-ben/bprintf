@@ -7,9 +7,9 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 
 #include <stdarg.h>
 
-#include <bprintf.h>
-#include <ascii.h>
-#include <blib.h>
+#include "bprintf.h"
+#include "ascii.h"
+#include "blib.h"
 
 #ifdef BPRINTF_DEBUG //TODO figure out why this has to come after other includes.
 	#include <stdio.h>
