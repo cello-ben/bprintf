@@ -12,7 +12,10 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 
 BPrintfStatus test_special(void)
 {
-    _debug_printf("Testing special characters.\n");
+    if (_debug_printf("Testing special characters.\n") < 0)
+    {
+        return BPRINTF_DEBUG_PRINT_ERR;
+    }
     const char *special_chars = "\"'()+,-./:=[\\]^_`|";
     while (*special_chars != '\0')
     {
@@ -27,7 +30,10 @@ BPrintfStatus test_special(void)
 
 BPrintfStatus test_alpha_caps(void)
 {
-    _debug_printf("Testing capital letters.\n");
+    if (_debug_printf("Testing capital letters.\n") < 0)
+    {
+        return BPRINTF_DEBUG_PRINT_ERR;
+    }
     
     const bsize_t ALPHA_CAPS_MIN = 65;
     const bsize_t ALPHA_CAPS_MAX = 90;
@@ -44,7 +50,10 @@ BPrintfStatus test_alpha_caps(void)
 
 BPrintfStatus test_numeric(void)
 {
-    _debug_printf("Testing digits.\n");
+    if (_debug_printf("Testing digits.\n") < 0)
+    {
+        return BPRINTF_DEBUG_PRINT_ERR;
+    }
 
     const bsize_t NUM_MIN = 48;
     const bsize_t NUM_MAX = 57;
@@ -61,26 +70,27 @@ BPrintfStatus test_numeric(void)
 
 BPrintfStatus test_signed_int_positive(void)
 {
-    _debug_printf("Testing %%d format specifier.\n");
-    //  if(bprintf("IT IS FEBRUARY AKA %d", 2) < 0) //No lowercase letters implemented (not yet, at least).
-    //  {
-    //     return BPRINTF_BPRINTF_ERR;
-    //  }
-    //  return BPRINTF_SUCCESS;
-     return bprintf("IT IS FEBRUARY AKA %d", 2) < 0 ? BPRINTF_BPRINTF_ERR: BPRINTF_SUCCESS;
+    if (_debug_printf("Testing %%d format specifier.\n") < 0)
+    {
+        return BPRINTF_DEBUG_PRINT_ERR;
+    }
+    return bprintf("IT IS FEBRUARY AKA %d", 2) < 0 ? BPRINTF_BPRINTF_ERR: BPRINTF_SUCCESS;
 }
 
 BPrintfStatus test_signed_int_negative(void)
 {
-    _debug_printf("Testing %%d format specifier.\n");
-     if(bprintf("TEMPERATURE IS %d CELSIUS.", -3) < 0)
-     {
-        return BPRINTF_BPRINTF_ERR;
-     }
-     if(bprintf("%d IS A LOW NUMBER.", INT_MIN + 1) < 0) //TODO figure out a workaround for needing to add 1 to minimum values.
-     {
-        return BPRINTF_BPRINTF_ERR;
-     }
+    if (_debug_printf("Testing %%d format specifier.\n") < 0)
+    {
+        return BPRINTF_DEBUG_PRINT_ERR;
+    }
+    if(bprintf("TEMPERATURE IS %d CELSIUS.", -3) < 0)
+    {
+    return BPRINTF_BPRINTF_ERR;
+    }
+    if(bprintf("%d IS A LOW NUMBER.", INT_MIN + 1) < 0) //TODO figure out a workaround for needing to add 1 to minimum values, if it exists.
+    {
+    return BPRINTF_BPRINTF_ERR;
+    }
     return BPRINTF_SUCCESS;
 }
 
@@ -134,11 +144,6 @@ BPrintfStatus test_unsigned_long(void)
     {
         return BPRINTF_DEBUG_PRINT_ERR;
     }
-    // if (bprintf("%lu IS A HIGH NUMBER.", LONG_MAX) < 0)
-    // {
-    //     return BPRINTF_BPRINTF_ERR;
-    // }
-    // return BPRINTF_SUCCESS;
     return bprintf("%lu IS A HIGH NUMBER.", LONG_MAX) < 0 ? BPRINTF_BPRINTF_ERR : BPRINTF_SUCCESS;
 }
 
@@ -190,11 +195,6 @@ BPrintfStatus test_unsigned_long_long(void)
     {
         return BPRINTF_DEBUG_PRINT_ERR;
     }
-    // if (bprintf("%llu IS A HIGH NUMBER.", ULLONG_MAX) < 0)
-    // {
-    //     return BPRINTF_BPRINTF_ERR;
-    // }
-    // return BPRINTF_SUCCESS;
     return bprintf("%llu IS A HIGH NUMBER.", ULLONG_MAX) < 0 ? BPRINTF_BPRINTF_ERR : BPRINTF_SUCCESS;
 }
 
@@ -204,11 +204,6 @@ BPrintfStatus test_char(void)
     {
         return BPRINTF_DEBUG_PRINT_ERR;
     }
-    // if(bprintf("A CHARACTER IS %c.", 'C') < 0)
-    //  {
-    //     return BPRINTF_BPRINTF_ERR;
-    //  }
-    //  return BPRINTF_SUCCESS;
     return bprintf("A CHARACTER IS %c.", 'C') < 0 ? BPRINTF_BPRINTF_ERR : BPRINTF_SUCCESS;
 }
 
@@ -218,11 +213,6 @@ BPrintfStatus test_roman(void)
     {
         return BPRINTF_DEBUG_PRINT_ERR;
     }
-    // if (bprintf("%R WAS ROMAN, MY FRIEND.", "MCDIV") < 0)
-    // {
-    //     return BPRINTF_BPRINTF_ERR;
-    // }
-    // return BPRINTF_SUCCESS;
     return bprintf("%R WAS ROMAN, MY FRIEND.", "MCDIV") < 0 ? BPRINTF_BPRINTF_ERR : BPRINTF_SUCCESS;
 }
 
@@ -258,12 +248,18 @@ BPrintfStatus test_buffer_overflow(void)
     {
         return BPRINTF_BPRINTF_ERR;
     }
-    _debug_printf("Characters written (char array): %d\n", bprintf_res);
+    if (_debug_printf("Characters written (char array): %d\n", bprintf_res) < 0)
+    {
+        return BPRINTF_DEBUG_PRINT_ERR;
+    }
     bprintf_res = bprintf("%s", &big_buffer); //TODO figure out if I indeed want to pass the address here.
     if (bprintf_res < 0)
     {
         return BPRINTF_BPRINTF_ERR;
     }
-    _debug_printf("Characters written (address): %d\n", bprintf_res);
-    return bprintf_res > BPRINTF_BUF_LEN ? BPRINTF_BPRINTF_ERR : BPRINTF_SUCCESS;
+    if (_debug_printf("Characters written (address): %d\n", bprintf_res) < 0)
+    {
+        return BPRINTF_DEBUG_PRINT_ERR;
+    }
+    return bprintf_res > BPRINTF_BUF_LEN || bprintf_res < 0 ? BPRINTF_BPRINTF_ERR : BPRINTF_SUCCESS; //TODO make sure I'm checking the right things when returning.
 }
