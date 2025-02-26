@@ -11,10 +11,13 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 	#include <assert.h>
 	#include <limits.h>
 	#include <test.h>
+#else
+	#include "pico/stdlib.h"
 #endif
 
 int main(void)
 {
+	int print_res = 0;
 	#ifdef BPRINTF_DEBUG
 		assert(test_special() == BPRINTF_SUCCESS);
 		assert(test_alpha_caps() == BPRINTF_SUCCESS);
@@ -31,10 +34,10 @@ int main(void)
 		assert(test_roman() == BPRINTF_SUCCESS);
 		assert(test_string() == BPRINTF_SUCCESS);
 		assert(test_buffer_overflow() == BPRINTF_SUCCESS);
-		_debug_printf("All tests passed!\n");
+		print_res = _debug_printf("All tests passed!\n");
 	#else
-		bprintf("HELLO WORLD");
-		
+		init_leds();
+		print_res = bprintf("HELLO WORLD");
 	#endif
-	return 0;
+	return print_res;
 }

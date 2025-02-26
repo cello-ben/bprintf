@@ -57,14 +57,25 @@ static BPrintfStatus _debug_print_char(const LEDState *grid)
 	return BPRINTF_SUCCESS;
 }
 
+void init_leds(void)
+{
+	#ifndef BPRINTF_DEBUG
+		for (bsize_t i = 0; i < CHAR_WIDTH * CHAR_HEIGHT; i++)
+		{
+			gpio_init(LED_MAP[i]);
+			gpio_set_dir(LED_MAP[i], GPIO_OUT);
+		}
+	#endif
+}
+
 static void clear_leds(void)
 {
-	for (bsize_t i = 0; i < CHAR_WIDTH * CHAR_HEIGHT; i++)
-	{
-		#ifndef BPRINTF_DEBUG
-			gpio_put(LED_MAP[i], LED_OFF);
-		#endif
-	}
+	#ifndef BPRINTF_DEBUG
+		for (bsize_t i = 0; i < CHAR_WIDTH * CHAR_HEIGHT; i++)
+		{
+				gpio_put(LED_MAP[i], LED_OFF);
+		}
+	#endif
 }
 
 static BPrintfStatus send_to_board(const LEDState *leds)
