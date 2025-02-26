@@ -60,4 +60,4 @@ There are a couple of defines you can use for help debugging. The main one is `B
 
 # Generative AI Disclosure
 
-The code herein was written **without** the help of generative AI. Generative AI **was** used as an advisor for setting up the breadboard, as well as for basic electronics troubleshooting as I got set up for my first time doing embedded development.
+The code herein was written **without** the help of generative AI. When I got stuck, I either researched or reached out for help on r/cprogramming. I am deeply grateful for the latter. Generative AI **was** used as an advisor for setting up the breadboard, as well as for basic electronics troubleshooting as I got set up for my first time doing embedded development.
