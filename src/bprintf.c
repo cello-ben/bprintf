@@ -109,7 +109,7 @@ int bprintf(const char *fmt, ...)
 	bsize_t str_idx = 0;
 	while (*fmt != '\0')
 	{
-		if (str_idx >= BPRINTF_BUF_LEN)
+		if (str_idx >= BPRINTF_BUF_LEN) //Compiling on my Mac gives me no issues here. Compiling for the Pi itself on windows shows a warning about buffer overflow. There aren't any code paths that I've noticed that will bring us into an overflow if we are just checking for equality, but I need to revisit later.
 		{
 			_debug_printf("Breaking.");
 			buffer[BPRINTF_BUF_LEN] = '\0';
