@@ -208,10 +208,7 @@ int bprintf(const char *fmt, ...)
 				return -1;
 			}
 			#ifndef BPRINTF_DEBUG
-				if (clear_leds() == BPRINTF_PUTCHAR_ERR)
-				{
-					return -1;
-				}
+				clear_leds();
 			#endif
 		#endif
 	}

@@ -35,7 +35,7 @@ I'm Ben and I want to create my own `printf`...so...`bprintf`. This is my first 
 
 The Pico SDK has a most unwieldy build system, based upon CMake. Once set up, though, it is relatively straightforward to use with VS Code. 
 
-First, clone the project and open it up in VS Code. Then, you can install the Raspberry Pi Pico extension. Assuming you have CMake installed, you should be able to click the microcontroller-looking icon on the sidebar and choose "Import Project". Select the current working directory and whatever options you desire. I kept it at its defaults when testing, which at time of writing this meant using SDK version 2.0.0. 
+First, clone the project and open it up in VS Code. Then, you can install the Raspberry Pi Pico extension. Assuming you have CMake installed, you should be able to click the microcontroller-looking icon on the sidebar and choose "Import Project". Select the current working directory and whatever options you desire. I kept it at its defaults when testing, except that I went with SDK version 2.0.0 (not default at time of writing).
 
 Once imported, the toolchain should install automatically. You may notice that it has created `pico_sdk_import.cmake`, as well as a `.vscode` directory and a `.build` directory. Finally, you can choose to run the project on a Raspberry Pi Pico connected in BOOTSEL mode by, in the panel revealed by the microcontroller-looking icon, choosing "Run Project (USB)".
 
@@ -64,7 +64,7 @@ At present, there are many ASCII characters that have yet to be implemented. Par
 
 There are a couple of defines you can use for help debugging. The main one is `BPRINTF_DEBUG`, which allows more use of libc to use (real) `printf`. The other is `BPRINTF_SKIP_PUTCHAR`, which bypasses the calls to `bputchar`, thus eliminating some clutter in the terminal. Both should be defined in `bprintf.h`. 
 
-Make sure that neither of these are defined when you deploy to a Raspberry Pi Pico.
+Make sure that neither of these are defined when you deploy to a Raspberry Pi Pico. In the future, I may see about undefining them automatically using CMake, but I am unsure at this time.
 
 # Generative AI Disclosure
 
