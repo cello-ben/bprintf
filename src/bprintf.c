@@ -113,6 +113,7 @@ int bprintf(const char *fmt, ...)
 		{
 			_debug_printf("Breaking.");
 			buffer[BPRINTF_BUF_LEN] = '\0';
+			va_end(args);
 			return str_idx;
 		}
 		if (*fmt == '%')
