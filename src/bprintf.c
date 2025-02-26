@@ -109,7 +109,7 @@ int bprintf(const char *fmt, ...)
 	bsize_t str_idx = 0;
 	while (*fmt != '\0')
 	{
-		if (str_idx == BPRINTF_BUF_LEN)
+		if (str_idx >= BPRINTF_BUF_LEN)
 		{
 			_debug_printf("Breaking.");
 			buffer[BPRINTF_BUF_LEN] = '\0';
