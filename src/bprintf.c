@@ -19,7 +19,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 
 const int LED_MAP[CHAR_WIDTH * CHAR_HEIGHT] = {20, 22, 19, 17, 18, 16, 21, 10, 12};
 
-int _debug_printf(const char *fmt, ...) //TODO decide if I want to return BPrintfStatus from printing functions instead of regular integers.
+int _debug_printf(const char *fmt, ...)
 {
     #ifdef BPRINTF_DEBUG
         va_list args;
@@ -31,23 +31,30 @@ int _debug_printf(const char *fmt, ...) //TODO decide if I want to return BPrint
     return 0;
 }
 
-static int _debug_print_char(const LEDState *grid)
+static BPrintfStatus _debug_print_char(const LEDState *grid)
 {
-	int putchar_res = 0;
 	#ifdef BPRINTF_DEBUG
 		for (int i = 0; i < CHAR_WIDTH; i++)
 		{
 			for (int j = 0; j < CHAR_HEIGHT; j++)
 			{
 				size_t idx = (i * CHAR_WIDTH) + j;
-				putchar(grid[idx] == LED_ON ? '*' : ' ');
+				if (putchar(grid[idx] == LED_ON ? '*' : ' ') == EOF)
+				{
+					return BPRINTF_PUTCHAR_ERR;
+				}
 			}
-			putchar('\n');
+			if(putchar('\n') == EOF)
+			{
+				return BPRINTF_PUTCHAR_ERR;
+			}
 		}
-		putchar('\n');
-		return (int)putchar_res;
+		if(putchar('\n') == EOF)
+		{
+			return BPRINTF_PUTCHAR_ERR;
+		}
 	#endif
-	return 0;
+	return BPRINTF_SUCCESS;
 }
 
 static void clear_leds(void)
@@ -78,7 +85,7 @@ static BPrintfStatus send_to_board(const LEDState *leds)
 
 BPrintfStatus bputchar(char c)
 {
-	return send_to_board(ASCII_MAP[(bsize_t)c]) == BPRINTF_SUCCESS ? BPRINTF_SUCCESS : BPRINTF_INVALID_CHAR_ERR; 	
+	return send_to_board(ASCII_MAP[(bsize_t)c]) == BPRINTF_SUCCESS ? BPRINTF_SUCCESS : BPRINTF_INVALID_CHAR_ERR; //Errors only show up in debug mode, based on not getting return values from Pico API calls. 	
 }
 
 int bprintf(const char *fmt, ...)
