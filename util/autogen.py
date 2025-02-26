@@ -19,8 +19,6 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 
 #include <{sys.argv[1].lower()}.h>
 
-
-
 """
     
     h_contents = f"""/*
