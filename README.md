@@ -8,7 +8,10 @@ I'm Ben and I want to create my own `printf`...so...`bprintf`. This is my first 
 
 - Audit the code to be more defensive and prevent overflows and the like. The stakes are low since this project is purely for fun and learning, but good practice is good practice.
 
-### Format Specifiers Currently Implemented
+# In Action
+[Printing Digits](https://youtube.com/shorts/oyurObTua48)
+
+# Format Specifiers Currently Implemented
 
 `%c` - Prints a single character.
 
