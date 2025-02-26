@@ -7,10 +7,10 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 
 #include "bstring.h"
 
-unsigned int bstrlen(const char *s)
+bsize_t bstrlen(const char *s)
 {
 	const char *tmp = s;
-	unsigned int len = 0;
+	bsize_t len = 0;
 	while (*tmp != '\0')
 	{
 		len++;

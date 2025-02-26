@@ -9,6 +9,7 @@ output.txt
 *.dSYM
 *.a
 *.o
+*.s
 .DS_Store
 src/.DS_Store
 src/include/.DS_Store
