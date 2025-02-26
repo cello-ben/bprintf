@@ -13,14 +13,14 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 BPrintfStatus test_special(void)
 {
     _debug_printf("Testing special characters.\n");
-    const char *SPECIAL_CHARS = "\"'()+,-./:=[\\]^_`|";
-    while (*SPECIAL_CHARS != '\0')
+    const char *special_chars = "\"'()+,-./:=[\\]^_`|";
+    while (*special_chars != '\0')
     {
-        if (bputchar(*SPECIAL_CHARS) < 0)
+        if (bputchar(*special_chars) < 0)
         {
             return BPRINTF_PUTCHAR_ERR;
         }
-        SPECIAL_CHARS++;
+        special_chars++;
     }
     return BPRINTF_SUCCESS;
 }
