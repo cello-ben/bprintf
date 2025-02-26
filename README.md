@@ -8,6 +8,8 @@ I'm Ben and I want to create my own `printf`...so...`bprintf`. This is my first 
 
 - Audit the code to be more defensive and prevent overflows and the like. The stakes are low since this project is purely for fun and learning, but good practice is good practice.
 
+- Expand both the breadboard setup and the code to support a 4x4 matrix instead, in order to make the characters look like...errr...the characters.
+
 # In Action
 [Printing Digits](https://youtube.com/shorts/oyurObTua48)
 
