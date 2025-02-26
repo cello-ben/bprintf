@@ -73,10 +73,6 @@ static BPrintfStatus send_to_board(const LEDState *leds)
 		clear_leds();
 		return BPRINTF_SUCCESS; //We can't get an error code from clear_leds because gpio_put is void.
 	#endif
-	//Call on x times with pins we need to activate.
-	//Sleep for 1 second.
-	//Call off x times with pins we need to deactivate.
-	//Return BPRINTF_BOARD_SEND_ERR for error.
 	return BPRINTF_SUCCESS;
 }
 
@@ -95,7 +91,7 @@ int bprintf(const char *fmt, ...)
 	bsize_t str_idx = 0;
 	while (*fmt != '\0')
 	{
-		if (str_idx == BPRINTF_BUF_LEN) //TODO figure out why this doesn't prevent buffer overflow.
+		if (str_idx == BPRINTF_BUF_LEN)
 		{
 			_debug_printf("Breaking.");
 			buffer[BPRINTF_BUF_LEN] = '\0';
@@ -193,8 +189,7 @@ int bprintf(const char *fmt, ...)
 				va_end(args);
 				return -1;
 			}
-			//SLEEP
-			#ifndef BPRINTF_DEBUG //We don't need big spaces in debug output.
+			#ifndef BPRINTF_DEBUG
 				if (clear_leds() == BPRINTF_PUTCHAR_ERR)
 				{
 					return -1;
