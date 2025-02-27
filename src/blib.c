@@ -69,24 +69,10 @@ char *ulltos(unsigned long long n) //We can't pass an unsigned long long into a 
 	return res;
 }
 
-static BBool is_roman_numeral(char c)
-{
-	const char *roman_numerals = "CDILMVX";
-	const bsize_t roman_numerals_len = 7;
-
-	for (bsize_t i = 0; i < roman_numerals_len; i++)
-	{
-		if (c == roman_numerals[i])
-		{
-			return BTRUE;
-		}
-	}
-	return BFALSE;
-}
-
 char *rtods(const char *s) //TODO add long support when bug(s) fixed.
 {
-	int map[89] = {
+	const bsize_t MAP_LEN = 89;
+	int map[MAP_LEN] = {
 		['C'] = 100,
 		['D'] = 500,
 		['I'] = 1,
@@ -107,7 +93,7 @@ char *rtods(const char *s) //TODO add long support when bug(s) fixed.
 
     while (i >= 0)
     {
-		if (!is_roman_numeral(s[i]))
+		if (s[i] < 0 || s[i] > (char)MAP_LEN || !map[(bsize_t)s[i]])
 		{
 			return "<INVALID ROMAN NUMERAL>"; //I'd love to eventually implement support for an actual error code from our enum here, but it's not practical in the immediate future. I could also return an empty string literal like above. Open to suggestions!
 		}
