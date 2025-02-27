@@ -21,7 +21,6 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 
 	char *stringifyn(long long n, BBool is_signed);
 	char *ulltos(unsigned long long n);
-	static BBool is_roman_numeral(char c);
 	char *rtods(const char *s);
 
 #endif //BLIB_H

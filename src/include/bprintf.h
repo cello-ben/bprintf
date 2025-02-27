@@ -23,6 +23,8 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 
 	typedef unsigned int bsize_t;
 
+	
+
 	typedef enum LEDState {
 		LED_OFF,
 		LED_ON
@@ -38,10 +40,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 	} BPrintfStatus;
 
 	int _debug_printf(const char *fmt, ...);
-	static BPrintfStatus _debug_print_char(const LEDState *grid);
 	void init_leds(void);
-	static void clear_leds(void);
-	static BPrintfStatus send_to_board(const LEDState *leds);
 	BPrintfStatus bputchar(char c);
 	int bprintf(const char *fmt, ...);
 
