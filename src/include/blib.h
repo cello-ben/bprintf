@@ -14,8 +14,6 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 	#define LONG_LONG_MAX_DIGITS_LEN 19
 	#define ULONG_LONG_MAX_DIGITS_LEN 20
 
-	// #define ABS(x) (x) < 0 ? (-x) : (x) //Only used outside of 
-
 	typedef enum BBool {
 		BFALSE,
 		BTRUE
@@ -23,6 +21,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 
 	char *stringifyn(long long n, BBool is_signed);
 	char *ulltos(unsigned long long n);
+	static BBool is_roman_numeral(char c);
 	char *rtods(const char *s);
 
 #endif //BLIB_H

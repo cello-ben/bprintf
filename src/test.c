@@ -200,7 +200,7 @@ BPrintfStatus test_unsigned_long_long(void)
 
 BPrintfStatus test_zeroes(void)
 {
-    if (_debug_printf("Testing 0 with %%d format specifier.\n") < 0)
+    if (_debug_printf("Testing 0 with %%d format specifier.\n") < 0) //TODO add more format specifiers (and then remove ternary operator from return)
     {
         return BPRINTF_DEBUG_PRINT_ERR;
     }

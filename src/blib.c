@@ -57,7 +57,7 @@ char *ulltos(unsigned long long n) //TODO figure out why we can't use the main s
 	}
 	static char res[ULONG_LONG_MAX_DIGITS_LEN + 1]; //Workaround for no heap.
 	const bsize_t len = idx;
-	res[idx--] = '\0'; //TODO figure out for sure if we need this.
+	res[idx--] = '\0';
 	for (bsize_t i = 0; i < len; i++)
 	{
 		res[i] = tmp[idx--];
@@ -66,7 +66,7 @@ char *ulltos(unsigned long long n) //TODO figure out why we can't use the main s
 	// return stringifyn(n, BFALSE);
 }
 
-BBool is_roman_numeral(char c)
+static BBool is_roman_numeral(char c)
 {
 	const char *roman_numerals = "CDILMVX";
 	const bsize_t roman_numerals_len = 7;
