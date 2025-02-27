@@ -9,6 +9,8 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 #include "blib.h"
 #include "bstring.h"
 
+#define ROMAN_MAP_LEN 89
+
 // Potentially wastes a few extra bytes here and there, but nothing we can't handle.
 char *stringifyn(long long n, BBool negative) //GCC on Linux will error out with current compilation flags if we try to take ABS of an unsigned type, so we need to do it conditionally.
 {
@@ -71,8 +73,7 @@ char *ulltos(unsigned long long n) //We can't pass an unsigned long long into a 
 
 char *rtods(const char *s) //TODO add long support when bug(s) fixed.
 {
-	const bsize_t MAP_LEN = 89;
-	int map[MAP_LEN] = {
+	int map[ROMAN_MAP_LEN] = {
 		['C'] = 100,
 		['D'] = 500,
 		['I'] = 1,
@@ -93,7 +94,7 @@ char *rtods(const char *s) //TODO add long support when bug(s) fixed.
 
     while (i >= 0)
     {
-		if (s[i] < 0 || s[i] > (char)MAP_LEN || !map[(bsize_t)s[i]])
+		if (s[i] < 0 || s[i] > ROMAN_MAP_LEN || !map[(bsize_t)s[i]])
 		{
 			return "<INVALID ROMAN NUMERAL>"; //I'd love to eventually implement support for an actual error code from our enum here, but it's not practical in the immediate future. I could also return an empty string literal like above. Open to suggestions!
 		}
