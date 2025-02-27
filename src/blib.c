@@ -12,15 +12,15 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 // Potentially wastes a few extra bytes here and there, but nothing we can't handle.
 char *stringifyn(long long n, BBool negative) //GCC on Linux will error out with current compilation flags if we try to take ABS of an unsigned type, so we need to do it conditionally.
 {
-	if (n == 0) //Since we use n itself as a conditional later, we need to handle the edge case of actually wanting to print a zero.
+	if (n == 0)
 	{
-		return "0";
+		return "0"; //Since we use n itself as a conditional later, we need to handle the edge case of actually wanting to print a zero.
 	}
 	if (negative == BTRUE) //TODO make sure that this still works with LLONG_MIN and LLONG_MAX. Shouldn't get triggered with ULLONG_MAX since it can't be negative.
 	{
 		n = -n;
 	}
-	char tmp[LONG_LONG_MAX_DIGITS_LEN + 2]; //unsigned long long can be up to 20 digits, we add 1 for the null terminator. 
+	char tmp[LONG_LONG_MAX_DIGITS_LEN + 2]; //unsigned long long can be up to 20 digits on my development machine, and we add 1 for the null terminator. 
 	//It can't be negative, so we don't need to worry about that sign taking up space, and a signed long long on my Mac takes up
 	//a maximum of 19 digits. Of course, this may be platform-dependent, so it's something to revisit later on. It should be a matter of
 	//simply changing the max digit constants in blib.h. However, we could run into issues if, for example, long long can hold the same
@@ -46,8 +46,12 @@ char *stringifyn(long long n, BBool negative) //GCC on Linux will error out with
 	return res;
 }
 
-char *ulltos(unsigned long long n) //TODO figure out why we can't use the main stringifyn function for this one as written.
+char *ulltos(unsigned long long n) //We can't pass an unsigned long long into a function that can only take a long long, so we need a special function for the former.
 {
+	if (n == 0)
+	{
+		return "0"; //Same principle as above.
+	}
 	char tmp[ULONG_LONG_MAX_DIGITS_LEN + 1]; //Extra char for null terminator.
 	bsize_t idx = 0;
 	while (n > 0)
@@ -63,7 +67,6 @@ char *ulltos(unsigned long long n) //TODO figure out why we can't use the main s
 		res[i] = tmp[idx--];
 	}
 	return res;
-	// return stringifyn(n, BFALSE);
 }
 
 static BBool is_roman_numeral(char c)
