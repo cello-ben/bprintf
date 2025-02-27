@@ -198,6 +198,15 @@ BPrintfStatus test_unsigned_long_long(void)
     return bprintf("%llu IS A HIGH NUMBER.", ULLONG_MAX) < 0 ? BPRINTF_BPRINTF_ERR : BPRINTF_SUCCESS;
 }
 
+BPrintfStatus test_zeroes(void)
+{
+    if (_debug_printf("Testing 0 with %%d format specifier.\n") < 0)
+    {
+        return BPRINTF_DEBUG_PRINT_ERR;
+    }
+    return bprintf("%d", 0) < 0 ? BPRINTF_BPRINTF_ERR: BPRINTF_SUCCESS;
+}
+
 BPrintfStatus test_char(void)
 {
     if (_debug_printf("Testing %%c format specifier.\n") < 0)
@@ -213,7 +222,7 @@ BPrintfStatus test_roman(void)
     {
         return BPRINTF_DEBUG_PRINT_ERR;
     }
-    return bprintf("%R WAS ROMAN, MY FRIEND.", "MCDIV") < 0 ? BPRINTF_BPRINTF_ERR : BPRINTF_SUCCESS;
+    return bprintf("%R WAS ROMAN...NOT ANYMORE.", "MMCMVI") < 0 ? BPRINTF_BPRINTF_ERR : BPRINTF_SUCCESS;
 }
 
 BPrintfStatus test_string(void)

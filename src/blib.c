@@ -12,7 +12,11 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 // Potentially wastes a few extra bytes here and there, but nothing we can't handle.
 char *stringifyn(long long n, BBool negative) //GCC on Linux will error out with current compilation flags if we try to take ABS of an unsigned type, so we need to do it conditionally.
 {
-	if (negative == BTRUE)
+	if (n == 0) //Since we use n itself as a conditional later, we need to handle the edge case of actually wanting to print a zero.
+	{
+		return "0";
+	}
+	if (negative == BTRUE) //TODO make sure that this still works with LLONG_MIN and LLONG_MAX. Shouldn't get triggered with ULLONG_MAX since it can't be negative.
 	{
 		n = -n;
 	}
@@ -62,6 +66,21 @@ char *ulltos(unsigned long long n) //TODO figure out why we can't use the main s
 	// return stringifyn(n, BFALSE);
 }
 
+BBool is_roman_numeral(char c)
+{
+	const char *roman_numerals = "CDILMVX";
+	const bsize_t roman_numerals_len = 7;
+
+	for (bsize_t i = 0; i < roman_numerals_len; i++)
+	{
+		if (c == roman_numerals[i])
+		{
+			return BTRUE;
+		}
+	}
+	return BFALSE;
+}
+
 char *rtods(const char *s) //TODO add long support when bug(s) fixed.
 {
 	int map[89] = {
@@ -78,8 +97,17 @@ char *rtods(const char *s) //TODO add long support when bug(s) fixed.
 	int i = (int)len - 1; //Linux GCC gets mad if we do the while conditional with an unsigned type.
     int num = 0;
 	
+	if (!*s)
+	{
+		return ""; //We got an empty string, so we will respond in kind. At least that's how we'll handle this for now.
+	}
+
     while (i >= 0)
     {
+		if (!is_roman_numeral(s[i]))
+		{
+			return "<INVALID ROMAN NUMERAL>"; //I'd love to eventually implement support for an actual error code from our enum here, but it's not practical in the immediate future. I could also return an empty string literal like above. Open to suggestions!
+		}
         int curr = map[(bsize_t)s[i]];
         if (i != 0)
         {

@@ -81,7 +81,7 @@ static void clear_leds(void)
 static BPrintfStatus send_to_board(const LEDState *leds)
 {
 	#ifdef BPRINTF_DEBUG
-		return _debug_print_char(leds);
+		return _debug_print_char(leds) < 0 ? BPRINTF_DEBUG_PRINT_ERR : BPRINTF_SUCCESS;
 	#else
 		for (bsize_t i = 0; i < CHAR_WIDTH * CHAR_HEIGHT; i++)
 		{
@@ -89,9 +89,8 @@ static BPrintfStatus send_to_board(const LEDState *leds)
 		}
 		sleep_ms(SLEEP_MSEC);
 		clear_leds();
-		return BPRINTF_SUCCESS; //We can't get an error code from clear_leds because gpio_put is void.
 	#endif
-	return BPRINTF_SUCCESS;
+	return BPRINTF_SUCCESS; //We can't get an error code from clear_leds because gpio_put is void. The only function call in here that can signal an error is _debug_print_char, which returns early here if needed.
 }
 
 BPrintfStatus bputchar(char c)
@@ -189,7 +188,6 @@ int bprintf(const char *fmt, ...)
 				default:
 					//We don't support printing the '%' sign (or anything not covered above, for that matter), so there's no point in putting it in the buffer.
 					break;
-
 			}
 		}
 		else

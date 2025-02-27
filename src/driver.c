@@ -30,6 +30,7 @@ int main(void)
 		assert(test_signed_long_long_positive() == BPRINTF_SUCCESS);
 		assert(test_signed_long_long_negative() == BPRINTF_SUCCESS);
 		assert(test_unsigned_long_long() == BPRINTF_SUCCESS);
+		assert(test_zeroes() == BPRINTF_SUCCESS);
 		assert(test_char() == BPRINTF_SUCCESS);
 		assert(test_roman() == BPRINTF_SUCCESS);
 		assert(test_string() == BPRINTF_SUCCESS);

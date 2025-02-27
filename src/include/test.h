@@ -21,6 +21,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
     BPrintfStatus test_signed_long_long_positive(void);
     BPrintfStatus test_signed_long_long_negative(void);
     BPrintfStatus test_unsigned_long_long(void);
+    BPrintfStatus test_zeroes(void);
     BPrintfStatus test_char(void);
     BPrintfStatus test_roman(void);
     BPrintfStatus test_string(void);
