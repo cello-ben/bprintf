@@ -82,9 +82,8 @@ char *rtods(const char *s) //TODO add long support when bug(s) fixed.
 		['V'] = 5,
 		['X'] = 10
 	};
-
-    bsize_t len = bstrlen(s);
-	int i = (int)len - 1; //Linux GCC gets mad if we do the while conditional with an unsigned type.
+	
+	int i = (int)bstrlen(s) - 1; //Linux GCC gets mad if we do the while conditional with an unsigned type.
     int num = 0;
 	
 	if (!*s)
