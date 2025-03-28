@@ -9,12 +9,10 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 
 bsize_t bstrlen(const char *s)
 {
-	const char *tmp = s;
 	bsize_t len = 0;
-	while (*tmp != '\0')
+	while (*s++ != '\0')
 	{
 		len++;
-		tmp++;
 	}
 	return len;
 }
