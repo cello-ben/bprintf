@@ -325,7 +325,7 @@ static const LEDState ASCII_MAP[128][9] = {
 		LED_ON, LED_ON, LED_ON
 	},
 	{
-		LED_ON, LED_OFF, LED_OFF, //Grave accent/backtick
+		LED_ON, LED_OFF, LED_OFF, //Backtick
 		LED_OFF, LED_ON, LED_OFF,
 		LED_OFF, LED_OFF, LED_OFF
 	},
