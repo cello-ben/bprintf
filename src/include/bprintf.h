@@ -6,42 +6,42 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 */
 
 #ifndef BPRINTF_H
-	#define BPRINTF_H
+#define BPRINTF_H
 
-	#define BPRINTF_DEBUG
-	#define BPRINTF_SKIP_PUTCHAR
+#define BPRINTF_BUF_LEN 512
 
-	#define BPRINTF_BUF_LEN 512 //Default Pico stack size is 2048. This should be a safe number that leaves us plenty of wiggle room. And let's be real, who wants to sit and wait for an LED matrix to light up 512 different times?
+#define BPRINTF_DEBUG
+#define BPRINTF_SKIP_PUTCHAR
 
-	#define CHAR_WIDTH 3
-	#define CHAR_HEIGHT 3
+#define CHAR_WIDTH 3
+#define CHAR_HEIGHT 3
 
-	#define NUM_OFFSET 48
-	#define ALPHA_OFFSET 65
+#define SLEEP_MSEC 750
 
-	#define SLEEP_MSEC 750
+typedef unsigned int bsize_t;
 
-	typedef unsigned int bsize_t;
+typedef enum BBool {
+    BFALSE,
+    BTRUE
+} BBool;
 
-	
+typedef enum BPrintfStatus {
+    BPRINTF_BPRINTF_ERR = -1,
+    BPRINTF_SUCCESS,
+    BPRINTF_INVALID_CHAR_ERR,
+    BPRINTF_SEND_TO_BOARD_ERR,
+    BPRINTF_PUTCHAR_ERR,
+    BPRINTF_DEBUG_PRINT_ERR
+} BPrintfStatus;
 
-	typedef enum LEDState {
-		LED_OFF,
-		LED_ON
-	} LEDState;
+typedef enum LEDState {
+    LED_OFF,
+    LED_ON
+} LEDState;
 
-	typedef enum BPrintfStatus {
-		BPRINTF_BPRINTF_ERR = -1,
-		BPRINTF_SUCCESS,
-		BPRINTF_INVALID_CHAR_ERR,
-		BPRINTF_BOARD_SEND_ERR,
-		BPRINTF_PUTCHAR_ERR,
-		BPRINTF_DEBUG_PRINT_ERR
-	} BPrintfStatus;
-
-	int _debug_printf(const char *fmt, ...);
-	void init_leds(void);
-	BPrintfStatus bputchar(char c);
-	int bprintf(const char *fmt, ...);
+int _debug_printf(const char *fmt, ...);
+void init_leds(void);
+BPrintfStatus bputchar(char c);
+int bprintf(const char *fmt, ...);
 
 #endif //BPRINTF_H

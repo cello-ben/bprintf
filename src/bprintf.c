@@ -8,16 +8,15 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 #include <stdarg.h>
 
 #include "bprintf.h"
-// #include "ascii.h"
 #include "blib.h"
 
-#ifdef BPRINTF_DEBUG //TODO figure out why this has to come after other includes.
-	#include <stdio.h>
+#ifdef BPRINTF_DEBUG
+    #include <stdio.h>
 #else
-	#include "pico/stdlib.h"
+    #include "pico/stdlib.h"
 #endif
 
-const int LED_MAP[CHAR_WIDTH * CHAR_HEIGHT] = {20, 22, 19, 17, 18, 16, 21, 10, 12};
+const int LED_MAP[CHAR_WIDTH * CHAR_HEIGHT] = {20, 22, 19, 17, 18, 16, 21, 10, 12}; //This will likely need to be changed for other boards; it's based on arbitrary places where the LEDs happened to fit nicely on my breadboard.
 
 static const LEDState ASCII_MAP[128][9] = {
 	{LED_OFF}, //Placeholders
@@ -380,184 +379,186 @@ int _debug_printf(const char *fmt, ...)
 
 static BPrintfStatus _debug_print_char(const LEDState *grid)
 {
-	#ifdef BPRINTF_DEBUG
-		for (int i = 0; i < CHAR_WIDTH; i++)
-		{
-			for (int j = 0; j < CHAR_HEIGHT; j++)
-			{
-				size_t idx = (i * CHAR_WIDTH) + j;
-				if (putchar(grid[idx] == LED_ON ? '*' : ' ') == EOF)
-				{
-					return BPRINTF_PUTCHAR_ERR;
-				}
-			}
-			if(putchar('\n') == EOF)
-			{
-				return BPRINTF_PUTCHAR_ERR;
-			}
-		}
-		if(putchar('\n') == EOF)
-		{
-			return BPRINTF_PUTCHAR_ERR;
-		}
-	#endif
-	return BPRINTF_SUCCESS;
+    #ifdef BPRINTF_DEBUG
+    for (int i = 0; i < CHAR_WIDTH; i++)
+    {
+        for (int j = 0; j < CHAR_HEIGHT; j++)
+        {
+            size_t idx = (i * CHAR_WIDTH) + j;
+            if (putchar(grid[idx] == LED_ON ? '*' : ' ') == EOF)
+            {
+                return BPRINTF_PUTCHAR_ERR;
+            }
+        }
+        if (putchar('\n') == EOF)
+        {
+            return BPRINTF_PUTCHAR_ERR;
+        }
+    }
+    if (putchar('\n') == EOF)
+    {
+        return BPRINTF_PUTCHAR_ERR;
+    }
+    #endif
+    return BPRINTF_SUCCESS;
 }
 
 void init_leds(void)
 {
-	#ifndef BPRINTF_DEBUG
-		for (bsize_t i = 0; i < CHAR_WIDTH * CHAR_HEIGHT; i++)
-		{
-			gpio_init(LED_MAP[i]);
-			gpio_set_dir(LED_MAP[i], GPIO_OUT);
-		}
-	#endif
+    #ifndef BPRINTF_DEBUG
+    for (bsize_t i = 0; i < CHAR_WIDTH * CHAR_HEIGHT; i++)
+    {
+        gpio_init(LED_MAP[i]);
+        gpio_set_dir(LED_MAP[i], GPIO_OUT);
+    }
+    #endif
 }
 
 static void clear_leds(void)
 {
-	#ifndef BPRINTF_DEBUG
-		for (bsize_t i = 0; i < CHAR_WIDTH * CHAR_HEIGHT; i++)
-		{
-				gpio_put(LED_MAP[i], LED_OFF);
-		}
-	#endif
+    #ifndef BPRINTF_DEBUG
+    for (bsize_t i = 0; i < CHAR_WIDTH * CHAR_HEIGHT; i++)
+    {
+        gpio_put(LED_MAP[i], LED_OFF);
+    }
+    #endif
 }
 
 static BPrintfStatus send_to_board(const LEDState *leds)
 {
-	#ifdef BPRINTF_DEBUG
-		return _debug_print_char(leds) < 0 ? BPRINTF_DEBUG_PRINT_ERR : BPRINTF_SUCCESS;
-	#else
-		for (bsize_t i = 0; i < CHAR_WIDTH * CHAR_HEIGHT; i++)
-		{
-			gpio_put(LED_MAP[i], leds[i]);
-		}
-		sleep_ms(SLEEP_MSEC);
-		clear_leds();
-	#endif
-	return BPRINTF_SUCCESS; //We can't get an error code from clear_leds because gpio_put is void. The only function call in here that can signal an error is _debug_print_char, which returns early here if needed.
+    #ifdef BPRINTF_DEBUG
+    return _debug_print_char(leds) < 0 ? BPRINTF_DEBUG_PRINT_ERR : BPRINTF_SUCCESS;
+    #else
+    for (bsize_t i = 0; i < CHAR_WIDTH * CHAR_HEIGHT; i++)
+    {
+        gpio_put(LED_MAP[i], leds[i]);
+    }
+    sleep_ms(SLEEP_MSEC);
+    clear_leds();
+    #endif
+    return BPRINTF_SUCCESS;
 }
 
 BPrintfStatus bputchar(char c)
 {
-	return send_to_board(ASCII_MAP[(bsize_t)c]) == BPRINTF_SUCCESS ? BPRINTF_SUCCESS : BPRINTF_INVALID_CHAR_ERR; //Errors only show up in debug mode, based on not getting return values from Pico API calls. 	
+    return send_to_board(ASCII_MAP[(bsize_t)c]) == BPRINTF_SUCCESS ? BPRINTF_SUCCESS : BPRINTF_INVALID_CHAR_ERR;
 }
 
 int bprintf(const char *fmt, ...)
 {
-	char buffer[BPRINTF_BUF_LEN + 1];
-	va_list args;
-	va_start(args, fmt);
+    char buffer[BPRINTF_BUF_LEN + 1];
+    va_list args;
+    va_start(args, fmt);
 
-	//Parse format specifiers.
-	bsize_t str_idx = 0;
-	while (*fmt != '\0')
-	{
-		if (str_idx >= BPRINTF_BUF_LEN) //Compiling on my Mac gives me no issues here. Compiling for the Pi itself on windows shows a warning about buffer overflow. There aren't any code paths that I've noticed that will bring us into an overflow if we are just checking for equality, but I need to revisit later.
-		{
-			_debug_printf("Breaking.");
-			buffer[BPRINTF_BUF_LEN] = '\0';
-			va_end(args);
-			return str_idx;
-		}
-		if (*fmt == '%')
-		{
-			char c;
-			long long n;
-			char *s;
-			switch (*(fmt + 1)) //Massive, hideous switch statement. I'm no happier about it than you are. However, this seems to be the most straightforward way to deal with the logic since we don't have a heap (very much open to being enlightened otherwise).
-			{
-				case 'c':
-					c = (char)va_arg(args, int); //char gets promoted to int, so we need to work around. Cast is for clarity.
-					buffer[str_idx++] = c;
-					fmt++;
-					break;
-				case 'd':
-				case 'i':
-					n = (long long)va_arg(args, int);
-					s = stringifyn(n, (BBool)(n < 0));
-					goto copy_to_buffer; //Easily avoided with a helper function if we had a heap, but here we are. Again, open to suggestions as to how to improve this!
-				case 'l':
-					c = *(fmt + 2); //Get the next char to test what kind of long the user wants to print.
-					if (c == 'd' || c == 'i')
-					{
-						n = (long long)va_arg(args, long);
-						s = stringifyn(n, (BBool)(n < 0));
-						fmt++;
-					}
-					else if (c == 'u')
-					{
-						n = (long long)va_arg(args, unsigned long);
-						s = stringifyn(n, (BBool)(n < 0));
-						fmt++;
-					}
-					else if (c == 'l')
-					{
-						c = *(fmt + 3); //Get the third and final potential char of the format specifier for signed or unsigned.
-						fmt++;
-						if (c == 'd' || c == 'i')
-						{
-							n = va_arg(args, long long);
-							s = stringifyn(n, (BBool)(n < 0));
-							fmt++;
-						}
-						else if (c == 'u')
-						{
-							s = ulltos(va_arg(args, unsigned long long));
-							fmt++;
-						}
-						else
-						{
-							s = "";
-						}
-					}
-					else
-					{
-						s = "";
-					}
-					goto copy_to_buffer;
-				case 's':
-					s = va_arg(args, char*);
-					goto copy_to_buffer;
-				case 'R':
-					//Why not include Roman numeral to decimal string conversion? ;)
-					s = rtods(va_arg(args, char*));
-					goto copy_to_buffer;
-				copy_to_buffer:
-					fmt++;
-					while (*s != '\0' && str_idx < BPRINTF_BUF_LEN)
-					{
-						buffer[str_idx++] = *s;
-						s++;
-					}
-				default:
-					//We don't support printing the '%' sign (or anything not covered above, for that matter), so there's no point in putting it in the buffer.
-					break;
-			}
-		}
-		else
-		{
-			buffer[str_idx++] = *fmt;
-		}
-		fmt++;
-	}
-	buffer[str_idx] = '\0';
-	_debug_printf("%s\n", buffer);
-	for (bsize_t i = 0; i < str_idx; i++)
-	{
-		#ifndef BPRINTF_SKIP_PUTCHAR
-			if (bputchar(buffer[i]) == BPRINTF_PUTCHAR_ERR)
-			{
-				va_end(args);
-				return -1;
-			}
-			#ifndef BPRINTF_DEBUG
-				clear_leds();
-			#endif
-		#endif
-	}
-	va_end(args); //TODO figure out if this needs to stay here. 
-	return str_idx; //Characters written, excluding null terminator
+    //Parse format specifiers.
+    bsize_t str_idx = 0;
+    while (*fmt != '\0')
+    {
+        if (str_idx >= BPRINTF_BUF_LEN)
+        {
+            buffer[BPRINTF_BUF_LEN] = '\0';
+            va_end(args);
+            return str_idx;
+        }
+        if (*fmt == '%')
+        {
+            char c;
+            long long n;
+            char *s;
+            switch(*(fmt + 1))
+            {
+                case 'c':
+                    c = (char)va_arg(args, int); //We put "int" in as the type because char is promoted.
+                    buffer[str_idx++] = c;
+                    fmt++;
+                    break;
+                case 'd':
+                case 'i':
+                    n = (long long)va_arg(args, int);
+                    s = stringifyn(n, (BBool)(n < 0));
+                    goto copy_to_buffer;
+                case 'l':
+                    c = *(fmt + 2); //We want to see if it's a regular long or a long long.
+                    if (c == 'd' || c == 'i')
+                    {
+                        n = (long long)va_arg(args, long); //Still casting to a long long since that's what n is.
+                        s = stringifyn(n, (BBool)(n < 0));
+                        fmt++;
+                    }
+                    else if (c == 'u')
+                    {
+                        n = (long long)va_arg(args, unsigned long); //See above.
+                        s = stringifyn(n, (BBool)(n < 0));
+                        fmt++;
+                    }
+                    else if (c == 'l')
+                    {
+                        c = *(fmt + 3); //Third and final potential piece of the format specifier.
+                        fmt++;
+                        if (c == 'd' || c == 'i')
+                        {
+                            n = va_arg(args, long long);
+                            s = stringifyn(n, (BBool)(n < 0));
+                            fmt++;
+                        }
+                        else if (c == 'u')
+                        {
+                            s = ulltos(va_arg(args, unsigned long long));
+                            fmt++;
+                        }
+                        else
+                        {
+                            s = ""; //We hit something invalid.
+                        }
+                    }
+                    else
+                    {
+                        s = ""; //Same as above.
+                        
+                    }
+                    goto copy_to_buffer;
+            case 's':
+                s = va_arg(args, char*);
+                goto copy_to_buffer;
+            case 'R':
+                s = rtods(va_arg(args, char*));
+                goto copy_to_buffer;
+            copy_to_buffer:
+                fmt++;
+                while (*s != '\0' && str_idx < BPRINTF_BUF_LEN)
+                {
+                    buffer[str_idx++] = *s;
+                    s++;
+                }
+            default:
+                break; //Nothing to put in the buffer if we can't print it. 
+            }        
+        }
+        else
+        {
+            buffer[str_idx++] = *fmt; //Just putting a regular old character in.
+            
+        }
+        fmt++;
+    }
+        
+    fmt++;
+    buffer[str_idx] = '\0';
+    _debug_printf("%s\n", buffer);
+    for (bsize_t i = 0; i < str_idx; i++)
+    {
+        #ifndef BPRINTF_SKIP_PUTCHAR
+        if (bputchar(buffer[i]) == BPRINTF_PUTCHAR_ERR)
+        {
+            va_end(args);
+            return -1;
+        }
+        #ifndef BPRINTF_DEBUG
+            clear_leds();
+        #endif
+        #endif
+    }
+    va_end(args);
+    return str_idx;
 }
+

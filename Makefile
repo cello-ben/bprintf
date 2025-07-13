@@ -14,4 +14,4 @@ debug:
 	gcc -g -o bprintf_debug $(SRC_DIR)/*.c $(INC) $(CFLAGS) 
 
 clean:
-	rm -rf bprintf_debug *.a *.dSYM #TODO figure out if more things need to be removed later.
+	rm -rf bprintf_debug *.a *.dSYM build #TODO figure out if more things need to be removed later.

@@ -1,17 +1,12 @@
-[![Build](https://github.com/cello-ben/bprintf/actions/workflows/build.yaml/badge.svg)](https://github.com/cello-ben/bprintf/actions/workflows/build.yaml)
-
 # bprintf
 
-I'm Ben and I want to create my own `printf`...so...`bprintf`. This is my first foray into embedded programming. I have gotten the Raspberry Pi Pico set up and familiarized myself with the basics (managed to build and run the obligatory blinking LED sample program after some troubleshooting). Here are (some) next steps:
+This is my first foray into embedded programming. However, it is fully testable in a desktop environment. It's a work in progress, and with that in mind, here are (some) next steps:
 
 - Implement basic floating point/double format specifiers.
 
 - Audit the code to be more defensive and prevent overflows and the like. The stakes are low since this project is purely for fun and learning, but good practice is good practice.
 
 - Expand both the breadboard setup and the code to support a 4x4 matrix instead, in order to make the characters look like...errr...the characters.
-
-# In Action
-[Printing Digits](https://youtube.com/shorts/oyurObTua48)
 
 # Format Specifiers Currently Implemented
 
@@ -33,6 +28,10 @@ I'm Ben and I want to create my own `printf`...so...`bprintf`. This is my first 
 
 # Building
 
+## Local Development
+If you want to test it out on a computer, you can instead run `make debug`. Once finished, `make clean` will get rid of everything created by `make`, including the executable. To run the tests in `driver.c`, simply run the bprintf_debug executable. The new Roman numeral feature can be easily tested. It is commented out at present, but can be uncommented for testing when functionality is implemented.
+
+## Board Deployment
 The Pico SDK has a most unwieldy build system, based upon CMake. Once set up, though, it is relatively straightforward to use with VS Code. 
 
 First, clone the project and open it up in VS Code. Then, you can install the Raspberry Pi Pico extension. Assuming you have CMake installed, you should be able to click the microcontroller-looking icon on the sidebar and choose "Import Project". Select the current working directory and whatever options you desire. I kept it at its defaults when testing, except that I went with SDK version 2.0.0 (not default at time of writing).
@@ -40,8 +39,6 @@ First, clone the project and open it up in VS Code. Then, you can install the Ra
 Once imported, the toolchain should install automatically. You may notice that it has created `pico_sdk_import.cmake`, as well as a `.vscode` directory and a `.build` directory. Finally, you can choose to run the project on a Raspberry Pi Pico connected in BOOTSEL mode by, in the panel revealed by the microcontroller-looking icon, choosing "Run Project (USB)".
 
 If it is not working, you may need to change what Pico version you are using under "Switch Board" (in that same panel).
-
-If you want to test it out on a computer, you can instead run `make debug`. Once finished, `make clean` will get rid of everything created by `make`, including the executable. 
 
 # Freestanding
 

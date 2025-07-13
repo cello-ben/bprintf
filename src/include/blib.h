@@ -6,21 +6,17 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 */
 
 #ifndef BLIB_H
-	#define BLIB_H
+#define BLIB_H
 
-	#define INT_MAX_DIGITS_LEN 10
-	#define LONG_MAX_DIGITS_LEN 19
-	#define ULONG_MAX_DIGITS_LEN 20
-	#define LONG_LONG_MAX_DIGITS_LEN 19
-	#define ULONG_LONG_MAX_DIGITS_LEN 20
+#define LONG_LONG_MAX_DIGITS_LEN 19 //Works fine on my machine and Pico, YMMV.
+#define ULONG_LONG_MAX_DIGITS_LEN 20 //Same as above.
+#define NUM_OFFSET 48
 
-	typedef enum BBool {
-		BFALSE,
-		BTRUE
-	} BBool;
+#define ROMAN_MAP_LEN 89
 
-	char *stringifyn(long long n, BBool is_signed);
-	char *ulltos(unsigned long long n);
-	char *rtods(const char *s);
+char *stringifyn(long long n, BBool negative);
+char *ulltos(unsigned long long n);
+char *rtods(const char *s);
 
 #endif //BLIB_H
+

@@ -16,6 +16,7 @@ BPrintfStatus test_special(void)
     {
         return BPRINTF_DEBUG_PRINT_ERR;
     }
+
     const char *special_chars = "\"'()+,-./:=[\\]^_`|";
     while (*special_chars != '\0')
     {
@@ -34,17 +35,17 @@ BPrintfStatus test_alpha_caps(void)
     {
         return BPRINTF_DEBUG_PRINT_ERR;
     }
-    
+
     const bsize_t ALPHA_CAPS_MIN = 65;
     const bsize_t ALPHA_CAPS_MAX = 90;
 
-    for (bsize_t i = ALPHA_CAPS_MIN; i <= ALPHA_CAPS_MAX; i++)
-	{
-		if (bputchar(i) < 0)
+    for (bsize_t i = ALPHA_CAPS_MIN; i < ALPHA_CAPS_MAX; i++)
+    {
+        if (bputchar(i) < 0)
         {
             return BPRINTF_PUTCHAR_ERR;
         }
-	}
+    }
     return BPRINTF_SUCCESS;
 }
 
@@ -58,7 +59,7 @@ BPrintfStatus test_numeric(void)
     const bsize_t NUM_MIN = 48;
     const bsize_t NUM_MAX = 57;
 
-    for (bsize_t i = NUM_MIN; i <= NUM_MAX; i++)
+    for (bsize_t i = NUM_MIN; i < NUM_MAX; i++)
     {
         if (bputchar(i) < 0)
         {
@@ -70,26 +71,26 @@ BPrintfStatus test_numeric(void)
 
 BPrintfStatus test_signed_int_positive(void)
 {
-    if (_debug_printf("Testing %%d format specifier.\n") < 0)
+    if (_debug_printf("Testing %%d format specifier (positive).\n") < 0)
     {
         return BPRINTF_DEBUG_PRINT_ERR;
     }
-    return bprintf("IT IS FEBRUARY AKA %d", 2) < 0 ? BPRINTF_BPRINTF_ERR: BPRINTF_SUCCESS;
+    return bprintf("IT IS FEBRUARY, AKA %d", 2) < 0 ? BPRINTF_BPRINTF_ERR : BPRINTF_SUCCESS;
 }
 
 BPrintfStatus test_signed_int_negative(void)
 {
-    if (_debug_printf("Testing %%d format specifier.\n") < 0)
+    if (_debug_printf("Testing %%d format specifier (negative).\n") < 0)
     {
         return BPRINTF_DEBUG_PRINT_ERR;
     }
-    if(bprintf("TEMPERATURE IS %d CELSIUS.", -3) < 0)
+    if (bprintf("TEMPERATURE IS %d CELSIUS.", -3) < 0)
     {
-    return BPRINTF_BPRINTF_ERR;
+        return BPRINTF_BPRINTF_ERR;
     }
-    if(bprintf("%d IS A LOW NUMBER.", INT_MIN + 1) < 0) //TODO figure out a workaround for needing to add 1 to minimum values, if it exists.
+    if (bprintf("%d IS A LOW NUMBER.", INT_MIN + 1) < 0)
     {
-    return BPRINTF_BPRINTF_ERR;
+        return BPRINTF_DEBUG_PRINT_ERR;
     }
     return BPRINTF_SUCCESS;
 }
@@ -104,7 +105,7 @@ BPrintfStatus test_signed_long_positive(void)
     {
         return BPRINTF_BPRINTF_ERR;
     }
-    if (_debug_printf("Testing %%li format specifier (positive).\n") < 0)
+    if (_debug_printf("Testing %li format specifier (positive).\n") < 0)
     {
         return BPRINTF_DEBUG_PRINT_ERR;
     }
@@ -113,7 +114,6 @@ BPrintfStatus test_signed_long_positive(void)
         return BPRINTF_BPRINTF_ERR;
     }
     return BPRINTF_SUCCESS;
-    
 }
 
 BPrintfStatus test_signed_long_negative(void)
@@ -139,7 +139,6 @@ BPrintfStatus test_signed_long_negative(void)
 
 BPrintfStatus test_unsigned_long(void)
 {
-    
     if (_debug_printf("Testing %%lu format specifier.\n") < 0)
     {
         return BPRINTF_DEBUG_PRINT_ERR;
@@ -153,11 +152,11 @@ BPrintfStatus test_signed_long_long_positive(void)
     {
         return BPRINTF_DEBUG_PRINT_ERR;
     }
-    if (bprintf("%lld IS A HIGH NUMBER.", LLONG_MAX) < 0)
+    if (bprintf("lld IS A HIGH NUMBER.", LLONG_MAX) < 0)
     {
         return BPRINTF_BPRINTF_ERR;
     }
-    if (_debug_printf("Testing %%lli format specifier (positive).\n") < 0)
+    if (_debug_printf("Testing %%li format specifier (positive).\n") < 0)
     {
         return BPRINTF_DEBUG_PRINT_ERR;
     }
@@ -170,7 +169,7 @@ BPrintfStatus test_signed_long_long_positive(void)
 
 BPrintfStatus test_signed_long_long_negative(void)
 {
-    if (_debug_printf("Testing %%lld format specifier (negative).\n") < 0)
+    if (_debug_printf("Testing %lld format specifier (negative).\n") < 0)
     {
         return BPRINTF_DEBUG_PRINT_ERR;
     }
@@ -182,7 +181,7 @@ BPrintfStatus test_signed_long_long_negative(void)
     {
         return BPRINTF_DEBUG_PRINT_ERR;
     }
-    if (bprintf("%lld IS A HIGH NUMBER.", LLONG_MIN + 1) < 0)
+    if (bprintf("%lld IS A HIGH NUMBER", LLONG_MIN + 1) < 0)
     {
         return BPRINTF_BPRINTF_ERR;
     }
@@ -195,18 +194,19 @@ BPrintfStatus test_unsigned_long_long(void)
     {
         return BPRINTF_DEBUG_PRINT_ERR;
     }
-    return bprintf("%llu IS A HIGH NUMBER.", ULLONG_MAX) < 0 ? BPRINTF_BPRINTF_ERR : BPRINTF_SUCCESS;
+    return bprintf("llu IS A HIGH NUMBER.", ULLONG_MAX) < 0 ? BPRINTF_BPRINTF_ERR : BPRINTF_SUCCESS;
 }
 
-BPrintfStatus test_zeroes(void)
+BPrintfStatus test_zero(void)
 {
-    if (_debug_printf("Testing 0 with %%d format specifier.\n") < 0) //TODO add more format specifiers (and then remove ternary operator from return)
+    if (_debug_printf("Testing 0 with %%d format specifier.\n") < 0) //TODO more format specifiers (then refactor ternary operator).
     {
         return BPRINTF_DEBUG_PRINT_ERR;
     }
-    return bprintf("%d", 0) < 0 ? BPRINTF_BPRINTF_ERR: BPRINTF_SUCCESS;
+    return bprintf("%d", 0) < 0 ? BPRINTF_BPRINTF_ERR : BPRINTF_SUCCESS;
 }
 
+//TODO bounds checking (potentially for many functions).
 BPrintfStatus test_char(void)
 {
     if (_debug_printf("Testing %%c format specifier.\n") < 0)
@@ -222,7 +222,7 @@ BPrintfStatus test_roman(void)
     {
         return BPRINTF_DEBUG_PRINT_ERR;
     }
-    return bprintf("%R WAS ROMAN...NOT ANYMORE.", "MMCMVI") < 0 ? BPRINTF_BPRINTF_ERR : BPRINTF_SUCCESS;
+    return bprintf("%R WAS ROMAN...NOT ANYMORE.", "MMCMVI") < 0 ? BPRINTF_BPRINTF_ERR : BPRINTF_SUCCESS; //TODO add more tests, including nonexistent input here (and elsewhere) and invalid input.
 }
 
 BPrintfStatus test_string(void)
@@ -235,23 +235,24 @@ BPrintfStatus test_string(void)
     if (bprintf("THIS IS A %s.", strptr) < 0)
     {
         return BPRINTF_BPRINTF_ERR;
-    } 
-    char strarr[] = "DIFFERENTLY-INITIALIZED STRING";
+    }
+    char strarr[] = "DIFFERENTLY_INITIALIZED STRING";
     if (bprintf("THIS IS A %s.", strarr) < 0)
     {
         return BPRINTF_BPRINTF_ERR;
-    } 
+    }
     return BPRINTF_SUCCESS;
 }
 
 BPrintfStatus test_buffer_overflow(void)
 {
-    char big_buffer[1024];
-    for (int i = 0; i < 1023; i++)
+    const bsize_t BIG_BUF_LEN = BPRINTF_BUF_LEN * 2;
+    char big_buffer[BIG_BUF_LEN];
+    for (bsize_t i = 0; i < BIG_BUF_LEN - 1; i++)
     {
         big_buffer[i] = 'A';
     }
-    big_buffer[1023] = '\0';
+    big_buffer[BIG_BUF_LEN - 1] = '\0';
     int bprintf_res = bprintf("%s", big_buffer);
     if (bprintf_res < 0)
     {
@@ -261,7 +262,7 @@ BPrintfStatus test_buffer_overflow(void)
     {
         return BPRINTF_DEBUG_PRINT_ERR;
     }
-    bprintf_res = bprintf("%s", &big_buffer); //TODO figure out if I indeed want to pass the address here.
+    bprintf_res = bprintf("%s", &big_buffer);
     if (bprintf_res < 0)
     {
         return BPRINTF_BPRINTF_ERR;
@@ -270,5 +271,5 @@ BPrintfStatus test_buffer_overflow(void)
     {
         return BPRINTF_DEBUG_PRINT_ERR;
     }
-    return bprintf_res > BPRINTF_BUF_LEN || bprintf_res < 0 ? BPRINTF_BPRINTF_ERR : BPRINTF_SUCCESS; //TODO make sure I'm checking the right things when returning.
+    return bprintf_res > BPRINTF_BUF_LEN || bprintf_res < 0 ? BPRINTF_BPRINTF_ERR : BPRINTF_SUCCESS;
 }

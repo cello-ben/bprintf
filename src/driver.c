@@ -8,37 +8,38 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 #include "bprintf.h"
 
 #ifdef BPRINTF_DEBUG
-	#include <assert.h>
-	#include <limits.h>
-	#include <test.h>
+#include <assert.h>
+#include <limits.h>
+
+#include "test.h"
 #else
-	#include "pico/stdlib.h"
+#include "pico/stdlib.h"
 #endif
 
 int main(void)
 {
-	int print_res = 0;
-	#ifdef BPRINTF_DEBUG
-		assert(test_special() == BPRINTF_SUCCESS);
-		assert(test_alpha_caps() == BPRINTF_SUCCESS);
-		assert(test_numeric() == BPRINTF_SUCCESS);
-		assert(test_signed_int_positive() == BPRINTF_SUCCESS);
-		assert(test_signed_int_negative() == BPRINTF_SUCCESS);
-		assert(test_signed_long_positive() == BPRINTF_SUCCESS);
-		assert(test_signed_long_negative() == BPRINTF_SUCCESS);
-		assert(test_unsigned_long() == BPRINTF_SUCCESS);
-		assert(test_signed_long_long_positive() == BPRINTF_SUCCESS);
-		assert(test_signed_long_long_negative() == BPRINTF_SUCCESS);
-		assert(test_unsigned_long_long() == BPRINTF_SUCCESS);
-		assert(test_zeroes() == BPRINTF_SUCCESS);
-		assert(test_char() == BPRINTF_SUCCESS);
-		assert(test_roman() == BPRINTF_SUCCESS);
-		assert(test_string() == BPRINTF_SUCCESS);
-		assert(test_buffer_overflow() == BPRINTF_SUCCESS);
-		print_res = _debug_printf("All tests passed!\n");
-	#else
-		init_leds();
-		print_res = bprintf("HELLO WORLD");
-	#endif
-	return print_res;
+    int print_res = 0;
+    #ifdef BPRINTF_DEBUG
+        assert(test_special() == BPRINTF_SUCCESS);
+        assert(test_alpha_caps() == BPRINTF_SUCCESS);
+        assert(test_numeric() == BPRINTF_SUCCESS);
+        assert(test_signed_int_positive() == BPRINTF_SUCCESS);
+        assert(test_signed_int_negative() == BPRINTF_SUCCESS);
+        assert(test_signed_long_positive() == BPRINTF_SUCCESS);
+        assert(test_signed_long_negative() == BPRINTF_SUCCESS);
+        assert(test_unsigned_long() == BPRINTF_SUCCESS);
+        assert(test_signed_long_long_positive() == BPRINTF_SUCCESS);
+        assert(test_signed_long_long_negative() == BPRINTF_SUCCESS);
+        assert(test_unsigned_long() == BPRINTF_SUCCESS);
+        assert(test_zero() == BPRINTF_SUCCESS);
+        assert(test_char() == BPRINTF_SUCCESS);
+        assert(test_roman() == BPRINTF_SUCCESS);
+        assert(test_string() == BPRINTF_SUCCESS);
+        assert(test_buffer_overflow() == BPRINTF_SUCCESS);
+        print_res = _debug_printf("All tests passed!\n");
+    #else
+        init_leds();
+        print_res = bprintf("HELLO WORLD");
+    #endif
+    return print_res;
 }

@@ -6,11 +6,10 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 */
 
 #ifndef BSTRING_H
-    #define BSTRING_H
+#define BSTRING_H
 
-    #include "bprintf.h"
-    #include "blib.h"
+#include "bprintf.h"
 
-    bsize_t bstrlen(const char *s);
+bsize_t bstrlen(const char *s);
 
 #endif //BSTRING_H
