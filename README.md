@@ -1,4 +1,5 @@
 # bprintf
+[![Build Debug](https://github.com/cello-ben/bprintf/actions/workflows/build.yaml/badge.svg)](https://github.com/cello-ben/bprintf/actions/workflows/build.yaml)
 
 This is my first foray into embedded programming. However, it is fully testable in a desktop environment. It's a work in progress, and with that in mind, here are (some) next steps:
 
