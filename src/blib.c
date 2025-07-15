@@ -76,7 +76,7 @@ char *rtods(const char *s)
         ['X'] = 10
     };
 
-    int i = (int)bstrlen(s) - 1;
+    bsize_t i = bstrlen(s) - 1;
     int num = 0;
 
     if (!*s)
