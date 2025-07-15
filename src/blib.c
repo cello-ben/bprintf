@@ -76,7 +76,7 @@ char *rtods(const char *s)
         ['X'] = 10
     };
 
-    bsize_t i = bstrlen(s) - 1;
+    int i = (int)bstrlen(s) - 1; //We need int instead of bsize_t, or else GCC on Linux gets angry.
     int num = 0;
 
     if (!*s)
