@@ -7,6 +7,8 @@ This is my first foray into embedded programming. However, it is fully testable 
 
 - Audit the code to be more defensive and prevent overflows and the like. The stakes are low since this project is purely for fun and learning, but good practice is good practice.
 
+- Add in checks to make sure we give the right number of format specifiers.
+
 - Expand both the breadboard setup and the code to support a 4x4 matrix instead, in order to make the characters look like...errr...the characters.
 
 # Format Specifiers Currently Implemented
