@@ -11,9 +11,9 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 #include "blib.h"
 
 #ifdef BPRINTF_DEBUG
-    #include <stdio.h>
+#include <stdio.h>
 #else
-    #include "pico/stdlib.h"
+#include "pico/stdlib.h"
 #endif
 
 const int LED_MAP[CHAR_WIDTH * CHAR_HEIGHT] = {20, 22, 19, 17, 18, 16, 21, 10, 12}; //This will likely need to be changed for other boards; it's based on arbitrary places where the LEDs happened to fit nicely on my breadboard.
@@ -368,11 +368,11 @@ static const LEDState ASCII_MAP[128][9] = {
 int _debug_printf(const char *fmt, ...)
 {
     #ifdef BPRINTF_DEBUG
-        va_list args;
-        va_start(args, fmt);
-        int vprintf_res = vprintf(fmt, args);
-        va_end(args);
-        return vprintf_res;
+	va_list args;
+	va_start(args, fmt);
+	int vprintf_res = vprintf(fmt, args);
+	va_end(args);
+	return vprintf_res;
     #endif
     return 0;
 }
@@ -416,12 +416,12 @@ void init_leds(void)
 
 static void clear_leds(void)
 {
-    #ifndef BPRINTF_DEBUG
+	#ifndef BPRINTF_DEBUG
     for (bsize_t i = 0; i < CHAR_WIDTH * CHAR_HEIGHT; i++)
     {
         gpio_put(LED_MAP[i], LED_OFF);
     }
-    #endif
+	#endif
 }
 
 static BPrintfStatus send_to_board(const LEDState *leds)
@@ -553,10 +553,8 @@ int bprintf(const char *fmt, ...)
             va_end(args);
             return -1;
         }
-        #ifndef BPRINTF_DEBUG
-            clear_leds();
         #endif
-        #endif
+		clear_leds();
     }
     va_end(args);
     return str_idx;
