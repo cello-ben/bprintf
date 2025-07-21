@@ -11,6 +11,9 @@ This is my first foray into embedded programming. However, it is fully testable 
 
 - Expand both the breadboard setup and the code to support a 4x4 matrix instead, in order to make the characters look like...errr...the characters.
 
+# Behind the Scenes
+[How I Made bprintf](https://www.youtube.com/watch?v=IW856OGnBXc)
+
 # Format Specifiers Currently Implemented
 
 `%c` - Prints a single character.
